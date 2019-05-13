@@ -52,6 +52,8 @@ public class Game {
             if(sx == 0 && sy == 0) bot.idle();
             if(Button.A.isPressed()){
                 bot.shoot();
+                sx = 0;
+                sy = 0;
             }
             bot.x += sx;
             bot.y += sy;
