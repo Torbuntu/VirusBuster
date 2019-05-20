@@ -10,8 +10,8 @@ public class Game {
 
     public static void main(String[] args){
         //START Create
-        HiRes16Color screen = new HiRes16Color(Dragon.data());
-        Colodore.applyTo( screen );
+        HiRes16Color screen = new HiRes16Color(Colodore.palette(), Dragon.font());
+       
         Background bg = new Background();
         
         boolean attack = false;
@@ -38,7 +38,7 @@ public class Game {
         virusBank[0].x = 102;
         virusBank[0].y = 102;
         
-        float sx = 0, sy = 0, bsx=1, vsx = 0, vsy = 0;
+        float sx = 0, sy = 0, bsx=1, bsy = 0, vsx = 0, vsy = 0;
         int counter = 0;
         
         virusBank[0].walk();
@@ -47,7 +47,7 @@ public class Game {
         //Main game loop
         while(true){
             
-            System.out.println(screen.fps());
+           // System.out.println(screen.fps());
             screen.clear( 0x44 );
             bg.draw(screen, 0.0f, 0.0f);
             screen.setTextPosition(10, 160);
@@ -59,10 +59,23 @@ public class Game {
             if(Button.Down.isPressed()){
                 bot.walkVert();    
                 sy = 1;
+                if(!attack){
+                    blastFacing = 16;
+                    bsy = 1;
+                    bsx = 0;
+                    blast.setFlipped(true);
+                }
             }
             if( Button.Up.isPressed()){
                 bot.walkVert();
                 sy = -1;
+                if(!attack){
+                    blastFacing = -16;
+                    bsy = -1;
+                    bsx = 0;
+                    blast.setFlipped(false);
+                }
+                
             }
             if(sy == 0){
                 if(Button.Right.isPressed()){
@@ -71,7 +84,9 @@ public class Game {
                     if(!attack){
                        blastFacing = 16; 
                        bsx = 1;
+                       bsy = 0;
                        blast.setMirrored( true );
+                       blast.setFlipped(false);
                     } 
                     bot.walkHori();
                     sx = 1;
@@ -83,7 +98,9 @@ public class Game {
                     if(!attack) {
                         blastFacing = -16;
                         bsx = -1;
+                        bsy = 0;
                         blast.setMirrored( false );
+                        blast.setFlipped(false);
                     }
                     bot.walkHori();
                     sx = -1;
@@ -95,11 +112,17 @@ public class Game {
             if(Button.A.isPressed() && !attack){
                 bot.shoot();
                 attack = true;
-                blast.y = bot.y+3;
-                blast.x = bot.x+blastFacing;
+                if(bsy != 0){
+                    blast.y = bot.y + blastFacing;
+                    blast.x = bot.x;
+                    blast.fireVert();
+                }else{
+                    blast.y = bot.y+3;
+                    blast.x = bot.x+blastFacing;
+                    blast.fireHori();
+                }
                 sx = 0;
                 sy = 0;
-                blast.fire();
             }
             bot.x += sx;
             bot.y += sy;
@@ -108,8 +131,15 @@ public class Game {
             //START Move Blast
             if(attack){
                 blast.x += bsx;
+                blast.y += bsy;
             }
             if(blast.x > 220 || blast.x < 0){
+                blast.x = 0;
+                blast.y = 0;
+                attack = false;
+            }
+            if(blast.y > 180 || blast.y < 0){
+                blast.y = 0;
                 blast.x = 0;
                 attack = false;
             }
@@ -177,16 +207,14 @@ public class Game {
                 if(deathAnim[i] == 0){
                     deadFrags[i] = false;
                     virusBank[i].walk();
-                    if(bot.x > 110){
-                        virusBank[i].x = 230;
-                    }else{
-                        virusBank[i].x = 0;
-                    }
-                    if(bot.y > 68){
-                        virusBank[i].y = 180;
-                    }else{
-                        virusBank[i].y = 0;
-                    }
+                    int r = Math.random(0,2);
+					if(r== 1){
+						virusBank[i].x = 0;
+					}else{
+						virusBank[i].x = 230;
+					}
+
+					virusBank[i].y = Math.random(0, 180);
                     
                     deathAnim[i] = 50;
                 }
