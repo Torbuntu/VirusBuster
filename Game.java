@@ -33,6 +33,12 @@ public class Game {
         blast.x = 0;
         blast.y = 0;
         int blastFacing = 16;
+        int blastNextFace = 16;
+        int blastNextX = 0;
+        int blastNextY = 0;
+        boolean flipBlastVert = false;
+        boolean flipBlastHori = false;
+        
         blast.setMirrored( true );
         
         virusBank[0].x = 102;
@@ -59,59 +65,54 @@ public class Game {
             if(Button.Down.isPressed()){
                 bot.walkVert();    
                 sy = 1;
-                if(!attack){
-                    blastFacing = 16;
-                    bsy = 1;
-                    bsx = 0;
-                    blast.setFlipped(true);
-                }
+                blastNextFace = 16;
+                blastNextY = 1;
+                blastNextX = 0;
+                flipBlastVert = true;
+                
             }
             if( Button.Up.isPressed()){
                 bot.walkVert();
                 sy = -1;
-                if(!attack){
-                    blastFacing = -16;
-                    bsy = -1;
-                    bsx = 0;
-                    blast.setFlipped(false);
-                }
+                blastNextFace = -16;
+                blastNextY = -1;
+                blastNextX = 0;
+                flipBlastVert = false;
                 
             }
             if(sy == 0){
                 if(Button.Right.isPressed()){
                     bot.setMirrored( true );
-                    
-                    if(!attack){
-                       blastFacing = 16; 
-                       bsx = 1;
-                       bsy = 0;
-                       blast.setMirrored( true );
-                       blast.setFlipped(false);
-                    } 
+                    blastNextFace = 16;
+                    blastNextX = 1;
+                    blastNextY = 0;
+                    flipBlastHori = true;
+                    flipBlastVert = false;
                     bot.walkHori();
                     sx = 1;
                     
                 }
                 if(Button.Left.isPressed()){
                     bot.setMirrored( false );
-                    
-                    if(!attack) {
-                        blastFacing = -16;
-                        bsx = -1;
-                        bsy = 0;
-                        blast.setMirrored( false );
-                        blast.setFlipped(false);
-                    }
+                    blastNextFace = -16;
+                    blastNextX = -1;
+                    blastNextY = 0;
+                    flipBlastHori = false;
+                    flipBlastVert = false;
                     bot.walkHori();
                     sx = -1;
-                    
                 }
             }
             
             if(sx == 0 && sy == 0) bot.idle();
             if(Button.A.isPressed() && !attack){
+                blastFacing = blastNextFace;
                 bot.shoot();
                 attack = true;
+                bsx = blastNextX;
+                bsy = blastNextY;
+                blast.setFlipped(flipBlastVert);
+                blast.setMirrored(flipBlastHori);
                 if(bsy != 0){
                     blast.y = bot.y + blastFacing;
                     blast.x = bot.x;
@@ -133,12 +134,12 @@ public class Game {
                 blast.x += bsx;
                 blast.y += bsy;
             }
-            if(blast.x > 220 || blast.x < 0){
+            if(blast.x >= screen.width() || blast.x <= 0){
                 blast.x = 0;
                 blast.y = 0;
                 attack = false;
             }
-            if(blast.y > 180 || blast.y < 0){
+            if(blast.y > screen.height() || blast.y <= 0){
                 blast.y = 0;
                 blast.x = 0;
                 attack = false;

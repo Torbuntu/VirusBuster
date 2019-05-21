@@ -3,14 +3,14 @@
 	"lastBuffer": "Game.java",
 	"files": {
 		"Background.png": {},
-		"Blast-sheet.png": {},
 		"Blast.json": {},
-		"Blast.png": {},
 		"Bot.json": {},
-		"Frag.json": {},
 		"Frag-sheet.png": {},
+		"Frag.json": {},
 		"Frag.png": {},
 		"Game.java": {},
+		"Blast.png": {},
+		"Blast-sheet.png": {},
 		"LICENSE": {},
 		"README.md": {},
 		"Virus-sheet.png": {},
@@ -19,8 +19,8 @@
 		"VirusBuster.bin": {},
 		"VirusBuster.elf": {},
 		"bot-sheet.png": {},
-		"bot.png": {},
-		"project.json": {}
+		"project.json": {},
+		"bot.png": {}
 	},
 	"javaFlags": {
 		"mainClass": "Game"
@@ -234,6 +234,9 @@
 			"sdcard": false
 		},
 		"/bot.png": {
+			"sdcard": false
+		},
+		"/VirusBuster.bin.1.png": {
 			"sdcard": false
 		}
 	}
