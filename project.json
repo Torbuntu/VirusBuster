@@ -1,34 +1,33 @@
 {
 	"metadata": {},
-	"lastBuffer": "Game.java",
+	"lastBuffer": "Main.java",
 	"files": {
-		"Background.png": {},
-		"Blast.json": {},
-		"Bot.json": {},
-		"Frag-sheet.png": {},
-		"Frag.json": {},
-		"Frag.png": {},
-		"Game.java": {},
-		"Blast.png": {},
-		"Blast-sheet.png": {},
-		"LICENSE": {},
-		"README.md": {},
-		"Virus-sheet.png": {},
-		"Virus.json": {},
-		"Virus.png": {},
-		"VirusBuster.bin": {},
-		"VirusBuster.elf": {},
-		"bot-sheet.png": {},
-		"project.json": {},
-		"bot.png": {}
+		"Dog.json": {},
+		"Hello Java.bin": {},
+		"Hello Java.elf": {},
+		"Main.java": {},
+		"Pattern.png": {},
+		"dog.png": {},
+		"dump.bin": {},
+		"firmware.bin": {},
+		"project.json": {}
 	},
 	"javaFlags": {
-		"mainClass": "Game"
+		"mainClass": "Main"
 	},
 	"libs": {
 		"Pokitto": [
 			"${appPath}/javacompiler/pokitto/libs/startup.cpp",
 			"${appPath}/javacompiler/pokitto/libs/SystemInit.s"
+		],
+		"linux": "Desktop",
+		"windows": "Desktop",
+		"darwin": "Desktop",
+		"Desktop": [
+			{
+				"recurse": "${appPath}/PokittoLib/Pokitto",
+				"ignore": "BmpImage.cpp|ChaN|old_32bitSDL|libpff|SDFileSystem|File/ChaN|USBDevice|tinydir/tests|tinydir/samples|JoyHat|mbed-pokitto|POKITTO_HW|POKITTO_XTERNALS|PokittoDisk.cpp|PokittoBattery.cpp|Documentation|examples?|Physics|main.cpp|Pokitto_simsound.cpp"
+			}
 		]
 	},
 	"SFlags": {
@@ -40,54 +39,61 @@
 		]
 	},
 	"CPPFlags": {
+		"DEBUG": [
+			"-Og",
+			"-g3",
+			"-ggdb"
+		],
+		"RELEASE": [
+			"-flto",
+			"-O3"
+		],
 		"Pokitto": [
 			"-I${appPath}/javacompiler/pokitto/includes",
 			"-I${projectPath}",
 			"-DPOKITTO",
+			"-fexceptions",
 			"-fno-rtti",
 			"-Wno-pointer-arith",
 			"-c",
-			"-fno-exceptions",
 			"-fno-builtin",
 			"-ffunction-sections",
 			"-fdata-sections",
 			"-funsigned-char",
 			"-MMD",
 			"-fno-delete-null-pointer-checks",
-			"-fomit-frame-pointer",
 			"-mcpu=cortex-m0plus",
 			"-mthumb",
-			"-Og",
-			"-g3",
-			"-ggdb",
 			"-Wno-psabi"
 		],
-		"Pokitto-release": [
-			"-I${appPath}/javacompiler/pokitto/includes",
+		"Desktop": [
 			"-I${projectPath}",
-			"-DPOKITTO",
+			"-DPOK_SIM",
+			"-Wall",
+			"-std=gnu++17",
+			"-fsigned-char",
+			"-DPOK_SIM",
 			"-fno-rtti",
 			"-Wno-pointer-arith",
 			"-c",
-			"-fno-exceptions",
 			"-fno-builtin",
 			"-ffunction-sections",
 			"-fdata-sections",
 			"-funsigned-char",
 			"-MMD",
-			"-fno-delete-null-pointer-checks",
-			"-fomit-frame-pointer",
-			"-mcpu=cortex-m0plus",
-			"-mthumb",
-			"-flto",
-			"-O3"
-		],
-		"PC": [
-			"-DINTEL"
+			"-fno-delete-null-pointer-checks"
 		],
 		"ALL": [
-			"-std=c++14"
-		]
+			"-std=c++17"
+		],
+		"linux": {
+			"extend": "Desktop",
+			"flags": [
+				"-DPROJ_LINUX=1",
+				"-D_REENTRANT"
+			]
+		},
+		"windows": "Desktop"
 	},
 	"GDBFlags": {
 		"Pokitto": [
@@ -108,42 +114,23 @@
 		]
 	},
 	"LDFlags": {
-		"Pokitto-release": [
-			"-Wl,--gc-sections",
-			"-Wl,-n",
-			"--specs=nano.specs",
-			"-Wl,--wrap,_sbrk",
-			"-Wl,--wrap,malloc",
-			"-mcpu=cortex-m0plus",
-			"-mthumb",
-			"-O3",
-			"-Wl,--undefined=g_pfnVectors",
-			"-Wl,--undefined=boot",
-			"-T",
-			"${appPath}/javacompiler/pokitto/link.ld",
-			"--output",
-			"${projectPath}/${projectName}.elf",
-			"$objectFiles",
-			"-Wl,--start-group",
-			"-lstdc++",
-			"-lsupc++",
-			"-lm",
-			"-lc",
-			"-lgcc",
-			"-lnosys",
-			"-Wl,--end-group"
+		"RELEASE": [
+			"-O3"
+		],
+		"DEBUG": [
+			"-Og",
+			"-g3",
+			"-ggdb"
 		],
 		"Pokitto": [
 			"-Wl,--gc-sections",
 			"-Wl,-n",
 			"--specs=nano.specs",
 			"-Wl,--wrap,_sbrk",
+			"-Wl,--wrap,exit",
 			"-Wl,--wrap,malloc",
 			"-mcpu=cortex-m0plus",
 			"-mthumb",
-			"-Og",
-			"-g3",
-			"-ggdb",
 			"-Wl,--undefined=g_pfnVectors",
 			"-Wl,--undefined=boot",
 			"-T",
@@ -167,77 +154,141 @@
 			"compile-java",
 			"compile-cpp",
 			"compile-ld",
-			"compile-bin"
+			"compile-bin",
+			"make-img"
 		],
-		"PC": [
-			"buildc",
-			"buildcpp",
-			"link"
+		"Desktop": [
+			"compile-java",
+			"compile-cpp",
+			"compile-ld",
+			"compile-bin"
 		]
 	},
 	"meta": {
-		"": {
+		"": {},
+		"/Dog.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/Main.java": {
 			"sdcard": false
 		},
-		"/Background.png": {
+		"/Pattern.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/dog.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/project.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites": {
 			"sdcard": false
 		},
-		"/Blast-sheet.png": {
-			"sdcard": false
+		"/sprites/Background.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Blast.png": {
-			"sdcard": false
+		"/sprites/Blast.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Blast.json": {
-			"sdcard": false
+		"/sprites/Blast-sheet.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Bot.json": {
-			"sdcard": false
+		"/sprites/Blast.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Frag-sheet.png": {
-			"sdcard": false
+		"/sprites/Bot.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Frag.json": {
-			"sdcard": false
+		"/sprites/Frag-sheet.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Frag.png": {
-			"sdcard": false
+		"/sprites/Frag.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		},
-		"/Game.java": {
+		"/sprites/Frag.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Virus-sheet.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Virus.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Virus.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/bot-sheet.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/bot.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/README.md": {
 			"sdcard": false
 		},
 		"/LICENSE": {
 			"sdcard": false
 		},
-		"/README.md": {
-			"sdcard": false
-		},
-		"/Virus-sheet.png": {
-			"sdcard": false
-		},
-		"/Virus.json": {
-			"sdcard": false
-		},
-		"/Virus.png": {
-			"sdcard": false
-		},
 		"/VirusBuster.bin": {
 			"sdcard": false
 		},
-		"/VirusBuster.elf": {
-			"sdcard": false
-		},
-		"/bot-sheet.png": {
-			"sdcard": false
-		},
-		"/project.json": {
-			"sdcard": false
-		},
-		"/bot.png": {
-			"sdcard": false
-		},
-		"/VirusBuster.bin.1.png": {
+		"/demo.gif": {
 			"sdcard": false
 		}
+	},
+	"ideVersion": 10000,
+	"BUILDFlags": {
+		"Pokitto": {}
 	}
 }
