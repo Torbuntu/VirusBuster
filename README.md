@@ -1,6 +1,10 @@
 # VirusBuster
 A wave shooter game for Pokitto
 
+# Preview
+
+![](demo.gif)
+
 Built with FemtoIDE
 
 * make the blaster an array of 3. So you can shoot 3 blasts instead of just one. 
