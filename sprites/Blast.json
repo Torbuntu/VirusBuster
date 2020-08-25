@@ -56,7 +56,7 @@
   "size": { "w": 96, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "fireHori", "from": 0, "to": 2, "direction": "forward" },
+   { "name": "fire", "from": 0, "to": 2, "direction": "forward" },
    { "name": "fireVert", "from": 3, "to": 5, "direction": "forward" }
   ],
   "layers": [

@@ -1,5 +1,7 @@
 import sprites.Blast;
 
+import Math;
+
 public class BlastManager {
     
     int cooldown = 0;
@@ -22,37 +24,40 @@ public class BlastManager {
         }
         if(attack && cooldown == 0){
             cooldown = 20;
-            for(int i = 0; i < blasts.length; i++){
-                if(!blasts[i].active()){
-                    blasts[i].setX(x);
-                    blasts[i].setY(y);
+            for(BlastObject blast : blasts){
+                if(!blast.active()){
+                    blast.setX(x);
+                    blast.setY(y);
                     if(dir == 0){//left
-                        blasts[i].setDir(-1.0f, 0.0f);
+                        blast.setDir(-2.0f, 0.0f);
                     }
                     if(dir == 1){//up
-                        blasts[i].setDir(0.0f, -1.0f);
+                        blast.setDir(0.0f, -2.0f);
                     }
                     if(dir == 2){//right
-                        blasts[i].setDir(1.0f, 0.0f);
+                        blast.setDir(2.0f, 0.0f);
                     }
                     if(dir == 3){//down
-                        blasts[i].setDir(0.0f, 1.0f);
+                        blast.setDir(0.0f, 2.0f);
                     }
-                    blasts[i].draw = true;
+                    blast.draw = true;
                     return;
                 }
             }
         }
         
-        for(int i = 0; i < blasts.length; i++){
-            blasts[i].update();
+        for(BlastObject b : blasts){
+            b.update();
         }
     }
     
-    boolean hitEnemy(float ex, float ey){
-        for(int i = 0; i < blasts.length; i++){
-            if(blasts[i].active() && blasts[i].getX() >= ex-8 && blasts[i].getX() <= ex+8 && blasts[i].getY() >= ey-8 && blasts[i].getY() <= ey+8){
-                blasts[i].hit();
+    public boolean hitEnemy(float ex, float ey, float er){
+        for(BlastObject b : blasts){
+            float bx = b.getX()+8-ex;
+            float by = b.getY()+8-ey;
+            float r = 6+er;
+            if(b.active() && Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
+                b.hit();
                 return true;
             }
         }
@@ -60,15 +65,10 @@ public class BlastManager {
     }
     
     void render(){
-        for(int i = 0; i < blasts.length; i++){
-            blasts[i].render();
+        for(BlastObject b : blasts){
+            b.render();
         }
     }
-    
-    BlastObject[] getBlasts(){
-        return blasts;
-    }
-    
 }
 
 
@@ -79,6 +79,7 @@ class BlastObject {
     
     public BlastObject(){
         blast = new Blast();
+        blast.fire();
     }
     
     void update(){

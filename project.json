@@ -306,6 +306,9 @@
 		},
 		"/VirusManager.java": {
 			"sdcard": false
+		},
+		"/TitleScene.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
