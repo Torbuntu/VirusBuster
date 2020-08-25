@@ -2,7 +2,7 @@ import femto.mode.HiRes16Color;
 import femto.Game;
 import femto.State;
 import femto.input.Button;
-import femto.palette.Colodore;
+import femto.palette.UltimaViSharpX68000;
 import femto.font.TIC80;
 import femto.font.Dragon;
 
@@ -22,7 +22,7 @@ public class Main extends State {
         Game.run(Dragon.font(), new TitleScene());
     }
     
-    public static HiRes16Color screen = new HiRes16Color(Colodore.palette(), Dragon.font());
+    public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), Dragon.font());
     
     Bot bot;
     BlastManager blastManager;
@@ -45,16 +45,29 @@ public class Main extends State {
         virusManager = new VirusManager();
     }
     
-    void update(){
-        screen.clear(4);
-        screen.setTextPosition(10, 10);
+    
+    void drawHud(){
+        screen.drawRect(0, 0, 47, 14, 0);
+        screen.fillRect(2, 2, 45, 12, 2);
+        screen.setTextPosition(3, 3);
         screen.print("Kills: "+kills);
+    }
+    
+    void update(){
+        screen.clear(3);
         
         //walls, tmp
-        screen.fillRect(0, 0, 8, 180, 2);
-        screen.fillRect(212, 0, 8, 180, 2);
-        screen.fillRect(0, 0, 240, 8, 2);
-        screen.fillRect(0, 168, 240, 8, 2);
+        screen.fillRect(0, 0, 8, 180, 3);
+        screen.fillRect(212, 0, 8, 180, 3);
+        screen.fillRect(0, 0, 240, 8, 3);
+        screen.fillRect(0, 168, 240, 8, 3);
+        
+        for(int i = 0; i < 13; i++){
+            for(int j = 0; j < 10; j++){
+                Main.screen.drawRect(6+i*16, 6+j*16, 16, 16, 12);
+            }
+        }
+        
         
         //START move player
         sx = 0;
@@ -116,6 +129,9 @@ public class Main extends State {
         // else if(kills >= 5 ){
         //     activeEnemies=2;
         // }
+        
+        
+        drawHud();
         screen.flush();
     }
     
