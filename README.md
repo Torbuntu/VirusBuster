@@ -7,10 +7,15 @@ A wave shooter game for Pokitto
 
 Built with FemtoIDE
 
-* make the blaster an array of 3. So you can shoot 3 blasts instead of just one. 
 
-* I'll add a start screen so it doesn't just launch to the game. 
 
-* I'll add medium and large sized viruses to fight with bigger health.
+## TODO:
 
-* I'll add sound eventually. 
+- Start screen.
+- Room based, have to clear the room to advance to the next room (exiting to either of the four directions).
+    - Each room is a "sector" on a Pokitto board, your program's task is to clear the viruses from each sector, restoring funcitonality to the Pokitto.
+- Health (shield) meter. 
+    - How much power is left connected to your program. As Viruses attack your program, you lose connection. 
+- Different weapon types.
+    - Viruses may drop upgrades, such as fragments of programs they destroyed. These will give your program extra powerful attacks for a limited time.
+- SFX/Music
