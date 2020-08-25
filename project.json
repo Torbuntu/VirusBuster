@@ -285,6 +285,27 @@
 		},
 		"/demo.gif": {
 			"sdcard": false
+		},
+		"/VirusBuster.elf": {
+			"sdcard": false
+		},
+		"/BlastManager.java": {
+			"sdcard": false
+		},
+		"/sprites/Bot-sheet.png": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
+		},
+		"/sprites/Bot.png": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
+		},
+		"/VirusManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

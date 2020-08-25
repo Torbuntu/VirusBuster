@@ -6,22 +6,22 @@ import femto.palette.Colodore;
 import femto.font.TIC80;
 import femto.font.Dragon;
 
-import sprites.Background;
+//import sprites.Background;
 import sprites.Blast;
 import sprites.Bot;
 import sprites.Frag;
 import sprites.Virus;
 
+import BlastManager;
+
 public class Main extends State {
     
-    HiRes16Color screen = new HiRes16Color(Colodore.palette(), Dragon.font());
-    
-    Background bg;
+    public static HiRes16Color screen = new HiRes16Color(Colodore.palette(), Dragon.font());
     
     boolean attack = false;
     boolean dead = false;
     Bot bot;
-    Blast blast;
+    BlastManager blastManager;
     
     Virus[] virusBank;
     Frag[] fragBank = {new Frag(), new Frag(), new Frag(), new Frag(), new Frag(), new Frag(), new Frag(), new Frag(), new Frag(), new Frag()};
@@ -32,23 +32,14 @@ public class Main extends State {
     
     int kills = 0;
 
-    int blastFacing = 16;
-    int blastNextFace = 16;
-    int blastNextX = 0;
-    int blastNextY = 0;
-    boolean flipBlastVert = false;
-    boolean flipBlastHori = false;
-    
     float sx = 0, sy = 0, bsx=1, bsy = 0, vsx = 0, vsy = 0;
-    int counter = 0;
+    int counter = 0, dir = 1;
 
     public static void main(String[] args){
         Game.run(Dragon.font(), new Main());
     }
     
     void init(){
-        bg = new Background();
-        
         virusBank = new Virus[]{new Virus(), new Virus(), new Virus(), new Virus(), new Virus(), new Virus(), new Virus(), new Virus(), new Virus(), new Virus()};
             
         virusBank[0].x = 102;
@@ -57,12 +48,10 @@ public class Main extends State {
         virusBank[0].walk();
     
         bot = new Bot();
-        blast = new Blast();
         bot.x = 2;
         bot.y = 2;
-        blast.x = 0;
-        blast.y = 0;
-        blast.setMirrored( true );
+        
+        blastManager = new BlastManager();
     }
     
     void shutdown(){
@@ -70,11 +59,14 @@ public class Main extends State {
     }
     
     void update(){
-       // System.out.println(screen.fps());
-        screen.clear(0);
-        bg.draw(screen, 0.0f, 0.0f);
-        screen.setTextPosition(10, 160);
+        screen.clear(4);
+        screen.setTextPosition(10, 10);
         screen.print("Kills: "+kills);
+        
+        screen.fillRect(0, 0, 8, 180, 2);
+        screen.fillRect(212, 0, 8, 180, 2);
+        screen.fillRect(0, 0, 240, 8, 2);
+        screen.fillRect(0, 168, 240, 8, 2);
         
         //START move player
         sx = 0;
@@ -82,63 +74,32 @@ public class Main extends State {
         if(Button.Down.isPressed()){
             bot.walkVert();    
             sy = 1;
-            blastNextFace = 16;
-            blastNextY = 1;
-            blastNextX = 0;
-            flipBlastVert = true;
-            
+            dir = 3;
         }
         if( Button.Up.isPressed()){
             bot.walkVert();
             sy = -1;
-            blastNextFace = -16;
-            blastNextY = -1;
-            blastNextX = 0;
-            flipBlastVert = false;
-            
+            dir = 1;
         }
         if(sy == 0){
             if(Button.Right.isPressed()){
                 bot.setMirrored( true );
-                blastNextFace = 16;
-                blastNextX = 1;
-                blastNextY = 0;
-                flipBlastHori = true;
-                flipBlastVert = false;
                 bot.walkHori();
                 sx = 1;
-                
+                dir = 2;
             }
             if(Button.Left.isPressed()){
                 bot.setMirrored( false );
-                blastNextFace = -16;
-                blastNextX = -1;
-                blastNextY = 0;
-                flipBlastHori = false;
-                flipBlastVert = false;
                 bot.walkHori();
                 sx = -1;
+                dir = 0;
             }
         }
         
         if(sx == 0 && sy == 0) bot.idle();
         if(Button.A.isPressed() && !attack){
-            blastFacing = blastNextFace;
             bot.shoot();
             attack = true;
-            bsx = blastNextX;
-            bsy = blastNextY;
-            blast.setFlipped(flipBlastVert);
-            blast.setMirrored(flipBlastHori);
-            if(bsy != 0){
-                blast.y = bot.y + blastFacing;
-                blast.x = bot.x;
-                blast.fireVert();
-            }else{
-                blast.y = bot.y+3;
-                blast.x = bot.x+blastFacing;
-                blast.fireHori();
-            }
             sx = 0;
             sy = 0;
         }
@@ -147,22 +108,8 @@ public class Main extends State {
         //END move player
         
         //START Move Blast
-        if(attack){
-            blast.x += bsx;
-            blast.y += bsy;
-        }
-        if(blast.x >= screen.width() || blast.x <= 0){
-            blast.x = 0;
-            blast.y = 0;
-            attack = false;
-        }
-        if(blast.y > screen.height() || blast.y <= 0){
-            blast.y = 0;
-            blast.x = 0;
-            attack = false;
-        }
-        //END Move Blast
-        
+        blastManager.update(Button.A.isPressed(), bot.x, bot.y, dir);
+        blastManager.render();
         
         for(int i = 0; i < activeEnemies; i++){
             //START Move Virus
@@ -198,7 +145,7 @@ public class Main extends State {
             //END bot close to virus    
             
             //START Bolt hit enemies
-            if(blast.x >= virusBank[i].x-8 && blast.x <= virusBank[i].x+8 && blast.y >= virusBank[i].y-8 && blast.y <= virusBank[i].y+8 && attack){
+            if(blastManager.hitEnemy(virusBank[i].x, virusBank[i].y)){
                 fragBank[i].die();
                 fragBank[i].x = virusBank[i].x;
                 fragBank[i].y = virusBank[i].y;
@@ -206,8 +153,6 @@ public class Main extends State {
                 virusBank[i].y = -16;
                 deadFrags[i] = true;
                 attack = false;
-                blast.x = 0;
-                blast.y = 0;
                 kills++;
             }
             //END Bolt Hit Enemies
@@ -240,12 +185,7 @@ public class Main extends State {
         }
         
         //Draw to screen
-       
         bot.draw(screen);
-        
-        if(attack){
-            blast.draw(screen);
-        }
         
         if(kills >= 15 ){
             activeEnemies=10;
