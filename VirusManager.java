@@ -44,6 +44,7 @@ public class VirusManager{
             }
             
             viruses[i].updateMovement();
+            checkAvailable();
         }
     }
     
@@ -56,14 +57,39 @@ public class VirusManager{
     public void checkBlastHits(BlastManager blastManager){
         for(int i = 0; i < active; i++){
             if(viruses[i].isAlive() &&  blastManager.hitEnemy(viruses[i].getX()+8, viruses[i].getY()+8, 6.0f)){
-                viruses[i].kill();
-                Main.updateKills();
+                viruses[i].hit(1);
+                if(!viruses[i].isAlive()){
+                    Main.updateKills();
+                }
             }
         }
     }
     
     public void setActive(int inc){
         active = inc;
+    }
+    
+    public void checkAvailable(){
+        boolean cleared = true;
+        for(int i = 0; i < active; i++){
+            if(viruses[i].isAlive()){
+                cleared = false;
+                return;
+            }
+        }
+        if(cleared && Main.roomThreats > 0){
+            for(int i = 0; i < 10; i++){
+                if(i < Main.roomThreats){
+                    viruses[i].reset();
+                }
+            }
+        }
+    }
+    
+    public void resetAll(){
+        for(VirusObject v : viruses){
+            v.reset();
+        }
     }
 }
 
@@ -76,6 +102,11 @@ class VirusObject{
     float sx = 0, sy = 0;
     
     int animationTime = 50;
+    
+    //0 = normal, 1 = large
+    int type = 0;
+    int baseHealth = 2;
+    int health = 2;
     
     VirusObject(){
         virus = new Virus();
@@ -144,7 +175,7 @@ class VirusObject{
                 frag.draw(Main.screen);
                 animationTime--;
             }else{
-                reset();
+             //   reset();
             }
         }
     }
@@ -171,6 +202,17 @@ class VirusObject{
     }
     void setSpeedY(float s){
         sy = s;
+    }
+    
+    void hit(int damage){
+        health = health - damage;
+        if(health <= 0){
+            kill();
+        }
+    }
+    
+    int getHealth(){
+        return health;
     }
     
     void kill(){
@@ -210,5 +252,6 @@ class VirusObject{
             virus.y = 160;
         }
         alive = true;
+        health = baseHealth;
     }
 }

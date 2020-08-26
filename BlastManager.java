@@ -23,7 +23,7 @@ public class BlastManager {
             cooldown--;
         }
         if(attack && cooldown == 0){
-            cooldown = 20;
+            cooldown = 10;
             for(BlastObject blast : blasts){
                 if(!blast.active()){
                     blast.setX(x);
@@ -53,9 +53,9 @@ public class BlastManager {
     
     public boolean hitEnemy(float ex, float ey, float er){
         for(BlastObject b : blasts){
-            float bx = b.getX()+8-ex;
-            float by = b.getY()+8-ey;
-            float r = 6+er;
+            float bx = b.getX()+4-ex;
+            float by = b.getY()+4-ey;
+            float r = 4+er;
             if(b.active() && Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
                 b.hit();
                 return true;

@@ -2,29 +2,11 @@ import femto.Game;
 import femto.State;
 import femto.input.Button;
 
-
-import sprites.Bot;
-import sprites.Virus;
-
 public class TitleScene extends State {
-    Virus virus, virus2;
-    Bot bot;
-    
-    int sx = 0, sy = 0;
+    int select, count;
     void init(){
-        bot = new Bot();
-        
-        bot.x = 32;
-        bot.y = 32;
-        
-        virus = new Virus();
-        virus2 = new Virus();
-        
-        virus.x = 100;
-        virus.y = 100;
-        
-        virus2.x = 80;
-        virus2.y = 80;
+        select = 0;
+        count = 0;
     }
     
     void update(){
@@ -33,40 +15,38 @@ public class TitleScene extends State {
             Game.changeState(new Main());
         }
         
-        Main.screen.clear(4);
-        for(int i = 0; i < 13; i++){
-            for(int j = 0; j < 10; j++){
-                if(virus2.x/16 == i && virus2.y/16 == j){
-                    Main.screen.fillRect(6+i*16, 6+j*16, 16, 16, 8);
-                }else{
-                    Main.screen.drawRect(6+i*16, 6+j*16, 16, 16, 8);
-                }
-            }
-        }
-        
-        if(Button.Right.isPressed()){
-            sx = 1;
-        }
-        if(Button.Left.isPressed()){
-            sx = -1;
-        }
-        if(Button.Down.isPressed()){
-            sy = 1;
-        }
-        if(Button.Up.isPressed()){
-            sy = -1;
-        }
-        
+        Main.screen.clear(3);
+
         
         Main.screen.setTextPosition(10, 10);
-        Main.screen.print("Press C to begin.");
+        Main.screen.setTextColor(0);
+        Main.screen.print("Press C to begin Demo.");
+        
+        Main.screen.setTextPosition(10, 32);
+        Main.screen.print("Select Zone to Begin");
         
         
+        if(Button.Right.justPressed() && select < 7){
+            select++;
+        }
+        if(Button.Left.justPressed() && select > 0){
+            select--;
+        }
         
-        bot.draw(Main.screen);
-        virus.draw(Main.screen);
-        virus2.draw(Main.screen);
+        count++;
+        for(int i = 0; i < 8; i++){
+            if(select == i && count > 10){
+                Main.screen.drawRect((11+i*18), 44, 17, 17, 8);
+            }else{
+                Main.screen.drawRect((12+i*18), 45, 16, 16, 0);
+            }
+        }
+    Main.screen.fillRect(10, 70, 200, 50, 8+select);
+        Main.screen.setTextPosition(15, 75);
+        Main.screen.setTextColor(3);
+        Main.screen.print("Some text about the zone " + select);
         
+        if(count > 20) count = 0;
         
         Main.screen.flush();
     }
