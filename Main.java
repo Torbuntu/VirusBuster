@@ -32,6 +32,7 @@ public class Main extends State {
     int dir = 1;
     boolean attack = false;
     
+    public static boolean incoming = true;
     public static int roomNumber = 0;
     public static int score = 0;
     public static int roomThreshold = 25;
@@ -65,13 +66,15 @@ public class Main extends State {
         screen.setTextColor(3);
         screen.print("Score: "+score);
         
-        //Threat Level
-        screen.drawHLine(3, screen.height()-3, roomThreats*2, 7);
-        
-        //Room number
+        //Room number and threats remaining
         screen.setTextPosition(3, screen.height()-12);
         screen.setTextColor(0);
-        screen.print(roomNumber);
+        screen.print("Sector: " + roomNumber);
+        if(roomThreats > 0){
+            screen.print(" Threat Level: " + roomThreats);
+        }else{
+            screen.print(" Threats cleared!");
+        }
     }
     
     void update(){
@@ -145,7 +148,12 @@ public class Main extends State {
             screen.drawHLine((int)bot.x+6, (int)bot.y+4, 4, 8);
         }
         
-        if(roomThreats == 0){
+        
+        if(incoming){
+            virusManager.update(bot.x, bot.y);
+            virusManager.checkBlastHits(blastManager);
+            virusManager.render();
+        } else if(roomThreats == 0){
             screen.fillTriangle(screen.width()-6, screen.height()/2, screen.width()-24, screen.height()/2-8, screen.width()-24, screen.height()/2+8, 0);
             
             screen.setTextPosition(screen.width()/2-30, screen.height()/2);
@@ -159,10 +167,15 @@ public class Main extends State {
                 roomNumber++;
             }
         }else{
-            virusManager.update(bot.x, bot.y);
-            virusManager.checkBlastHits(blastManager);
-            virusManager.render();
+            screen.drawCircle(screen.width()/2, screen.height()/2, 16, 7);
+            float bx = bot.x+8-screen.width()/2;
+            float by = bot.y+8-screen.height()/2;
+            float r = 8;
+            if(Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
+                incoming = true;
+            }
         }
+        if(roomThreats == 0) incoming = false;
         
         drawHud();
         screen.flush();

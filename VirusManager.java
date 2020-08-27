@@ -7,11 +7,33 @@ import Math;
 public class VirusManager{
     VirusObject[] viruses;
     
-    int active = 3;
+    int active = 32;
     boolean canMove = false;
     
     public VirusManager(){
         viruses = new VirusObject[]{
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
+            new VirusObject(),
             new VirusObject(),
             new VirusObject(),
             new VirusObject(),
@@ -77,10 +99,14 @@ public class VirusManager{
                 return;
             }
         }
+        if(active < 16){
+            active++;
+        }
         if(cleared && Main.roomThreats > 0){
             for(int i = 0; i < 10; i++){
                 if(i < Main.roomThreats){
-                    viruses[i].reset();
+                    int r = Math.random(0, 2);
+                    viruses[i].reset(r);
                 }
             }
         }
@@ -168,6 +194,7 @@ class VirusObject{
     void render(){
         if(alive){
             virus.draw(Main.screen);
+           
             //debug circle
             // Main.screen.drawCircle(virus.x+8, virus.y+8, 8, 10, false);
         }else{
@@ -231,6 +258,11 @@ class VirusObject{
         float vy = virus.y+8 - y2;
         float vr = 8 + r2;
         return Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
+    }
+    
+    void reset(int t){
+        type = t;
+        reset();
     }
     
     void reset(){
