@@ -7,7 +7,7 @@ import Math;
 public class VirusManager{
     VirusObject[] viruses;
     
-    int active = 32;
+    int active = 2;
     boolean canMove = false;
     
     public VirusManager(){
@@ -122,11 +122,8 @@ public class VirusManager{
 class VirusObject{
     Virus virus;
     Frag frag;//dead virus
-    
     boolean alive = true;
-    
     float sx = 0, sy = 0;
-    
     int animationTime = 50;
     
     //0 = normal, 1 = large

@@ -309,6 +309,30 @@
 		},
 		"/TitleScene.java": {
 			"sdcard": false
+		},
+		"/WaveManager.java": {
+			"sdcard": false
+		},
+		"/ItemDropManager.java": {
+			"sdcard": false
+		},
+		"/sprites/Loot.png": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
+		},
+		"/sprites/Loot.json": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
+		},
+		"/sprites/Loot-sheet.png": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

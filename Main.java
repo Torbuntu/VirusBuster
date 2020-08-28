@@ -14,6 +14,7 @@ import sprites.Virus;
 
 import TitleScene;
 
+import ItemDropManager;
 import BlastManager;
 import VirusManager;
 
@@ -27,16 +28,19 @@ public class Main extends State {
     Bot bot;
     BlastManager blastManager;
     VirusManager virusManager;
+    ItemDropManager itemDropManager;
     
     float sx = 0, sy = 0;
     int dir = 1;
     boolean attack = false;
     
+    public boolean movingRooms = false;
+    public int transitionCount = 250;
     public static boolean incoming = true;
     public static int roomNumber = 0;
     public static int score = 0;
-    public static int roomThreshold = 25;
-    public static int roomThreats = 25;
+    // public static int roomThreshold = 25;
+    public static int roomThreats = 3;
     public static int kills = 0;
     public static void updateKills(){
         roomThreats--;
@@ -49,6 +53,7 @@ public class Main extends State {
         bot.x = screen.width()/2;
         bot.y = screen.height()/2;
         
+        itemDropManager = new ItemDropManager();
         blastManager = new BlastManager();
         virusManager = new VirusManager();
     }
@@ -62,9 +67,7 @@ public class Main extends State {
         screen.drawHLine(0, 14, 86, 0);//bottom line
         screen.fillTriangle(87, 2, 98, 2, 87, 14, 2);//right edge
         screen.drawLine(86, 14, 100, 0, 0);//finish the box
-        screen.setTextPosition(3, 3);
-        screen.setTextColor(3);
-        screen.print("Score: "+score);
+        
         
         //Room number and threats remaining
         screen.setTextPosition(3, screen.height()-12);
@@ -75,17 +78,34 @@ public class Main extends State {
         }else{
             screen.print(" Threats cleared!");
         }
+        screen.print(" Score: "+score);
     }
     
-    void update(){
-        screen.clear(3);
-
+    void drawBotVisor(){
+        if(dir == 0){
+            screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
+        }
+        if(dir == 2){
+            screen.drawHLine((int)bot.x+12, (int)bot.y+4, 2, 8);
+        }
+        if(dir == 3){
+            screen.drawHLine((int)bot.x+6, (int)bot.y+4, 4, 8);
+        }
+    }
+    
+    void drawGrid(){
         // draw grid
         for(int i = 0; i < 13; i++){
             for(int j = 0; j < 9; j++){
                 Main.screen.drawRect(6+i*16, 16+j*16, 16, 16, 12);
             }
         }
+    }
+    
+    void update(){
+        screen.clear(3);
+
+        
         
         //START move player
         sx = 0;
@@ -137,25 +157,33 @@ public class Main extends State {
         bot.y += sy;
         //END move player
         
+        if(Math.random(0, 30) == 10){
+            itemDropManager.newDrop(Math.random(32, 200), Math.random(64, 150));
+        }
+        if(!movingRooms){
+            drawGrid();
+        }
         //START Move Blast
         blastManager.update(attack, bot.x+8, bot.y+6, dir);
         
-        
-        //Draw to screen
-        blastManager.render();
-        bot.draw(screen);
-        if(dir == 3){
-            screen.drawHLine((int)bot.x+6, (int)bot.y+4, 4, 8);
-        }
-        
+
         
         if(incoming){
+            //Draw to screen
+            itemDropManager.updateAndRender(bot.x, bot.y);
+            blastManager.render();
+            bot.draw(screen);
+            drawBotVisor();
             virusManager.update(bot.x, bot.y);
             virusManager.checkBlastHits(blastManager);
             virusManager.render();
+            drawHud();
         } else if(roomThreats == 0){
             screen.fillTriangle(screen.width()-6, screen.height()/2, screen.width()-24, screen.height()/2-8, screen.width()-24, screen.height()/2+8, 0);
-            
+            itemDropManager.updateAndRender(bot.x, bot.y);
+            blastManager.render();
+            bot.draw(screen);
+            drawBotVisor();
             screen.setTextPosition(screen.width()/2-30, screen.height()/2);
             screen.setTextColor(0);
             screen.print("Sector Cleared");
@@ -165,8 +193,33 @@ public class Main extends State {
                 roomThreats = 25;
                 virusManager.resetAll();
                 roomNumber++;
+                transitionCount = 250;
+                movingRooms = true;
+            }
+            drawHud();
+        }else if(movingRooms){
+            if(transitionCount > 0){
+                transitionCount--;
+    
+                bot.draw(screen, screen.width()/2 - 8, screen.height()/2 - 8);
+                drawBotVisor();
+                screen.drawCircle(screen.width()/2, screen.height()/2, transitionCount/3, 10);
+                
+            }else{
+                if(bot.y < screen.height()/2+16){
+                    bot.walkVert();
+                    bot.y = bot.y + 1;
+                    bot.draw(screen);
+                    drawBotVisor();
+                }else{
+                    movingRooms = false;
+                }
             }
         }else{
+            itemDropManager.updateAndRender(bot.x, bot.y);
+            blastManager.render();
+            bot.draw(screen);
+            drawBotVisor();
             screen.drawCircle(screen.width()/2, screen.height()/2, 16, 7);
             float bx = bot.x+8-screen.width()/2;
             float by = bot.y+8-screen.height()/2;
@@ -174,10 +227,12 @@ public class Main extends State {
             if(Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
                 incoming = true;
             }
+            drawHud();
         }
         if(roomThreats == 0) incoming = false;
+
         
-        drawHud();
+        
         screen.flush();
     }
     
