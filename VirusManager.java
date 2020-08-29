@@ -81,7 +81,7 @@ public class VirusManager{
             if(viruses[i].isAlive() &&  blastManager.hitEnemy(viruses[i].getX()+8, viruses[i].getY()+8, 6.0f)){
                 viruses[i].hit(1);
                 if(!viruses[i].isAlive()){
-                    Main.updateKills();
+                    Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
                 }
             }
         }
@@ -103,7 +103,7 @@ public class VirusManager{
             active++;
         }
         if(cleared && Main.roomThreats > 0){
-            for(int i = 0; i < 10; i++){
+            for(int i = 0; i < Main.roomThreats; i++){
                 if(i < Main.roomThreats){
                     int r = Math.random(0, 2);
                     viruses[i].reset(r);
