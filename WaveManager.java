@@ -3,7 +3,6 @@ public class WaveManager {
     int waves;
     int[] groups;
     
-    
     public void initWave(int sector){
         
     }

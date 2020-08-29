@@ -34,7 +34,7 @@ public class ItemDropManager {
             if(i.getAvailable()){
                 float vx = i.loot.x+4 - x;
                 float vy = i.loot.y+4 - y;
-                float vr = 4 + 6;
+                float vr = 6 + 8;
                 if(Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr)){
                     i.reset();
                     return true;

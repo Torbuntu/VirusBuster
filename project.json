@@ -333,6 +333,12 @@
 			"palette": "[default]",
 			"palOffset": 0,
 			"sdcard": false
+		},
+		"/sprites/Hexagon.png": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

@@ -3,7 +3,7 @@ import femto.State;
 import femto.input.Button;
 
 public class TitleScene extends State {
-    int select, count;
+    int select=0, count=0;
     void init(){
         select = 0;
         count = 0;
@@ -12,6 +12,7 @@ public class TitleScene extends State {
     void update(){
         
         if(Button.C.justPressed()){
+            Main.setZone(select);
             Game.changeState(new Main());
         }
         
@@ -41,7 +42,7 @@ public class TitleScene extends State {
                 Main.screen.drawRect((12+i*18), 45, 16, 16, 0);
             }
         }
-    Main.screen.fillRect(10, 70, 200, 50, 8+select);
+        Main.screen.fillRect(10, 70, 200, 50, 8+select);
         Main.screen.setTextPosition(15, 75);
         Main.screen.setTextColor(3);
         Main.screen.print("Some text about the zone " + select);

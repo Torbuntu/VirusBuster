@@ -3,7 +3,6 @@ import femto.Game;
 import femto.State;
 import femto.input.Button;
 import femto.palette.UltimaViSharpX68000;
-import femto.font.TIC80;
 import femto.font.Dragon;
 
 //import sprites.
@@ -27,13 +26,17 @@ public class Main extends State {
     
     //0 = enemies!, 1 = threats cleared, 2 = Traveling
     public static int ROOM_STATUS = 0; 
-    
+    public static int ZONE = 0;
+    public static void setZone(int z){
+        ZONE = z;
+    }
     
     Bot bot;
     BlastManager blastManager;
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     
+    int speed = 1;
     float sx = 0, sy = 0;
     int dir = 1;
     boolean attack = false;
@@ -69,16 +72,20 @@ public class Main extends State {
         //START move player
         sx = 0;
         sy = 0;
+        speed = 1;
+        if(Button.B.isPressed()){
+            speed = 2;
+        }
         if(Button.Down.isPressed() && bot.y+1 < screen.height()-32){
             bot.walkVert();    
-            sy = 1;
+            sy = speed;
             if(!attack){
                 dir = 3;
             }
         }
         if( Button.Up.isPressed() && bot.y-1 > 16){
             bot.walkVert();
-            sy = -1;
+            sy = -speed;
             if(!attack){
                 dir = 1;
             }
@@ -87,7 +94,7 @@ public class Main extends State {
             if(Button.Right.isPressed() && bot.x+1 < screen.width()-20){
                 bot.setMirrored( true );
                 bot.walkHori();
-                sx = 1;
+                sx = speed;
                 if(!attack){
                     dir = 2;
                 }
@@ -95,7 +102,7 @@ public class Main extends State {
             if(Button.Left.isPressed() && bot.x-1 > 5){
                 bot.setMirrored( false );
                 bot.walkHori();
-                sx = -1;
+                sx = -speed;
                 if(!attack){
                     dir = 0;
                 }
@@ -108,10 +115,8 @@ public class Main extends State {
         }
         if(Button.A.isPressed()) attack = true;
         else attack = false;
+        if(Button.B.isPressed()) attack = false;
         
-        if(Button.B.isPressed()){
-            //sword attack?
-        }
         bot.x += sx;
         bot.y += sy;
         //END move player
@@ -127,7 +132,6 @@ public class Main extends State {
         screen.drawLine(86, 14, 100, 0, 0);//finish the box
         screen.setTextPosition(100, 3);
         screen.print("Inventory: " + inventory);
-        
         
         //Room number and threats remaining
         screen.setTextPosition(3, screen.height()-12);
@@ -155,15 +159,44 @@ public class Main extends State {
     
     void drawGrid(){
         // draw grid
+        if(ZONE % 2 == 1){
+            drawHexGrid();
+        }else{
+            drawRectGrid();
+        }
+    }
+    
+    void drawRectGrid(){
         for(int i = 0; i < 13; i++){
             for(int j = 0; j < 9; j++){
-                Main.screen.drawRect(6+i*16, 16+j*16, 16, 16, 12);
+                screen.drawRect(6+i*16, 16+j*16, 16, 16, 12);
+            }
+        }
+    }
+    
+    void drawHexGrid(){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 7; j++){
+                int x = 16+i*20;
+                int y = 18+j*20;
+                screen.drawHLine(x,     y,    8,  14);//top
+                screen.drawLine(x+8,    y,    x+14, y+6, 14);
+                screen.drawVLine(x+14,  y+6,  8, 14);//right
+                screen.drawLine(x+14,   y+14, x+8,  y+20, 14);
+                screen.drawHLine(x,     y+20, 8, 14);//bottom
+                screen.drawLine(x,      y+20, x-6,  y+14, 14);
+                screen.drawVLine(x-6,   y+6, 8, 14);//left
+                screen.drawLine(x-6,    y+6,  x,    y, 14);
             }
         }
     }
     
     void update(){
         screen.clear(3);
+        
+        if(Button.C.justPressed()){
+            Game.changeState(new TitleScene());
+        }
         
         if(createItemDrop){
             createItemDrop = false;
@@ -179,15 +212,17 @@ public class Main extends State {
             ROOM_STATUS = 1;
         }
         
+        
         switch(ROOM_STATUS){
             case 0:// threats incoming
                 //Draw to screen
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x, bot.y)){
+                if(itemDropManager.checkCollect(bot.x+8, bot.y+8)){
                     inventory++;
                 }
                 blastManager.render();
+                bot.setRecolor(kills);
                 bot.draw(screen);
                 drawBotVisor();
                 
@@ -200,7 +235,7 @@ public class Main extends State {
             case 1:// cleared
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x, bot.y)){
+                if(itemDropManager.checkCollect(bot.x+8, bot.y+8)){
                     inventory++;
                 }
                 
@@ -260,13 +295,6 @@ public class Main extends State {
                 break;
         }
         
-        
-        
         screen.flush();
-    }
-    
-    
-    void shutdown(){
-        screen = null;
     }
 }
