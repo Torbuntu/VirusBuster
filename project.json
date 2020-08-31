@@ -339,6 +339,9 @@
 			"palette": "[default]",
 			"palOffset": 0,
 			"sdcard": false
+		},
+		"/BossMode.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

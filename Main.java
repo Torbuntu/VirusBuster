@@ -47,10 +47,8 @@ public class Main extends State {
     public static float itemX = 0, itemY = 0;
     public static int roomNumber = 0;
     public static int score = 0;
-    public static int roomThreats = 3;
     public static int kills = 0;
     public static void updateKills(float x, float y){
-        roomThreats--;
         kills++;
         score += 10;
         itemX = x;
@@ -66,6 +64,7 @@ public class Main extends State {
         itemDropManager = new ItemDropManager();
         blastManager = new BlastManager();
         virusManager = new VirusManager();
+        virusManager.initWave(0);
     }
     
     void updateBotMovement(){
@@ -131,18 +130,21 @@ public class Main extends State {
         screen.fillTriangle(87, 2, 98, 2, 87, 14, 2);//right edge
         screen.drawLine(86, 14, 100, 0, 0);//finish the box
         screen.setTextPosition(100, 3);
+        screen.setTextColor(0);
         screen.print("Inventory: " + inventory);
         
         //Room number and threats remaining
         screen.setTextPosition(3, screen.height()-12);
-        screen.setTextColor(0);
+        
         screen.print("Sector: " + roomNumber);
-        if(roomThreats > 0){
-            screen.print(" Threats: " + roomThreats);
+        if(virusManager.getThreats() > 0){
+            screen.print(" Threats: " + virusManager.getThreats());
         }else{
             screen.print(" Threats cleared!");
         }
         screen.print(" Score: "+score);
+        screen.print(" at: " + virusManager.active);
+        screen.print(" cw: " + virusManager.currentWave);
     }
     
     void drawBotVisor(){
@@ -207,11 +209,6 @@ public class Main extends State {
    
         //START Move Blast
         blastManager.update(attack, bot.x+8, bot.y+6, dir);
-
-        if(roomThreats == 0){//CLEARED
-            ROOM_STATUS = 1;
-        }
-        
         
         switch(ROOM_STATUS){
             case 0:// threats incoming
@@ -228,6 +225,9 @@ public class Main extends State {
                 
                 virusManager.update(bot.x, bot.y);
                 virusManager.checkBlastHits(blastManager);
+                if(virusManager.getThreats() == 0){
+                    ROOM_STATUS = 1; //cleared!
+                }
                  
                 virusManager.render();
                 drawHud();
@@ -248,7 +248,6 @@ public class Main extends State {
                 if(Math.abs((bot.x+8-(screen.width()-64)) * (bot.x+8-(screen.width()-64)) + (bot.y+8-64) * (bot.y+8-64)) < (8) * (8)){
                     bot.x = 6;
                     bot.y = screen.height()/2;
-                    roomThreats = 25;
                     virusManager.resetAll();
                     roomNumber++;
                     transitionCount = 250;
@@ -275,6 +274,7 @@ public class Main extends State {
                         bot.draw(screen);
                         drawBotVisor();
                     }else{
+                        virusManager.initWave(roomNumber);
                         ROOM_STATUS = 3;
                     }
                 }

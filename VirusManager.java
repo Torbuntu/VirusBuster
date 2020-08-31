@@ -6,9 +6,12 @@ import Math;
 
 public class VirusManager{
     VirusObject[] viruses;
+    int[] waves;
+    int currentWave;
+    int active;
+    int total;
     
-    int active = 2;
-    boolean canMove = false;
+    int incoming = 150;
     
     public VirusManager(){
         viruses = new VirusObject[]{
@@ -48,10 +51,14 @@ public class VirusManager{
     }
     
     public void update(float bx, float by){
-        for(int i = 0; i < active; i++){
+        checkAvailable();
+        if(incoming > 0){
+            incoming--;
+            return;
+        }
+        for(int i = 0; i < waves[currentWave]; i++){
             viruses[i].update(bx, by);
-            
-            for(int x = 0; x < active; x++){
+            for(int x = 0; x < waves[currentWave]; x++){
                 if(x != i && viruses[x].isAlive()){
                     if(viruses[i].checkCircleCollide(viruses[x].getX(), viruses[x].getY(), 8)){
                         if(Math.random(0, 2) == 1){
@@ -66,56 +73,89 @@ public class VirusManager{
             }
             
             viruses[i].updateMovement();
-            checkAvailable();
         }
     }
     
     public void render(){
-        for(int i = 0; i < active; i++){
+        if(incoming > 0){
+            Main.screen.setTextPosition(Main.screen.width()/2-16, Main.screen.height()/2);
+            Main.screen.setTextColor(8);
+            Main.screen.print("<Incoming>");
+            return;
+        }
+        for(int i = 0; i < waves[currentWave]; i++){
             viruses[i].render();
         }
     }
     
     public void checkBlastHits(BlastManager blastManager){
-        for(int i = 0; i < active; i++){
-            if(viruses[i].isAlive() &&  blastManager.hitEnemy(viruses[i].getX()+8, viruses[i].getY()+8, 6.0f)){
-                viruses[i].hit(1);
-                if(!viruses[i].isAlive()){
-                    Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
+        if(incoming <= 0){
+            for(int i = 0; i < waves[currentWave]; i++){
+                if(viruses[i].isAlive() &&  blastManager.hitEnemy(viruses[i].getX()+8, viruses[i].getY()+8, 6.0f)){
+                    viruses[i].hit(1);
+                    if(!viruses[i].isAlive()){
+                        total--;
+                        active--;
+                        Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
+                    }
                 }
             }
         }
     }
-    
-    public void setActive(int inc){
-        active = inc;
-    }
-    
+
     public void checkAvailable(){
-        boolean cleared = true;
-        for(int i = 0; i < active; i++){
+        for(int i = 0; i < waves[currentWave]; i++){
             if(viruses[i].isAlive()){
-                cleared = false;
                 return;
             }
         }
-        if(active < 16){
-            active++;
-        }
-        if(cleared && Main.roomThreats > 0){
-            for(int i = 0; i < Main.roomThreats; i++){
-                if(i < Main.roomThreats){
-                    int r = Math.random(0, 2);
-                    viruses[i].reset(r);
-                }
+        if(total > 0){
+            currentWave++;
+            active = waves[currentWave];
+            for(int i = 0; i < waves[currentWave]; i++){
+                int r = Math.random(0, 2);
+                viruses[i].reset(r);
             }
+            incoming = 150;
         }
+    }
+    
+    public int getThreats(){
+        return total;
     }
     
     public void resetAll(){
         for(VirusObject v : viruses){
             v.reset();
         }
+    }
+    
+    //TODO: add Sector info
+    public void initWave(int sector){
+        currentWave = 0;
+        switch(sector){
+            case 0:
+                waves = new int[]{3, 5, 5, 7};
+                total = 20;
+                break;
+            case 1:
+                waves = new int[]{3, 5, 5, 7};
+                total = 20;
+                break;
+            case 2:
+                waves = new int[]{3, 5, 5, 7};
+                total = 20;
+                break;
+            case 7:
+                waves = new int[]{5, 8, 12, 16};
+                total = 41;
+                break;
+            default:
+                waves = new int[]{3, 5, 5, 7};
+                total = 20;
+                break;
+        }
+        active = waves[currentWave];
     }
 }
 
@@ -281,3 +321,4 @@ class VirusObject{
         health = baseHealth;
     }
 }
+
