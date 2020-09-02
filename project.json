@@ -342,6 +342,21 @@
 		},
 		"/BossMode.java": {
 			"sdcard": false
+		},
+		"/sprites/SmallBoss.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/SmallBoss.json": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
+		},
+		"/sprites/SmallBoss-sheet.png": {
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0,
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

@@ -17,6 +17,8 @@ import ItemDropManager;
 import BlastManager;
 import VirusManager;
 
+import BossMode;
+
 public class Main extends State {
     public static void main(String[] args){
         Game.run(Dragon.font(), new TitleScene());
@@ -35,6 +37,7 @@ public class Main extends State {
     BlastManager blastManager;
     VirusManager virusManager;
     ItemDropManager itemDropManager;
+    BossMode bossMode;
     
     int speed = 1;
     float sx = 0, sy = 0;
@@ -65,6 +68,7 @@ public class Main extends State {
         blastManager = new BlastManager();
         virusManager = new VirusManager();
         virusManager.initWave(0);
+        bossMode = new BossMode(0);
     }
     
     void updateBotMovement(){
@@ -122,29 +126,41 @@ public class Main extends State {
     }
     
     void drawHud(){
-        //Score
+        //Bot Shield
         screen.fillRect(2, 2, 86, 12, 2);//background grey
         screen.drawVLine(0, 0, 14, 0);//first stroke down
         screen.drawHLine(0, 0, 100, 0);//top line
         screen.drawHLine(0, 14, 86, 0);//bottom line
         screen.fillTriangle(87, 2, 98, 2, 87, 14, 2);//right edge
         screen.drawLine(86, 14, 100, 0, 0);//finish the box
-        screen.setTextPosition(100, 3);
+        
+        //Threats or Boss Shield
+        screen.fillRect(134, 2, 84, 12, 2);
+        screen.drawVLine(219, 0, 14, 0);//first stroke down
+        screen.drawHLine(120, 0, 100, 0);//top line
+        screen.drawHLine(134, 14, 86, 0);//bottom line
+        screen.fillTriangle(122, 2, 134, 2, 136, 14, 2);//right edge
+        screen.drawLine(120, 0, 134, 14, 0);//finish the box
+        
+        //Zone and Sector 
+        screen.setTextPosition(106, 3);
         screen.setTextColor(0);
-        screen.print("Inventory: " + inventory);
+        screen.print(ZONE + ":" + roomNumber);
         
         //Room number and threats remaining
+        //TODO: Remove sector and threat printing when GUI is updated 
         screen.setTextPosition(3, screen.height()-12);
         
-        screen.print("Sector: " + roomNumber);
-        if(virusManager.getThreats() > 0){
-            screen.print(" Threats: " + virusManager.getThreats());
-        }else{
-            screen.print(" Threats cleared!");
-        }
-        screen.print(" Score: "+score);
-        screen.print(" at: " + virusManager.active);
-        screen.print(" cw: " + virusManager.currentWave);
+        // screen.print("Sector: " + roomNumber);
+        // if(virusManager.getThreats() > 0){
+        //     screen.print(" Threats: " + virusManager.getThreats());
+        // }else{
+        //     screen.print(" Threats cleared!");
+        // }
+        screen.print("Score: "+score);
+        
+        screen.setTextPosition(110, screen.height()-12);
+        screen.print("Currency: " + inventory);
     }
     
     void drawBotVisor(){
@@ -223,13 +239,18 @@ public class Main extends State {
                 bot.draw(screen);
                 drawBotVisor();
                 
-                virusManager.update(bot.x, bot.y);
-                virusManager.checkBlastHits(blastManager);
-                if(virusManager.getThreats() == 0){
-                    ROOM_STATUS = 1; //cleared!
+                if(roomNumber == 4){
+                    bossMode.update(bot.x, bot.y);
+                    bossMode.checkBlastHits(blastManager);
+                    bossMode.render();
+                }else{
+                    virusManager.update(bot.x, bot.y);
+                    virusManager.checkBlastHits(blastManager);
+                    if(virusManager.getThreats() == 0){
+                        ROOM_STATUS = 1; //cleared!
+                    }
+                    virusManager.render();
                 }
-                 
-                virusManager.render();
                 drawHud();
                 break;
             case 1:// cleared
@@ -275,6 +296,9 @@ public class Main extends State {
                         drawBotVisor();
                     }else{
                         virusManager.initWave(roomNumber);
+                        if(roomNumber == 4){
+                            bossMode = new BossMode(0);
+                        }
                         ROOM_STATUS = 3;
                     }
                 }
