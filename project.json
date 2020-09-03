@@ -363,6 +363,18 @@
 		},
 		"/sprites/Bot.aseprite": {
 			"sdcard": false
+		},
+		"/managers": {
+			"sdcard": false
+		},
+		"/managers/BlastManager.java": {
+			"sdcard": false
+		},
+		"/managers/ItemDropManager.java": {
+			"sdcard": false
+		},
+		"/managers/VirusManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

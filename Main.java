@@ -13,9 +13,9 @@ import sprites.Virus;
 
 import TitleScene;
 
-import ItemDropManager;
-import BlastManager;
-import VirusManager;
+import managers.ItemDropManager;
+import managers.BlastManager;
+import managers.VirusManager;
 
 import BossMode;
 
@@ -271,14 +271,14 @@ public class Main extends State {
         updateBotMovement();
    
         //START Move Blast
-        blastManager.update(attack, bot.x+8, bot.y+6, dir);
+        blastManager.update(attack, bot.x+7, bot.y+6, dir);
         
         switch(ROOM_STATUS){
             case 0:// threats incoming
                 //Draw to screen
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x+8, bot.y+8)){
+                if(itemDropManager.checkCollect(bot.x+7, bot.y+7)){
                     inventory++;
                 }
                 blastManager.render();
@@ -303,7 +303,7 @@ public class Main extends State {
             case 1:// cleared
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x+8, bot.y+8)){
+                if(itemDropManager.checkCollect(bot.x+7, bot.y+7)){
                     inventory++;
                 }
                 
@@ -313,7 +313,7 @@ public class Main extends State {
                 
                 screen.drawCircle(screen.width()-64, 64, 16, 12);
                 
-                if(Math.abs((bot.x+8-(screen.width()-64)) * (bot.x+8-(screen.width()-64)) + (bot.y+8-64) * (bot.y+8-64)) < (8) * (8)){
+                if(Math.abs((bot.x+7-(screen.width()-64)) * (bot.x+7-(screen.width()-64)) + (bot.y+8-64) * (bot.y+8-64)) < (7) * (8)){
                     bot.x = 6;
                     bot.y = screen.height()/2;
                     virusManager.resetAll();

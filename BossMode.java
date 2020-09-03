@@ -1,6 +1,5 @@
-import sprites.SmallBoss;//TODO: Make this sprite
-
-import BlastManager;
+import sprites.SmallBoss;
+import managers.BlastManager;
 
 public class BossMode{
     BossBlast[] blasts;
