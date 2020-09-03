@@ -35,7 +35,7 @@ public class TitleScene extends State {
         }
         
         count++;
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 4; i++){
             if(select == i && count > 10){
                 Main.screen.drawRect((11+i*18), 44, 17, 17, 8);
             }else{

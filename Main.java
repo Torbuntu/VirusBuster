@@ -48,7 +48,7 @@ public class Main extends State {
     public int transitionCount = 250;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
-    public static int roomNumber = 0;
+    public static int sector = 0;
     public static int score = 0;
     public static int kills = 0;
     public static void updateKills(float x, float y){
@@ -71,6 +71,12 @@ public class Main extends State {
         bossMode = new BossMode(0);
     }
     
+    
+    /**
+     * When dashing, player shield is lower and thus they take more damage.
+     * Unable to shoot while dashing.
+     * 
+     */
     void updateBotMovement(){
         //START move player
         sx = 0;
@@ -80,14 +86,23 @@ public class Main extends State {
             speed = 2;
         }
         if(Button.Down.isPressed() && bot.y+1 < screen.height()-32){
-            bot.walkVert();    
+            if(speed==2){
+                bot.dashVert();
+            }else{
+                bot.walkVert(); 
+            }
+               
             sy = speed;
             if(!attack){
                 dir = 3;
             }
         }
         if( Button.Up.isPressed() && bot.y-1 > 16){
-            bot.walkVert();
+            if(speed==2){
+                bot.dashVert();
+            }else{
+                bot.walkVert(); 
+            }
             sy = -speed;
             if(!attack){
                 dir = 1;
@@ -96,7 +111,11 @@ public class Main extends State {
         if(sy == 0){
             if(Button.Right.isPressed() && bot.x+1 < screen.width()-20){
                 bot.setMirrored( true );
-                bot.walkHori();
+                if(speed==2){
+                    bot.dashHori();
+                }else{
+                    bot.walkHori();
+                }
                 sx = speed;
                 if(!attack){
                     dir = 2;
@@ -104,7 +123,11 @@ public class Main extends State {
             }
             if(Button.Left.isPressed() && bot.x-1 > 5){
                 bot.setMirrored( false );
-                bot.walkHori();
+                if(speed==2){
+                    bot.dashHori();
+                }else{
+                    bot.walkHori();
+                }
                 sx = -speed;
                 if(!attack){
                     dir = 0;
@@ -114,7 +137,7 @@ public class Main extends State {
         
         if(sx == 0 && sy == 0) {
             if(attack) bot.shoot();
-            else bot.idle();
+            else if(speed!=2) bot.idle();
         }
         if(Button.A.isPressed()) attack = true;
         else attack = false;
@@ -145,13 +168,13 @@ public class Main extends State {
         //Zone and Sector 
         screen.setTextPosition(106, 3);
         screen.setTextColor(0);
-        screen.print(ZONE + ":" + roomNumber);
+        screen.print(ZONE + ":" + sector);
         
         //Room number and threats remaining
         //TODO: Remove sector and threat printing when GUI is updated 
         screen.setTextPosition(3, screen.height()-12);
         
-        // screen.print("Sector: " + roomNumber);
+        // screen.print("Sector: " + sector);
         // if(virusManager.getThreats() > 0){
         //     screen.print(" Threats: " + virusManager.getThreats());
         // }else{
@@ -164,14 +187,38 @@ public class Main extends State {
     }
     
     void drawBotVisor(){
-        if(dir == 0){
-            screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
+        // dashing and actually moving
+        if(speed==2){
+            if(dir == 0){//l
+                screen.drawHLine((int)bot.x+14, (int)bot.y+9, Math.random(2, 5), 10);
+            }
+            if(dir == 1){//u
+                screen.drawVLine((int)bot.x+4, (int)bot.y+16, Math.random(2, 5), 10);
+                screen.drawVLine((int)bot.x+9, (int)bot.y+16, Math.random(2, 5), 10);
+            }
+            if(dir == 2){//r
+                screen.drawHLine((int)bot.x, (int)bot.y+9, -Math.random(2, 5), 10);
+            }
+            if(dir == 3){//d
+                screen.drawVLine((int)bot.x+4, (int)bot.y, -Math.random(2, 5), 10);
+                screen.drawVLine((int)bot.x+9, (int)bot.y, -Math.random(2, 5), 10);
+                
+                //eyes
+                screen.fillRect((int)bot.x+3, (int)bot.y+5, 2, 2, 8);
+                screen.fillRect((int)bot.x+9, (int)bot.y+5, 2, 2, 8);
+            }
         }
-        if(dir == 2){
-            screen.drawHLine((int)bot.x+12, (int)bot.y+4, 2, 8);
-        }
-        if(dir == 3){
-            screen.drawHLine((int)bot.x+6, (int)bot.y+4, 4, 8);
+        if (speed != 2){
+            if(dir == 0){
+                screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
+            }
+            if(dir == 2){
+                screen.drawHLine((int)bot.x+10, (int)bot.y+4, 2, 8);
+            }
+            if(dir == 3){
+                screen.drawHLine((int)bot.x+3, (int)bot.y+4, 2, 8);
+                screen.drawHLine((int)bot.x+9, (int)bot.y+4, 2, 8);
+            }
         }
     }
     
@@ -239,7 +286,7 @@ public class Main extends State {
                 bot.draw(screen);
                 drawBotVisor();
                 
-                if(roomNumber == 4){
+                if(sector == 4){
                     bossMode.update(bot.x, bot.y);
                     bossMode.checkBlastHits(blastManager);
                     bossMode.render();
@@ -270,7 +317,7 @@ public class Main extends State {
                     bot.x = 6;
                     bot.y = screen.height()/2;
                     virusManager.resetAll();
-                    roomNumber++;
+                    sector++;
                     transitionCount = 250;
                     ROOM_STATUS = 2;
                 }
@@ -295,8 +342,8 @@ public class Main extends State {
                         bot.draw(screen);
                         drawBotVisor();
                     }else{
-                        virusManager.initWave(roomNumber);
-                        if(roomNumber == 4){
+                        virusManager.initWave(sector);
+                        if(sector == 4){
                             bossMode = new BossMode(0);
                         }
                         ROOM_STATUS = 3;

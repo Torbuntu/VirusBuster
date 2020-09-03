@@ -357,6 +357,12 @@
 			"palette": "[default]",
 			"palOffset": 0,
 			"sdcard": false
+		},
+		"/sprites/Chip.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/Bot.aseprite": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
