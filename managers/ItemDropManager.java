@@ -32,16 +32,19 @@ public class ItemDropManager {
     public boolean checkCollect(float x, float y){
         for(Item i : items){
             if(i.getAvailable()){
-                float vx = i.loot.x+4 - x;
-                float vy = i.loot.y+4 - y;
-                float vr = 6 + 8;
-                if(Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr)){
+                if(Main.checkCollides(i.loot.x+4, i.loot.y+4, x, y, 6, 8)){
                     i.reset();
                     return true;
                 }
             }
         }
         return false;
+    }
+    
+    public void clear(){
+        for(Item i : items){
+            i.available = false;
+        }
     }
        
 }

@@ -53,10 +53,7 @@ public class BlastManager {
     
     public boolean hitEnemy(float ex, float ey, float er){
         for(BlastObject b : blasts){
-            float bx = b.getX()+4-ex;
-            float by = b.getY()+4-ey;
-            float r = 4+er;
-            if(b.active() && Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
+            if(b.active() && Main.checkCollides(b.getX()+4, b.getY()+4, ex, ey, 4, er)){
                 b.hit();
                 return true;
             }

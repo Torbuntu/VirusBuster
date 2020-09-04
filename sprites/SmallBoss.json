@@ -70,14 +70,32 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 200
+   },
+   {
+    "filename": "SmallBoss 8.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 150
+   },
+   {
+    "filename": "SmallBoss 9.aseprite",
+    "frame": { "x": 288, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 150
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.25-x64",
+  "version": "1.2.18-x64",
   "image": "SmallBoss-sheet.png",
   "format": "RGBA8888",
-  "size": { "w": 256, "h": 32 },
+  "size": { "w": 320, "h": 32 },
   "scale": "1",
   "frameTags": [
    { "name": "walk", "from": 0, "to": 1, "direction": "forward" },
@@ -85,7 +103,8 @@
    { "name": "hurtA", "from": 4, "to": 4, "direction": "forward" },
    { "name": "hurtB", "from": 5, "to": 5, "direction": "forward" },
    { "name": "hurtC", "from": 6, "to": 6, "direction": "forward" },
-   { "name": "hurtD", "from": 7, "to": 7, "direction": "forward" }
+   { "name": "hurtD", "from": 7, "to": 7, "direction": "forward" },
+   { "name": "die", "from": 8, "to": 9, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

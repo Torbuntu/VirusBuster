@@ -16,8 +16,7 @@ import TitleScene;
 import managers.ItemDropManager;
 import managers.BlastManager;
 import managers.VirusManager;
-
-import BossMode;
+import managers.BossManager;
 
 public class Main extends State {
     public static void main(String[] args){
@@ -26,6 +25,12 @@ public class Main extends State {
     
     public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), Dragon.font());
     
+    Bot bot;
+    BlastManager blastManager;
+    VirusManager virusManager;
+    ItemDropManager itemDropManager;
+    BossManager bossManager;
+    
     //0 = enemies!, 1 = threats cleared, 2 = Traveling
     public static int ROOM_STATUS = 0; 
     public static int ZONE = 0;
@@ -33,24 +38,13 @@ public class Main extends State {
         ZONE = z;
     }
     
-    Bot bot;
-    BlastManager blastManager;
-    VirusManager virusManager;
-    ItemDropManager itemDropManager;
-    BossMode bossMode;
     
-    int speed = 1;
+    int speed = 1, dir = 1, currency = 0, transitionCount = 250;
     float sx = 0, sy = 0;
-    int dir = 1;
-    boolean attack = false;
-    public int inventory = 0;
-    public boolean movingRooms = false;
-    public int transitionCount = 250;
+    boolean attack = false, movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
-    public static int sector = 0;
-    public static int score = 0;
-    public static int kills = 0;
+    public static int kills = 0, score = 0, sector = 0, shield = 100;
     public static void updateKills(float x, float y){
         kills++;
         score += 10;
@@ -58,6 +52,14 @@ public class Main extends State {
         itemY = y;
         createItemDrop = true;
     }
+    
+    // helper methods
+    public static boolean checkCollides(float x1, float y1, float x2, float y2, float r1, float r2){
+        float vx = x1 - x2;
+        float vy = y1 - y2;
+        float vr = r1 + r2;
+        return Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
+    } 
     
     void init(){
         bot = new Bot();
@@ -67,12 +69,12 @@ public class Main extends State {
         itemDropManager = new ItemDropManager();
         blastManager = new BlastManager();
         virusManager = new VirusManager();
+        bossManager = new BossManager();
         virusManager.initWave(0);
-        bossMode = new BossMode(0);
     }
     
-    
     /**
+     * updateBotMovement controls the logic for bot movement and animation type
      * When dashing, player shield is lower and thus they take more damage.
      * Unable to shoot while dashing.
      * 
@@ -148,6 +150,11 @@ public class Main extends State {
         //END move player
     }
     
+    /**
+     * drawHud displays the top progress bar indicators for shield/threats/boss health 
+     * as well as displaying the Score, currency and current ZONE:sector.
+     * 
+     */
     void drawHud(){
         //Bot Shield
         screen.fillRect(2, 2, 86, 12, 2);//background grey
@@ -155,7 +162,14 @@ public class Main extends State {
         screen.drawHLine(0, 0, 100, 0);//top line
         screen.drawHLine(0, 14, 86, 0);//bottom line
         screen.fillTriangle(87, 2, 98, 2, 87, 14, 2);//right edge
+        
+        // bot shield
+        int shieldWidth = (int)(shield * 95 / 100);
+        screen.fillRect(2, 3, shieldWidth, 8, 15);
+        
+        screen.fillTriangle(87, 14, 101, 0, 100, 14, 3);
         screen.drawLine(86, 14, 100, 0, 0);//finish the box
+        
         
         //Threats or Boss Shield
         screen.fillRect(134, 2, 84, 12, 2);
@@ -163,27 +177,34 @@ public class Main extends State {
         screen.drawHLine(120, 0, 100, 0);//top line
         screen.drawHLine(134, 14, 86, 0);//bottom line
         screen.fillTriangle(122, 2, 134, 2, 136, 14, 2);//right edge
+        
+        // threats or boss health
+        if(sector == 4){
+            int threatWidth = (int)(bossManager.getCurrentHealth() * 95 / bossManager.getTotalHealth());
+            screen.fillRect(218-threatWidth, 3, threatWidth, 8, 8);
+        }else{
+            int threatWidth = (int)(virusManager.getThreats() * 95 / virusManager.getTotalThreats());
+            screen.fillRect(218-threatWidth, 3, threatWidth, 8, 8);
+        }
+        
+        screen.fillTriangle(121, 0, 135, 14, 121, 14, 3);
         screen.drawLine(120, 0, 134, 14, 0);//finish the box
         
-        //Zone and Sector 
+        // black middle box behind the ZONE:sector indicator 
+        screen.fillRect(100, 0, 19, 16, 3);
+        
+        
+        //Zone : Sector 
         screen.setTextPosition(106, 3);
         screen.setTextColor(0);
         screen.print(ZONE + ":" + sector);
         
-        //Room number and threats remaining
-        //TODO: Remove sector and threat printing when GUI is updated 
+        //Score and Currency 
         screen.setTextPosition(3, screen.height()-12);
-        
-        // screen.print("Sector: " + sector);
-        // if(virusManager.getThreats() > 0){
-        //     screen.print(" Threats: " + virusManager.getThreats());
-        // }else{
-        //     screen.print(" Threats cleared!");
-        // }
         screen.print("Score: "+score);
         
         screen.setTextPosition(110, screen.height()-12);
-        screen.print("Currency: " + inventory);
+        screen.print("Currency: " + currency);
     }
     
     void drawBotVisor(){
@@ -244,22 +265,24 @@ public class Main extends State {
             for(int j = 0; j < 7; j++){
                 int x = 16+i*20;
                 int y = 18+j*20;
-                screen.drawHLine(x,     y,    8,  14);//top
-                screen.drawLine(x+8,    y,    x+14, y+6, 14);
-                screen.drawVLine(x+14,  y+6,  8, 14);//right
+                screen.drawHLine(x,     y,    8,          14);//top
+                screen.drawLine(x+8,    y,    x+14, y+6,  14);
+                screen.drawVLine(x+14,  y+6,  8,          14);//right
                 screen.drawLine(x+14,   y+14, x+8,  y+20, 14);
-                screen.drawHLine(x,     y+20, 8, 14);//bottom
+                screen.drawHLine(x,     y+20, 8,          14);//bottom
                 screen.drawLine(x,      y+20, x-6,  y+14, 14);
-                screen.drawVLine(x-6,   y+6, 8, 14);//left
-                screen.drawLine(x-6,    y+6,  x,    y, 14);
+                screen.drawVLine(x-6,   y+6,  8,          14);//left
+                screen.drawLine(x-6,    y+6,  x,    y,    14);
             }
         }
     }
     
+    // TODO: Refactor into more manageable methods.
     void update(){
         screen.clear(3);
         
         if(Button.C.justPressed()){
+            //TODO, go to currency
             Game.changeState(new TitleScene());
         }
         
@@ -272,29 +295,32 @@ public class Main extends State {
    
         //START Move Blast
         blastManager.update(attack, bot.x+7, bot.y+6, dir);
+        blastManager.render();
         
         switch(ROOM_STATUS){
             case 0:// threats incoming
                 //Draw to screen
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x+7, bot.y+7)){
-                    inventory++;
+                if(itemDropManager.checkCollect(bot.x+7, bot.y+8)){
+                    currency++;
                 }
-                blastManager.render();
+                
                 bot.setRecolor(kills);
                 bot.draw(screen);
                 drawBotVisor();
                 
                 if(sector == 4){
-                    bossMode.update(bot.x, bot.y);
-                    bossMode.checkBlastHits(blastManager);
-                    bossMode.render();
+                    bossManager.update(blastManager, bot.x, bot.y);
+                    bossManager.render();
+                    if(bossManager.cleared()){
+                        ROOM_STATUS = 1; // CLEARED!
+                    }
                 }else{
                     virusManager.update(bot.x, bot.y);
                     virusManager.checkBlastHits(blastManager);
                     if(virusManager.getThreats() == 0){
-                        ROOM_STATUS = 1; //cleared!
+                        ROOM_STATUS = 1; // CLEARED!
                     }
                     virusManager.render();
                 }
@@ -304,10 +330,9 @@ public class Main extends State {
                 drawGrid();
                 itemDropManager.updateAndRender();
                 if(itemDropManager.checkCollect(bot.x+7, bot.y+7)){
-                    inventory++;
+                    currency++;
                 }
                 
-                blastManager.render();
                 bot.draw(screen);
                 drawBotVisor();
                 
@@ -342,9 +367,25 @@ public class Main extends State {
                         bot.draw(screen);
                         drawBotVisor();
                     }else{
-                        virusManager.initWave(sector);
+                        
                         if(sector == 4){
-                            bossMode = new BossMode(0);
+                            switch(ZONE){
+                                case 0:
+                                    bossManager.init(1, new int[]{0});
+                                    break;
+                                case 1:
+                                    bossManager.init(2, new int[]{0, 0});
+                                    break;
+                                case 2:
+                                    bossManager.init(3, new int[]{0, 0, 0});
+                                    break;
+                                case 3:
+                                    bossManager.init(4, new int[]{0, 0, 0, 0});
+                                    break;
+                            }
+                            
+                        }else{
+                            virusManager.initWave(sector);
                         }
                         ROOM_STATUS = 3;
                     }
@@ -352,7 +393,6 @@ public class Main extends State {
                 break;
             case 3://Prep
                 drawGrid();
-                blastManager.render();
                 bot.draw(screen);
                 drawBotVisor();
                 screen.drawCircle(screen.width()/2, screen.height()/2, 16, 7);

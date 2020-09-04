@@ -375,6 +375,12 @@
 		},
 		"/managers/VirusManager.java": {
 			"sdcard": false
+		},
+		"/managers/BossManager.java": {
+			"sdcard": false
+		},
+		"/managers/BossMode.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

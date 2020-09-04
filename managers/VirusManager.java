@@ -10,6 +10,7 @@ public class VirusManager{
     int currentWave;
     int active;
     int total;
+    int max;
     
     int incoming = 150;
     
@@ -60,13 +61,13 @@ public class VirusManager{
             viruses[i].update(bx, by);
             for(int x = 0; x < waves[currentWave]; x++){
                 if(x != i && viruses[x].isAlive()){
-                    if(viruses[i].checkCircleCollide(viruses[x].getX(), viruses[x].getY(), 8)){
+                    if(Main.checkCollides(viruses[i].getX()+8, viruses[i].getY()+8, viruses[x].getX()+8, viruses[x].getY()+8, 8, 6)){
                         if(Math.random(0, 2) == 1){
                             viruses[i].setSpeedX(-1.0f);
                             viruses[x].virus.x += 1.0f;
                         }else{
                             viruses[i].setSpeedY(-1.0f);
-                            viruses[x].virus.y -= 1.0f;
+                            viruses[x].virus.y += 1.0f;
                         }
                     }
                 }
@@ -123,6 +124,9 @@ public class VirusManager{
     public int getThreats(){
         return total;
     }
+    public int getTotalThreats(){
+        return max;
+    }
     
     public void resetAll(){
         for(VirusObject v : viruses){
@@ -155,6 +159,7 @@ public class VirusManager{
                 total = 20;
                 break;
         }
+        max = total;
         active = waves[currentWave];
     }
 }
@@ -215,6 +220,9 @@ class VirusObject{
                 if(bx <= (virus.x + 32) && bx >= virus.x){
                     virus.setMirrored(false);
                 }
+                if(Main.checkCollides(virus.x+8, virus.y+8, bx+8, by+8, 8, 6)){
+                    Main.shield--;
+                }
                 
                 virus.bite();
             }else{
@@ -257,7 +265,6 @@ class VirusObject{
         }
     }
     
-    
     void setSpeedX(float s){
         sx = s;
     }
@@ -286,14 +293,7 @@ class VirusObject{
     boolean isAlive(){
         return alive;
     }
-    
-    boolean checkCircleCollide(float x2, float y2, float r2){ 
-        float vx = virus.x+8 - x2;
-        float vy = virus.y+8 - y2;
-        float vr = 8 + r2;
-        return Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
-    }
-    
+
     void reset(int t){
         type = t;
         reset();

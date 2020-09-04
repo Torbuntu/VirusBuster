@@ -7,14 +7,29 @@ public class BossMode{
     float sx = 0, sy = 0;//speed variables
     SmallBoss virus;
     int health, maxHealth;
-    int shooting = 0, shootReady = 250;
-    
+    int shooting = 0, shootReady = 250, dying = 150;
     
     boolean alive = true;
     
-    public BossMode(int t){
+    public void init(int t){
         virus = new SmallBoss();
-        
+        int dir = Math.random(0, 4);
+        if(dir == 0){
+            virus.x = 0;
+            virus.y = 80;
+        }
+        if(dir == 1){
+            virus.x = 100;
+            virus.y = 0;
+        }
+        if(dir == 2){
+            virus.x = 220;
+            virus.y = 80;
+        }
+        if(dir == 3){
+            virus.x = 100;
+            virus.y = 160;
+        }
         bossType = t;
         switch(bossType){
             case 0:
@@ -23,6 +38,8 @@ public class BossMode{
                 maxHealth = health;
                 shootReady = 250;
                 blasts = new BossBlast[]{
+                    new BossBlast(),
+                    new BossBlast(),
                     new BossBlast(),
                     new BossBlast(),
                     new BossBlast(),
@@ -117,15 +134,19 @@ public class BossMode{
     
     void render(){
         if(alive){
-            int barWidth = (int)(health * virus.width() / maxHealth);
-            Main.screen.drawHLine((int)virus.x, (int)virus.y-4, barWidth, 8);
-            virus.draw(Main.screen);
+            switch(bossType){
+                case 0:
+                    virus.draw(Main.screen);
+                    break;
+            }
             
             for(BossBlast b : blasts){
                 if(b.isActive()) b.render();
             }
-        }else{
-            
+        }else if(dying > 0){
+            dying--;
+            virus.die();
+            virus.draw(Main.screen);
         }
     }
     
@@ -135,16 +156,16 @@ public class BossMode{
             int hurtType = Math.random(0, 4);
             switch(hurtType){
                 case 0:
-                    virus.hurtA();
+                    hurtA();
                     break;
                 case 1:
-                    virus.hurtB();
+                    hurtB();
                     break;
                 case 2:
-                    virus.hurtC();
+                    hurtC();
                     break;
                 case 3:
-                    virus.hurtD();
+                    hurtD();
                     break;
             }
         }
@@ -172,7 +193,99 @@ public class BossMode{
             default:
             break;
         }
-        
+    }
+    
+    public float getX(){
+        switch(bossType){
+            case 0:
+                return virus.x;
+            default:
+                return 0;
+        }
+    }
+    
+    public float getY(){
+        switch(bossType){
+            case 0:
+                return virus.y;
+            default:
+                return 0;
+        }
+    }
+    
+    public void incX(float x){
+        switch(bossType){
+            case 0:
+                virus.x += x;
+                break;
+        }
+    }
+    public void incY(float y){
+        switch(bossType){
+            case 0:
+                virus.y += y;
+                break;
+        }
+    }
+    
+    public void setSpeedX(float x){
+        sx = x;
+    }
+    public void setSpeedY(float y){
+        sy = y;
+    }
+    
+    public int getMaxHealth(){
+        return maxHealth;
+    }
+    
+    public int getHealth(){
+        return health;
+    }
+    
+    public boolean getAlive(){
+        return dying > 0; // ensure we draw the full enemy death animation
+    }
+    
+    
+    void bite(){}
+    void walk(){}
+    void die(){}
+    void hurtA(){
+        switch(bossType){
+            case 0:
+                virus.hurtA();
+                break;
+            default:
+            break;
+        }
+    }
+    void hurtB(){
+        switch(bossType){
+            case 0:
+                virus.hurtB();
+                break;
+            default:
+            break;
+        }
+    }
+    void hurtC(){
+        switch(bossType){
+            case 0:
+                virus.hurtC();
+                break;
+            default:
+            break;
+        }
+    }
+    void hurtD(){
+        switch(bossType){
+            case 0:
+                virus.hurtD();
+                break;
+            default:
+            break;
+        }
     }
 }
 
@@ -190,12 +303,11 @@ class BossBlast{
     
     void update(float ex, float ey){
         if(!active)return;
-        float bx = x-(ex+8);
-        float by = y-(ey+8);
-        float r = 8+4;
-        if(active && Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
+
+        if(active && Main.checkCollides(x, y, ex+7, ex+8, 8, 4)){
             //player hit!
             active = false;
+            Main.shield -= 5;
         }
         
         x += dx;
