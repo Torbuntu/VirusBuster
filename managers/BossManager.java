@@ -25,12 +25,19 @@ public class BossManager {
             for(int x = 0; x < activeBosses; x++){
                 if(x != i){
                     if(Main.checkCollides(bosses[i].getX()+16, bosses[i].getY()+16, bosses[x].getX()+16, bosses[x].getY()+16, 14, 14)){
-                        if(Math.random(0, 2) == 1){
+                        if(bosses[i].getX() < bosses[x].getX()) {
                             bosses[i].setSpeedX(-2.0f);
                             bosses[x].incX(2.0f);
                         }else{
+                            bosses[i].setSpeedX(2.0f);
+                            bosses[x].incX(-2.0f);
+                        }
+                        if(bosses[i].getY() < bosses[x].getY()) {
                             bosses[i].setSpeedY(-2.0f);
                             bosses[x].incY(2.0f);
+                        }else{
+                            bosses[i].setSpeedY(2.0f);
+                            bosses[x].incY(-2.0f);
                         }
                     }
                 }

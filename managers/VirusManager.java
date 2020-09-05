@@ -63,12 +63,19 @@ public class VirusManager{
                 for(int x = 0; x < waves[currentWave]; x++){
                     if(x != i && viruses[x].isAlive()){
                         if(Main.checkCollides(viruses[i].getX()+8, viruses[i].getY()+8, viruses[x].getX()+8, viruses[x].getY()+8, 8, 6)){
-                            if(Math.random(0, 2) == 1){
+                            if(viruses[i].getX() < viruses[x].getX()){
                                 viruses[i].setSpeedX(-1.0f);
                                 viruses[x].virus.x += 1.0f;
                             }else{
+                                viruses[i].setSpeedX(1.0f);
+                                viruses[x].virus.x -= 1.0f;
+                            }
+                            if(viruses[i].getY() < viruses[x].getY()){
                                 viruses[i].setSpeedY(-1.0f);
                                 viruses[x].virus.y += 1.0f;
+                            }else{
+                                viruses[i].setSpeedY(1.0f);
+                                viruses[x].virus.y -= 1.0f;
                             }
                         }
                     }
