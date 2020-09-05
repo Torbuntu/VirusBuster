@@ -265,14 +265,14 @@ public class Main extends State {
             for(int j = 0; j < 7; j++){
                 int x = 16+i*20;
                 int y = 18+j*20;
-                screen.drawHLine(x,     y,    8,          14);//top
-                screen.drawLine(x+8,    y,    x+14, y+6,  14);
-                screen.drawVLine(x+14,  y+6,  8,          14);//right
-                screen.drawLine(x+14,   y+14, x+8,  y+20, 14);
-                screen.drawHLine(x,     y+20, 8,          14);//bottom
-                screen.drawLine(x,      y+20, x-6,  y+14, 14);
-                screen.drawVLine(x-6,   y+6,  8,          14);//left
-                screen.drawLine(x-6,    y+6,  x,    y,    14);
+                screen.drawHLine(x,     y,    8,          12);//top
+                screen.drawLine(x+8,    y,    x+14, y+6,  12);
+                screen.drawVLine(x+14,  y+6,  8,          12);//right
+                screen.drawLine(x+14,   y+14, x+8,  y+20, 12);
+                screen.drawHLine(x,     y+20, 8,          12);//bottom
+                screen.drawLine(x,      y+20, x-6,  y+14, 12);
+                screen.drawVLine(x-6,   y+6,  8,          12);//left
+                screen.drawLine(x-6,    y+6,  x,    y,    12);
             }
         }
     }
