@@ -44,7 +44,7 @@ public class Main extends State {
     boolean attack = false, movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
-    public static int kills = 0, score = 0, sector = 0, shield = 100;
+    public static int kills = 0, score = 0, sector = 3, shield = 100;
     public static void updateKills(float x, float y){
         kills++;
         score += 10;
@@ -205,6 +205,8 @@ public class Main extends State {
         
         screen.setTextPosition(110, screen.height()-12);
         screen.print("Currency: " + currency);
+        
+        screen.print("be: " + bossManager.getCurrentHealth());
     }
     
     void drawBotVisor(){

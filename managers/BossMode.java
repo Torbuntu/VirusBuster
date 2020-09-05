@@ -54,6 +54,10 @@ public class BossMode{
     
     void update(BlastManager blastManager, float bx, float by){
         if(alive){
+            for(BossBlast b : blasts){
+                if(b.isActive()) b.update(bx, by);
+            }
+            
             shootReady--;
             if(shootReady==0){
                 checkActiveBlasts();
@@ -63,45 +67,9 @@ public class BossMode{
                 virus.bite();
                 return;
             }
-            //START Move Virus
-            sx = 0;
-            sy = 0;
             
-            // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
-            float dx = Math.abs(virus.x - bx);
-            float dy = Math.abs(virus.y - by);
+            moveBoss(bx, by);
             
-            if(dx > dy){
-                if(virus.x < bx){
-                    sx = 0.5f;
-                }
-                if(virus.x > bx){
-                    sx = -0.5f;
-                }
-            }else{
-                if(virus.y > by){
-                    sy = -0.5f;
-                }
-                if(virus.y < by){
-                    sy = 0.5f;
-                }
-            }
-            
-            //check if close
-            if(bx >= (virus.x - 50) && bx <= (virus.x + 80) && by >= (virus.y - 50) && by <= (virus.y + 80) ){
-                if(bx >= (virus.x - 50) && bx <= virus.x){
-                    virus.setMirrored(true);
-                }
-                if(bx <= (virus.x + 80) && bx >= virus.x){
-                    virus.setMirrored(false);
-                }
-                if(hurt==0)
-                    virus.bite();
-            }else{
-                if(hurt==0)
-                    virus.walk();
-            }
-            // if hit, sx/sy are 0
             checkBlastHits(blastManager);
             
             if(hurt > 0){
@@ -115,9 +83,47 @@ public class BossMode{
                 virus.x += sx;
                 virus.y += sy;
             }
-            for(BossBlast b : blasts){
-                if(b.isActive()) b.update(bx, by);
+        }
+    }
+    
+    void moveBoss(float bx, float by){
+        //START Move Virus
+        sx = 0;
+        sy = 0;
+        
+        // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
+        float dx = Math.abs(virus.x - bx);
+        float dy = Math.abs(virus.y - by);
+        
+        if(dx > dy){
+            if(virus.x < bx){
+                sx = 0.5f;
             }
+            if(virus.x > bx){
+                sx = -0.5f;
+            }
+        }else{
+            if(virus.y > by){
+                sy = -0.5f;
+            }
+            if(virus.y < by){
+                sy = 0.5f;
+            }
+        }
+        
+        //check if close
+        if(bx >= (virus.x - 50) && bx <= (virus.x + 80) && by >= (virus.y - 50) && by <= (virus.y + 80) ){
+            if(bx >= (virus.x - 50) && bx <= virus.x){
+                virus.setMirrored(true);
+            }
+            if(bx <= (virus.x + 80) && bx >= virus.x){
+                virus.setMirrored(false);
+            }
+            if(hurt==0)
+                virus.bite();
+        }else{
+            if(hurt==0)
+                virus.walk();
         }
     }
     
