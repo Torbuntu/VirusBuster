@@ -148,8 +148,8 @@ public class VirusManager{
         currentWave = 0;
         switch(sector){
             case 0:
-                waves = new int[]{3, 5, 5, 7};
-                total = 20;
+                waves = new int[]{3};
+                total = 3;
                 break;
             case 1:
                 waves = new int[]{3, 5, 5, 7};

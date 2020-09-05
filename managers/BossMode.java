@@ -52,7 +52,7 @@ public class BossMode{
         
     }
     
-    void update(float bx, float by){
+    void update(BlastManager blastManager, float bx, float by){
         if(alive){
             shootReady--;
             if(shootReady==0){
@@ -88,11 +88,11 @@ public class BossMode{
             }
             
             //check if close
-            if(bx >= (virus.x - 50) && bx <= (virus.x + 50) && by >= (virus.y - 50) && by <= (virus.y + 50) ){
+            if(bx >= (virus.x - 50) && bx <= (virus.x + 80) && by >= (virus.y - 50) && by <= (virus.y + 80) ){
                 if(bx >= (virus.x - 50) && bx <= virus.x){
                     virus.setMirrored(true);
                 }
-                if(bx <= (virus.x + 50) && bx >= virus.x){
+                if(bx <= (virus.x + 80) && bx >= virus.x){
                     virus.setMirrored(false);
                 }
                 if(hurt==0)
@@ -101,8 +101,9 @@ public class BossMode{
                 if(hurt==0)
                     virus.walk();
             }
-            virus.x += sx;
-            virus.y += sy;
+            // if hit, sx/sy are 0
+            checkBlastHits(blastManager);
+            
             if(hurt > 0){
                 hurt--;
                 if(hurt % 5 == 0){
@@ -110,6 +111,9 @@ public class BossMode{
                 }else{
                     virus.setMirrored(false);
                 }
+            }else{
+                virus.x += sx;
+                virus.y += sy;
             }
             for(BossBlast b : blasts){
                 if(b.isActive()) b.update(bx, by);
@@ -304,7 +308,7 @@ class BossBlast{
     void update(float ex, float ey){
         if(!active)return;
 
-        if(active && Main.checkCollides(x, y, ex+7, ex+8, 8, 4)){
+        if(active && Main.checkCollides(x, y, ex, ey, 8, 4)){
             //player hit!
             active = false;
             Main.shield -= 5;

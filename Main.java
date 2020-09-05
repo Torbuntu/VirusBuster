@@ -311,7 +311,7 @@ public class Main extends State {
                 drawBotVisor();
                 
                 if(sector == 4){
-                    bossManager.update(blastManager, bot.x, bot.y);
+                    bossManager.update(blastManager, (bot.x+7), (bot.y+8));
                     bossManager.render();
                     if(bossManager.cleared()){
                         ROOM_STATUS = 1; // CLEARED!
