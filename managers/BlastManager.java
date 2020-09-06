@@ -1,14 +1,18 @@
 import sprites.Blast;
 
-import Math;
-
 public class BlastManager {
     
-    int cooldown = 0;
+    // refresh - how quickly blasts refresh
+    // rate    - how many blasts are active at a time
+    int cooldown = 0, refresh = 30, rate = 3;
     BlastObject[] blasts;
     
     public BlastManager(){
         blasts = new BlastObject[]{
+            new BlastObject(),
+            new BlastObject(),
+            new BlastObject(),
+            new BlastObject(),
             new BlastObject(),
             new BlastObject(),
             new BlastObject(),
@@ -23,31 +27,31 @@ public class BlastManager {
             cooldown--;
         }
         if(attack && cooldown == 0){
-            cooldown = 10;
-            for(BlastObject blast : blasts){
-                if(!blast.active()){
-                    blast.setX(x);
-                    blast.setY(y);
+            cooldown = refresh;
+            for(int i = 0; i < rate; i++){
+                if(!blasts[i].active()){
+                    blasts[i].setX(x);
+                    blasts[i].setY(y);
                     if(dir == 0){//left
-                        blast.setDir(-2.0f, 0.0f);
+                        blasts[i].setDir(-2.0f, 0.0f);
                     }
                     if(dir == 1){//up
-                        blast.setDir(0.0f, -2.0f);
+                        blasts[i].setDir(0.0f, -2.0f);
                     }
                     if(dir == 2){//right
-                        blast.setDir(2.0f, 0.0f);
+                        blasts[i].setDir(2.0f, 0.0f);
                     }
                     if(dir == 3){//down
-                        blast.setDir(0.0f, 2.0f);
+                        blasts[i].setDir(0.0f, 2.0f);
                     }
-                    blast.draw = true;
+                    blasts[i].draw = true;
                     return;
                 }
             }
         }
         
-        for(BlastObject b : blasts){
-            b.update();
+        for(int i = 0; i < rate; i++){
+            blasts[i].update();
         }
     }
     
@@ -62,8 +66,8 @@ public class BlastManager {
     }
     
     void render(){
-        for(BlastObject b : blasts){
-            b.render();
+        for(int i = 0; i < rate; i++){
+            blasts[i].render();
         }
     }
 }

@@ -384,6 +384,9 @@
 		},
 		"/VirusBuster.eeprom": {
 			"sdcard": false
+		},
+		"/managers/BotManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

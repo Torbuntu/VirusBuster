@@ -5,14 +5,9 @@ import femto.input.Button;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.Dragon;
 
-//import sprites.
-import sprites.Blast;
-import sprites.Bot;
-import sprites.Frag;
-import sprites.Virus;
-
 import TitleScene;
 
+import managers.BotManager;
 import managers.ItemDropManager;
 import managers.BlastManager;
 import managers.VirusManager;
@@ -39,7 +34,8 @@ public class Main extends State {
     public static final SaveManager saveManager = new SaveManager();
     public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), Dragon.font());
     
-    Bot bot;
+    // Bot bot;
+    BotManager botManager;
     BlastManager blastManager;
     VirusManager virusManager;
     ItemDropManager itemDropManager;
@@ -53,9 +49,11 @@ public class Main extends State {
     }
     
     
-    int speed = 1, dir = 1, currency = 0, transitionCount = 250;
-    float sx = 0, sy = 0;
-    boolean attack = false, movingRooms = false;
+    // int speed = 1, dir = 1, 
+    int currency = 0, transitionCount = 250;
+    // float sx = 0, sy = 0;
+    // boolean attack = false, 
+    boolean movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
     public static int kills = 0, score = 0, sector = 0, shield = 100;
@@ -76,92 +74,12 @@ public class Main extends State {
     } 
     
     void init(){
-        bot = new Bot();
-        bot.x = screen.width()/2;
-        bot.y = screen.height()/2;
-        
+        botManager = new BotManager();
         itemDropManager = new ItemDropManager();
         blastManager = new BlastManager();
         virusManager = new VirusManager();
         bossManager = new BossManager();
         virusManager.initWave(0);
-    }
-    
-    /**
-     * updateBotMovement controls the logic for bot movement and animation type
-     * When dashing, player shield is lower and thus they take more damage.
-     * Unable to shoot while dashing.
-     * 
-     */
-    void updateBotMovement(){
-        //START move player
-        sx = 0;
-        sy = 0;
-        speed = 1;
-        if(Button.B.isPressed()){
-            speed = 2;
-        }
-        if(Button.Down.isPressed() && bot.y+1 < screen.height()-32){
-            if(speed==2){
-                bot.dashVert();
-            }else{
-                bot.walkVert(); 
-            }
-               
-            sy = speed;
-            if(!attack){
-                dir = 3;
-            }
-        }
-        if( Button.Up.isPressed() && bot.y-1 > 16){
-            if(speed==2){
-                bot.dashVert();
-            }else{
-                bot.walkVert(); 
-            }
-            sy = -speed;
-            if(!attack){
-                dir = 1;
-            }
-        }
-        if(sy == 0){
-            if(Button.Right.isPressed() && bot.x+1 < screen.width()-20){
-                bot.setMirrored( true );
-                if(speed==2){
-                    bot.dashHori();
-                }else{
-                    bot.walkHori();
-                }
-                sx = speed;
-                if(!attack){
-                    dir = 2;
-                }
-            }
-            if(Button.Left.isPressed() && bot.x-1 > 5){
-                bot.setMirrored( false );
-                if(speed==2){
-                    bot.dashHori();
-                }else{
-                    bot.walkHori();
-                }
-                sx = -speed;
-                if(!attack){
-                    dir = 0;
-                }
-            }
-        }
-        
-        if(sx == 0 && sy == 0) {
-            if(attack) bot.shoot();
-            else if(speed!=2) bot.idle();
-        }
-        if(Button.A.isPressed()) attack = true;
-        else attack = false;
-        if(Button.B.isPressed()) attack = false;
-        
-        bot.x += sx;
-        bot.y += sy;
-        //END move player
     }
     
     /**
@@ -223,42 +141,6 @@ public class Main extends State {
         screen.print("be: " + bossManager.getCurrentHealth());
     }
     
-    void drawBotVisor(){
-        // dashing and actually moving
-        if(speed==2){
-            if(dir == 0){//l
-                screen.drawHLine((int)bot.x+14, (int)bot.y+9, Math.random(2, 5), 10);
-            }
-            if(dir == 1){//u
-                screen.drawVLine((int)bot.x+4, (int)bot.y+16, Math.random(2, 5), 10);
-                screen.drawVLine((int)bot.x+9, (int)bot.y+16, Math.random(2, 5), 10);
-            }
-            if(dir == 2){//r
-                screen.drawHLine((int)bot.x, (int)bot.y+9, -Math.random(2, 5), 10);
-            }
-            if(dir == 3){//d
-                screen.drawVLine((int)bot.x+4, (int)bot.y, -Math.random(2, 5), 10);
-                screen.drawVLine((int)bot.x+9, (int)bot.y, -Math.random(2, 5), 10);
-                
-                //eyes
-                screen.fillRect((int)bot.x+3, (int)bot.y+5, 2, 2, 8);
-                screen.fillRect((int)bot.x+9, (int)bot.y+5, 2, 2, 8);
-            }
-        }
-        if (speed != 2){
-            if(dir == 0){
-                screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
-            }
-            if(dir == 2){
-                screen.drawHLine((int)bot.x+10, (int)bot.y+4, 2, 8);
-            }
-            if(dir == 3){
-                screen.drawHLine((int)bot.x+3, (int)bot.y+4, 2, 8);
-                screen.drawHLine((int)bot.x+9, (int)bot.y+4, 2, 8);
-            }
-        }
-    }
-    
     void drawGrid(){
         // draw grid
         if(ZONE % 2 == 1){
@@ -307,10 +189,10 @@ public class Main extends State {
             itemDropManager.newDrop(itemX, itemY);
         }
         
-        updateBotMovement();
+        botManager.updateBotMovement();
    
         //START Move Blast
-        blastManager.update(attack, bot.x+7, bot.y+6, dir);
+        blastManager.update(botManager.getAttacking(), botManager.getX()+7, botManager.getY()+6, botManager.getDir());
         blastManager.render();
         
         switch(ROOM_STATUS){
@@ -318,22 +200,20 @@ public class Main extends State {
                 //Draw to screen
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x+7, bot.y+8)){
+                if(itemDropManager.checkCollect(botManager.getX()+7, botManager.getY()+8)){
                     currency++;
                 }
                 
-                bot.setRecolor(kills);
-                bot.draw(screen);
-                drawBotVisor();
+                botManager.render();
                 
                 if(sector == 4){
-                    bossManager.update(blastManager, (bot.x+7), (bot.y+8));
+                    bossManager.update(blastManager, (botManager.getX()+7), (botManager.getY()+8));
                     bossManager.render();
                     if(bossManager.cleared()){
                         ROOM_STATUS = 1; // CLEARED!
                     }
                 }else{
-                    virusManager.update(bot.x, bot.y);
+                    virusManager.update(botManager.getX(), botManager.getY());
                     virusManager.checkBlastHits(blastManager);
                     if(virusManager.getThreats() == 0){
                         ROOM_STATUS = 1; // CLEARED!
@@ -345,18 +225,16 @@ public class Main extends State {
             case 1:// cleared
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(bot.x+7, bot.y+7)){
+                if(itemDropManager.checkCollect(botManager.getX()+7, botManager.getY()+7)){
                     currency++;
                 }
                 
-                bot.draw(screen);
-                drawBotVisor();
+                botManager.render();
                 
                 screen.drawCircle(screen.width()-64, 64, 16, 12);
                 
-                if(Math.abs((bot.x+7-(screen.width()-64)) * (bot.x+7-(screen.width()-64)) + (bot.y+8-64) * (bot.y+8-64)) < (7) * (8)){
-                    bot.x = 6;
-                    bot.y = screen.height()/2;
+                if(checkCollides(botManager.getX()+7, botManager.getY()+8, (screen.width()-64), 64, 7, 8)){
+                    botManager.setPos(6, screen.height()/2);
                     virusManager.resetAll();
                     sector++;
                     transitionCount = 250;
@@ -372,18 +250,15 @@ public class Main extends State {
                 if(transitionCount > 0){
                     transitionCount--;
     
-                    bot.draw(screen, screen.width()/2 - 8, screen.height()/2 - 8);
-                    drawBotVisor();
+                    botManager.render(screen.width()/2-8, screen.height()/2-8);
                     screen.drawCircle(screen.width()/2, screen.height()/2, transitionCount/3, 10);
                     
                 }else{
-                    if(bot.y < screen.height()/2+16){
-                        bot.walkVert();
-                        bot.y = bot.y + 1;
-                        bot.draw(screen);
-                        drawBotVisor();
+                    if(botManager.getY() < screen.height()/2+16){
+                        botManager.bot.walkVert();
+                        botManager.setY(botManager.getY()+1);
+                        botManager.render();
                     }else{
-                        
                         if(sector == 4){
                             switch(ZONE){
                                 case 0:
@@ -409,13 +284,9 @@ public class Main extends State {
                 break;
             case 3://Prep
                 drawGrid();
-                bot.draw(screen);
-                drawBotVisor();
+                botManager.render();
                 screen.drawCircle(screen.width()/2, screen.height()/2, 16, 7);
-                float bx = bot.x+8-screen.width()/2;
-                float by = bot.y+8-screen.height()/2;
-                float r = 8;
-                if(Math.abs((bx) * (bx) + (by) * (by)) < (r) * (r)){
+                if(checkCollides(botManager.getX()+8, botManager.getY()+8, screen.width()/2, screen.height()/2, 8, 8)){
                     ROOM_STATUS = 0;
                 }
                 drawHud();
