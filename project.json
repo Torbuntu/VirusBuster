@@ -381,6 +381,9 @@
 		},
 		"/managers/BossMode.java": {
 			"sdcard": false
+		},
+		"/VirusBuster.eeprom": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

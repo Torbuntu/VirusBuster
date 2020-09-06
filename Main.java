@@ -18,11 +18,25 @@ import managers.BlastManager;
 import managers.VirusManager;
 import managers.BossManager;
 
+class SaveManager extends femto.Cookie {
+    SaveManager() {
+        super();
+        begin("VBUST");
+    }
+    boolean firstZoneClear;
+    boolean secondZoneClear;
+    boolean thirdZoneClear;
+    boolean fourthZoneClear;
+    boolean endlessUnlocked;
+    
+    int highScore;
+}
+
 public class Main extends State {
     public static void main(String[] args){
         Game.run(Dragon.font(), new TitleScene());
     }
-    
+    public static final SaveManager saveManager = new SaveManager();
     public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), Dragon.font());
     
     Bot bot;
@@ -44,7 +58,7 @@ public class Main extends State {
     boolean attack = false, movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
-    public static int kills = 0, score = 0, sector = 3, shield = 100;
+    public static int kills = 0, score = 0, sector = 0, shield = 100;
     public static void updateKills(float x, float y){
         kills++;
         score += 10;

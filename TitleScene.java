@@ -27,7 +27,7 @@ public class TitleScene extends State {
         Main.screen.print("Select Zone to Begin");
         
         
-        if(Button.Right.justPressed() && select < 7){
+        if(Button.Right.justPressed() && select < 3){
             select++;
         }
         if(Button.Left.justPressed() && select > 0){
@@ -37,9 +37,9 @@ public class TitleScene extends State {
         count++;
         for(int i = 0; i < 4; i++){
             if(select == i && count > 10){
-                Main.screen.drawRect((11+i*18), 44, 17, 17, 8);
+                Main.screen.drawRect((11+i*50), 44, 17, 17, 8);
             }else{
-                Main.screen.drawRect((12+i*18), 45, 16, 16, 0);
+                Main.screen.drawRect((12+i*50), 45, 16, 16, 0);
             }
         }
         Main.screen.fillRect(10, 70, 200, 50, 8+select);
