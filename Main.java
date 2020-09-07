@@ -3,7 +3,7 @@ import femto.Game;
 import femto.State;
 import femto.input.Button;
 import femto.palette.UltimaViSharpX68000;
-import femto.font.Dragon;
+import femto.font.FontC64;
 
 import TitleScene;
 
@@ -29,10 +29,10 @@ class SaveManager extends femto.Cookie {
 
 public class Main extends State {
     public static void main(String[] args){
-        Game.run(Dragon.font(), new TitleScene());
+        Game.run(FontC64.font(), new TitleScene());
     }
     public static final SaveManager saveManager = new SaveManager();
-    public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), Dragon.font());
+    public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
     
     // Bot bot;
     BotManager botManager;
@@ -108,7 +108,7 @@ public class Main extends State {
         
         
         //Zone : Sector 
-        screen.setTextPosition(106, 3);
+        screen.setTextPosition(98, 3);
         screen.setTextColor(0);
         screen.print(ZONE + ":" + sector);
         
@@ -116,8 +116,8 @@ public class Main extends State {
         screen.setTextPosition(3, screen.height()-12);
         screen.print("Score: "+score);
         
-        screen.setTextPosition(110, screen.height()-12);
-        screen.print("Currency: " + currency);
+        screen.setTextPosition(140, screen.height()-12);
+        screen.print("$$: " + currency);
     }
     
     void drawGrid(){
