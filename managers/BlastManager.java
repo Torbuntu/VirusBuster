@@ -66,6 +66,8 @@ public class BlastManager {
     }
     
     void render(){
+        int cooldownWidth = (int)(cooldown * 78 / refresh);
+        Main.screen.drawHLine(6, 13, cooldownWidth, 8);
         for(int i = 0; i < rate; i++){
             blasts[i].render();
         }

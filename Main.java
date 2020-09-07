@@ -41,7 +41,6 @@ public class Main extends State {
     ItemDropManager itemDropManager;
     BossManager bossManager;
     
-    //0 = enemies!, 1 = threats cleared, 2 = Traveling
     public static int ROOM_STATUS = 0; 
     public static int ZONE = 0;
     public static void setZone(int z){
@@ -49,10 +48,7 @@ public class Main extends State {
     }
     
     
-    // int speed = 1, dir = 1, 
     int currency = 0, transitionCount = 250;
-    // float sx = 0, sy = 0;
-    // boolean attack = false, 
     boolean movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
@@ -89,41 +85,26 @@ public class Main extends State {
      */
     void drawHud(){
         //Bot Shield
-        screen.fillRect(2, 2, 86, 12, 2);//background grey
-        screen.drawVLine(0, 0, 14, 0);//first stroke down
-        screen.drawHLine(0, 0, 100, 0);//top line
-        screen.drawHLine(0, 14, 86, 0);//bottom line
-        screen.fillTriangle(87, 2, 98, 2, 87, 14, 2);//right edge
+        screen.drawRect(6, 0, 80, 10, 0);
+        screen.fillRect(8, 2, 78, 8, 2);//background grey
         
         // bot shield
-        int shieldWidth = (int)(shield * 95 / 100);
-        screen.fillRect(2, 3, shieldWidth, 8, 15);
-        
-        screen.fillTriangle(87, 14, 101, 0, 100, 14, 3);
-        screen.drawLine(86, 14, 100, 0, 0);//finish the box
+        int shieldWidth = (int)(shield * 78 / 100);
+        screen.fillRect(8, 2, shieldWidth, 8, 15);
         
         
         //Threats or Boss Shield
-        screen.fillRect(134, 2, 84, 12, 2);
-        screen.drawVLine(219, 0, 14, 0);//first stroke down
-        screen.drawHLine(120, 0, 100, 0);//top line
-        screen.drawHLine(134, 14, 86, 0);//bottom line
-        screen.fillTriangle(122, 2, 134, 2, 136, 14, 2);//right edge
+        screen.drawRect(134, 0, 80, 10, 0);
+        screen.fillRect(136, 2, 78, 8, 2);
         
         // threats or boss health
         if(sector == 4){
-            int threatWidth = (int)(bossManager.getCurrentHealth() * 95 / bossManager.getTotalHealth());
-            screen.fillRect(218-threatWidth, 3, threatWidth, 8, 8);
+            int threatWidth = (int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth());
+            screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
         }else{
-            int threatWidth = (int)(virusManager.getThreats() * 95 / virusManager.getTotalThreats());
-            screen.fillRect(218-threatWidth, 3, threatWidth, 8, 8);
+            int threatWidth = (int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats());
+            screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
         }
-        
-        screen.fillTriangle(121, 0, 135, 14, 121, 14, 3);
-        screen.drawLine(120, 0, 134, 14, 0);//finish the box
-        
-        // black middle box behind the ZONE:sector indicator 
-        screen.fillRect(100, 0, 19, 16, 3);
         
         
         //Zone : Sector 
@@ -137,8 +118,6 @@ public class Main extends State {
         
         screen.setTextPosition(110, screen.height()-12);
         screen.print("Currency: " + currency);
-        
-        screen.print("be: " + bossManager.getCurrentHealth());
     }
     
     void drawGrid(){
