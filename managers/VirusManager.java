@@ -88,7 +88,8 @@ public class VirusManager{
     
     public void render(){
         if(incoming > 0){
-            Main.screen.setTextPosition(Main.screen.width()/2-48, Main.screen.height()/2);
+            Main.screen.fillRect(Main.screen.width()/2-50, 150-incoming-2, 94, 12, 3);
+            Main.screen.setTextPosition(Main.screen.width()/2-48, 150-incoming);
             Main.screen.setTextColor(8);
             Main.screen.print("<Incoming>");
             return;

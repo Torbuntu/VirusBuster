@@ -7,7 +7,8 @@ public class BossMode{
     float sx = 0, sy = 0;//speed variables
     SmallBoss virus;
     int health, maxHealth;
-    int shooting = 0, shootReady = 250, dying = 150;
+    int shooting = 0, shootReady = 250, dying = 150, berserk = 0;
+    boolean damaged = false;
     
     boolean alive = true;
     
@@ -53,6 +54,24 @@ public class BossMode{
     }
     
     void update(BlastManager blastManager, float bx, float by){
+        if(berserk > 0){
+            berserk--;
+            if(virus.x+32 > Main.screen.width()){
+                sx = -2.5f;
+            }
+            if(virus.x < 0){
+                sx = 2.5f;
+            }
+            if(virus.y+32 > Main.screen.height()){
+                sy = -2.5f;
+            }
+            if(virus.y < 0){
+                sy = 2.5f;
+            }
+            virus.x += sx;
+            virus.y += sy;
+            return;
+        }
         if(alive){
             for(BossBlast b : blasts){
                 if(b.isActive()) b.update(bx, by);
@@ -79,7 +98,17 @@ public class BossMode{
                 }else{
                     virus.setMirrored(false);
                 }
-            }else{
+            } else {
+                virus.x += sx;
+                virus.y += sy;
+            }
+            if(getHealth() < getMaxHealth()/2){
+                if(!damaged){
+                    damaged = true;
+                    berserk = 500;
+                    sx = 2.5f;
+                    sy = 2.5f;
+                }
                 virus.x += sx;
                 virus.y += sy;
             }
@@ -143,6 +172,11 @@ public class BossMode{
     }
     
     void render(){
+        if(berserk > 0){
+            virus.bite();
+            virus.draw(Main.screen);
+            return;
+        }
         if(alive){
             switch(bossType){
                 case 0:
