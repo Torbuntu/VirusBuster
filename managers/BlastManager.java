@@ -2,8 +2,8 @@ import sprites.Blast;
 
 public class BlastManager {
     
-    // refresh - how quickly blasts refresh
-    // rate    - how many blasts are active at a time
+    // refresh -30 how quickly blasts refresh
+    // rate    -3 how many blasts are active at a time
     int cooldown = 0, refresh = 30, rate = 3;
     BlastObject[] blasts;
     
@@ -71,6 +71,27 @@ public class BlastManager {
         for(int i = 0; i < rate; i++){
             blasts[i].render();
         }
+    }
+    
+    public void incRate(){
+        if(rate > 10) rate = 10;
+        else rate++;
+    }
+    public void decRate(){
+        if(rate > 3) rate--;
+    }
+    public void incRefresh(){
+        refresh-=5;
+        if(refresh < 5) refresh = 5;
+    }
+    public void decRefresh(){
+        refresh+=5;
+    }
+    public int getRefresh(){
+        return refresh;
+    }
+    public int getRate(){
+        return rate;
     }
 }
 

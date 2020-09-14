@@ -47,8 +47,7 @@ public class Main extends State {
         ZONE = z;
     }
     
-    
-    int currency = 0, transitionCount = 250;
+    int currency = 0, viby = 0;
     boolean movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
@@ -157,23 +156,21 @@ public class Main extends State {
     // TODO: Refactor into more manageable methods.
     void update(){
         screen.clear(3);
-        
-        if(Button.C.justPressed()){
-            //TODO, go to currency
-            Game.changeState(new TitleScene());
-        }
+
         
         if(createItemDrop){
             createItemDrop = false;
             itemDropManager.newDrop(itemX, itemY);
         }
         
-        botManager.updateBotMovement();
-   
-        //START Move Blast
-        blastManager.update(botManager.getAttacking(), botManager.getX()+7, botManager.getY()+6, botManager.getDir());
-        blastManager.render();
-        
+        // If not traveling
+        if(ROOM_STATUS != 2){
+            botManager.updateBotMovement();
+       
+            //START Move Blast
+            blastManager.update(botManager.getAttacking(), botManager.getX()+7, botManager.getY()+6, botManager.getDir());
+            blastManager.render();
+        }
         switch(ROOM_STATUS){
             case 0:// threats incoming
                 //Draw to screen
@@ -208,58 +205,73 @@ public class Main extends State {
                     currency++;
                 }
                 
+                screen.setTextPosition(screen.width()/2-58, screen.height()/2);
+                screen.setTextColor(0);
+                screen.print("Sector Cleared");
+                screen.setTextPosition(32, screen.height()/2+16);
+                screen.print("Press C to transport");
+                
                 botManager.render();
                 
-                screen.drawCircle(screen.width()-64, 64, 16, 12);
-                
-                if(checkCollides(botManager.getX()+7, botManager.getY()+8, (screen.width()-64), 64, 7, 8)){
+                if(Button.C.justPressed()){
                     botManager.setPos(6, screen.height()/2);
                     virusManager.resetAll();
                     sector++;
-                    transitionCount = 250;
                     ROOM_STATUS = 2;
                 }
                 
-                screen.setTextPosition(screen.width()/2-30, screen.height()/2);
-                screen.setTextColor(0);
-                screen.print("Sector Cleared");
                 drawHud();
                 break;
             case 2://traveling
-                if(transitionCount > 0){
-                    transitionCount--;
-    
-                    botManager.render(screen.width()/2-8, screen.height()/2-8);
-                    screen.drawCircle(screen.width()/2, screen.height()/2, transitionCount/3, 10);
-                    
-                }else{
-                    if(botManager.getY() < screen.height()/2+16){
-                        botManager.bot.walkVert();
-                        botManager.setY(botManager.getY()+1);
-                        botManager.render();
-                    }else{
-                        if(sector == 4){
-                            switch(ZONE){
-                                case 0:
-                                    bossManager.init(1, new int[]{0});
-                                    break;
-                                case 1:
-                                    bossManager.init(2, new int[]{0, 0});
-                                    break;
-                                case 2:
-                                    bossManager.init(3, new int[]{0, 0, 0});
-                                    break;
-                                case 3:
-                                    bossManager.init(4, new int[]{0, 0, 0, 0});
-                                    break;
-                            }
-                            
-                        }else{
-                            virusManager.initWave(sector);
-                        }
-                        ROOM_STATUS = 3;
+                viby = Math.random(-2, 3);
+                screen.fillCircle(screen.width()/2-8+viby, screen.height()/2+viby, 5, 10);
+                
+                if(Button.A.justPressed() && blastManager.getRate() < 10){
+                    currency-=5;
+                    blastManager.incRate();
+                }
+                if(Button.B.justPressed() && blastManager.getRefresh() > 0){
+                    currency -= 10;
+                    blastManager.incRefresh();
+                }
+                if(Button.Up.justPressed() && shield < 100){
+                    currency -= 20;
+                    if(shield + 10 > 100)shield = 100;
+                    else{
+                        shield+=10;
                     }
                 }
+
+                screen.setTextPosition(2, 16);
+                screen.setTextColor(0);
+                screen.println("Rate: " + blastManager.getRate());
+                screen.println("Refresh: " + blastManager.getRefresh());
+                screen.println("Shield: " + shield);
+
+                if(Button.C.justPressed()){
+                    if(sector == 4){
+                        switch(ZONE){
+                            case 0:
+                                bossManager.init(1, new int[]{0});
+                                break;
+                            case 1:
+                                bossManager.init(2, new int[]{0, 0});
+                                break;
+                            case 2:
+                                bossManager.init(3, new int[]{0, 0, 0});
+                                break;
+                            case 3:
+                                bossManager.init(4, new int[]{0, 0, 0, 0});
+                                break;
+                        }
+                        
+                    }else{
+                        virusManager.initWave(sector);
+                    }
+                    itemDropManager.clear();
+                    ROOM_STATUS = 3;
+                }
+                
                 break;
             case 3://Prep
                 drawGrid();
