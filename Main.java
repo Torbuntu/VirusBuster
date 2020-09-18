@@ -4,6 +4,8 @@ import femto.State;
 import femto.input.Button;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
+import femto.sound.Mixer;
+import audio.Shoot;
 
 import TitleScene;
 
@@ -41,6 +43,8 @@ public class Main extends State {
     ItemDropManager itemDropManager;
     BossManager bossManager;
     
+    Shoot shootSound;
+    
     public static int ROOM_STATUS = 0; 
     public static int ZONE = 0;
     public static void setZone(int z){
@@ -75,6 +79,9 @@ public class Main extends State {
         virusManager = new VirusManager();
         bossManager = new BossManager();
         virusManager.initWave(0);
+        
+        shootSound = new Shoot(0);
+        Mixer.init(8000);
     }
     
     /**
@@ -157,6 +164,9 @@ public class Main extends State {
     void update(){
         screen.clear(3);
 
+        if(Button.C.justPressed()){
+            shootSound.play();
+        }
         
         if(createItemDrop){
             createItemDrop = false;

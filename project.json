@@ -387,6 +387,33 @@
 		},
 		"/managers/BotManager.java": {
 			"sdcard": false
+		},
+		"/audio": {
+			"sdcard": false
+		},
+		"/audio/shoot.beep": {
+			"sdcard": false
+		},
+		"/audio/shoot.wav": {
+			"sdcard": false
+		},
+		"/audio/shoot.wave": {
+			"sdcard": false
+		},
+		"/audio/Shoot.wav": {
+			"sdcard": false
+		},
+		"/audio/Test.wav": {
+			"sdcard": false
+		},
+		"/audio/test.wav": {
+			"sdcard": false
+		},
+		"/audio/Shoot.h": {
+			"sdcard": false
+		},
+		"/audio/ShootSound.wav": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

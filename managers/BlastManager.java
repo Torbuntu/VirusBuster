@@ -1,3 +1,4 @@
+import audio.Shoot;
 import sprites.Blast;
 
 public class BlastManager {
@@ -100,10 +101,13 @@ class BlastObject {
     float sx = 0, sy = 0;
     boolean draw = false;
     Blast blast;
+    Shoot shoot;
     
     public BlastObject(){
         blast = new Blast();
         blast.fire();
+        
+        shoot = new Shoot(0);
     }
     
     void update(){
@@ -135,6 +139,7 @@ class BlastObject {
     }
     
     void setDir(float x, float y){
+        shoot.play();
         sx = x;
         sy = y;
     }
