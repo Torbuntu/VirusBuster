@@ -1,7 +1,9 @@
 import sprites.SmallBoss;
 import managers.BlastManager;
+import audio.Explode;
 
 public class BossMode{
+    Explode explode;
     BossBlast[] blasts;
     int bossType = 0, hurt = 0;
     float sx = 0, sy = 0;//speed variables
@@ -13,6 +15,7 @@ public class BossMode{
     boolean alive = true;
     
     public void init(int t){
+        explode = new Explode(1);
         virus = new SmallBoss();
         int dir = Math.random(0, 4);
         if(dir == 0){
@@ -188,6 +191,20 @@ public class BossMode{
                 if(b.isActive()) b.render();
             }
         }else if(dying > 0){
+            switch(dying){
+                case 150:
+                    explode.play();
+                    break;
+                case 100:
+                    explode.play();
+                    break;
+                case 50:
+                    explode.play();
+                    break;
+                case 1:
+                    explode.play();
+                    break;
+            }
             dying--;
             virus.die();
             virus.draw(Main.screen);

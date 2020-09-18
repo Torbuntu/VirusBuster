@@ -414,6 +414,15 @@
 		},
 		"/audio/ShootSound.wav": {
 			"sdcard": false
+		},
+		"/audio/Explode.wav": {
+			"sdcard": false
+		},
+		"/audio/Coin.wav": {
+			"sdcard": false
+		},
+		"/audio/Coin0.wav": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

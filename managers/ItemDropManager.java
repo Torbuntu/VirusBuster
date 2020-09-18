@@ -1,6 +1,10 @@
 import sprites.Loot;
+import audio.Coin;
 
 public class ItemDropManager {
+    
+    Coin coin = new Coin(0);
+    
     Item[] items = new Item[]{
         new Item(),
         new Item(),
@@ -34,6 +38,7 @@ public class ItemDropManager {
             if(i.getAvailable()){
                 if(Main.checkCollides(i.loot.x+4, i.loot.y+4, x, y, 6, 8)){
                     i.reset();
+                    coin.play();
                     return true;
                 }
             }

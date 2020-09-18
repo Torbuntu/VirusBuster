@@ -5,7 +5,6 @@ import femto.input.Button;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
 import femto.sound.Mixer;
-import audio.Shoot;
 
 import TitleScene;
 
@@ -43,7 +42,8 @@ public class Main extends State {
     ItemDropManager itemDropManager;
     BossManager bossManager;
     
-    Shoot shootSound;
+    public static final String PRESS_C_TRANSPORT = "Press C to transport";
+    public static final String SECTOR_CLEAR = "Sector Cleared";
     
     public static int ROOM_STATUS = 0; 
     public static int ZONE = 0;
@@ -79,8 +79,9 @@ public class Main extends State {
         virusManager = new VirusManager();
         bossManager = new BossManager();
         virusManager.initWave(0);
-        
-        shootSound = new Shoot(0);
+
+        shield = 100;
+
         Mixer.init(8000);
     }
     
@@ -164,10 +165,6 @@ public class Main extends State {
     void update(){
         screen.clear(3);
 
-        if(Button.C.justPressed()){
-            shootSound.play();
-        }
-        
         if(createItemDrop){
             createItemDrop = false;
             itemDropManager.newDrop(itemX, itemY);
@@ -188,6 +185,9 @@ public class Main extends State {
                 itemDropManager.updateAndRender();
                 if(itemDropManager.checkCollect(botManager.getX()+7, botManager.getY()+8)){
                     currency++;
+                }
+                if(shield <= 0){
+                    Game.changeState(new TitleScene());
                 }
                 
                 botManager.render();
@@ -217,9 +217,9 @@ public class Main extends State {
                 
                 screen.setTextPosition(screen.width()/2-58, screen.height()/2);
                 screen.setTextColor(0);
-                screen.print("Sector Cleared");
-                screen.setTextPosition(32, screen.height()/2+16);
-                screen.print("Press C to transport");
+                screen.print(SECTOR_CLEAR);
+                screen.setTextPosition(26, screen.height()/2+16);
+                screen.print(PRESS_C_TRANSPORT);
                 
                 botManager.render();
                 

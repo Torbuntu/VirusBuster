@@ -1,5 +1,6 @@
 import sprites.Virus;
 import sprites.Frag;
+import audio.Explode;
 
 import managers.BlastManager;
 import Math;
@@ -11,10 +12,12 @@ public class VirusManager{
     int active;
     int total;
     int max;
+    Explode explode;
     
     int incoming = 150;
     
     public VirusManager(){
+        explode = new Explode(1);
         viruses = new VirusObject[]{
             new VirusObject(),
             new VirusObject(),
@@ -105,6 +108,7 @@ public class VirusManager{
                 if(viruses[i].isAlive() &&  blastManager.hitEnemy(viruses[i].getX()+8, viruses[i].getY()+8, 6.0f)){
                     viruses[i].hit(1);
                     if(!viruses[i].isAlive()){
+                        explode.play();
                         total--;
                         active--;
                         Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);

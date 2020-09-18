@@ -1,12 +1,14 @@
 import femto.Game;
 import femto.State;
 import femto.input.Button;
+import femto.sound.Mixer;
 
 public class TitleScene extends State {
     int select=0, count=0;
     void init(){
         select = 0;
         count = 0;
+        Mixer.init(8000);
     }
     
     void update(){
