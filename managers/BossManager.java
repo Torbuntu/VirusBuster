@@ -18,9 +18,9 @@ public class BossManager {
         }
     }
     
-    public void update(BlastManager blastManager, float x, float y){
+    public void update(BlastManager blastManager, float bx, float by){
         for(int i = 0; i < activeBosses; i++){
-            bosses[i].update(blastManager, x, y);
+            bosses[i].update(blastManager, bx, by);
             for(int x = 0; x < activeBosses; x++){
                 if(x != i){
                     if(Main.checkCollides(bosses[i].getX()+16, bosses[i].getY()+16, bosses[x].getX()+16, bosses[x].getY()+16, 14, 14)){

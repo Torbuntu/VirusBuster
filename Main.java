@@ -42,7 +42,6 @@ public class Main extends State {
     }
     
     int currency = 0, viby = 0, threatWidth = 0;
-    boolean movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
     public static int kills = 0, score = 0, sector = 0, shield = 100;
@@ -52,6 +51,20 @@ public class Main extends State {
         itemX = x;
         itemY = y;
         createItemDrop = true;
+    }
+    
+    void reset(){
+        currency = 0;
+        viby = 0;
+        threatWidth = 0;
+        createItemDrop = false;
+        itemX = 0;
+        itemY = 0;
+        kills = 0;
+        score = 0;
+        sector = 0;
+        shield = 100;
+        ROOM_STATUS = 0;
     }
     
     // helper methods
@@ -123,7 +136,7 @@ public class Main extends State {
         screen.setTextPosition(140, screen.height()-12);
         screen.print("$$: " + currency);
         
-        screen.setTextPosition(2, 12);
+        // screen.setTextPosition(2, 12);
         // screen.println(blastManager.getAccuracy());
     }
     
@@ -175,7 +188,7 @@ public class Main extends State {
             botManager.updateBotMovement();
        
             //START Move Blast
-            blastManager.update(botManager.getAttacking(), botManager.getX()+7, botManager.getY()+6, botManager.getDir());
+            blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
             blastManager.render();
         }
         switch(ROOM_STATUS){
@@ -183,17 +196,17 @@ public class Main extends State {
                 //Draw to screen
                 drawGrid();
                 itemDropManager.updateAndRender();
-                if(itemDropManager.checkCollect(botManager.getX()+7, botManager.getY()+8)){
+                if(itemDropManager.checkCollect(botManager.getX()+8, botManager.getY()+8)){
                     currency++;
                 }
                 if(shield <= 0){
-                    Game.changeState(new TitleScene());
+                    ROOM_STATUS = 5;//GAME OVER
                 }
                 
                 botManager.render();
                 
                 if(sector == 4){
-                    bossManager.update(blastManager, (botManager.getX()+7), (botManager.getY()+8));
+                    bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
                     bossManager.render();
                     if(bossManager.cleared()){
                         ROOM_STATUS = 1; // CLEARED!
@@ -243,6 +256,8 @@ public class Main extends State {
                         }
                         saveManager.saveCookie();
                         ROOM_STATUS = 4;
+                        virusManager.resetAll();
+                        break;
                     }
                     botManager.setPos(6, screen.height()/2);
                     virusManager.resetAll();
@@ -257,26 +272,33 @@ public class Main extends State {
                 screen.fillCircle(screen.width()/2-8+viby, screen.height()/2+viby, 5, 10);
                 
                 if(Button.A.justPressed() && blastManager.getRate() < 10){
-                    currency -= 2;
-                    blastManager.incRate();
+                    if(currency >= 2){
+                        currency -= 2;
+                        blastManager.incRate();
+                    }
                 }
                 if(Button.B.justPressed() && blastManager.getRefresh() > 0){
-                    currency -= 2;
-                    blastManager.incRefresh();
+                    if(currency >= 2){
+                        currency -= 2;
+                        blastManager.incRefresh();
+                    }
                 }
                 if(Button.Up.justPressed() && shield < 100){
-                    currency -= 10;
-                    if(shield + 10 > 100)shield = 100;
-                    else{
-                        shield+=10;
+                    if(currency >= 10){
+                        currency -= 10;
+                        if(shield + 10 > 100)shield = 100;
+                        else{
+                            shield+=10;
+                        }
                     }
                 }
 
-                screen.setTextPosition(2, 16);
+                screen.setTextPosition(0, 16);
                 screen.setTextColor(0);
-                screen.println("$2  - Rate: " + blastManager.getRate());
-                screen.println("$2  - Refresh: " + blastManager.getRefresh());
-                screen.println("$10 - Shield: " + shield);
+                screen.println("$2  - [A]  Rate: " + blastManager.getRate());
+                screen.println("$2  - [B]  Refresh: " + blastManager.getRefresh());
+                screen.println("$10 - [Up] Shield: " + shield);
+                screen.println("\n$$" + currency);
 
                 if(Button.C.justPressed()){
                     if(sector == 4){
@@ -314,12 +336,26 @@ public class Main extends State {
                 drawHud();
                 break;
             case 4://Summary!
-                screen.setTextPosition(2, 10);
+                screen.setTextPosition(0, 10);
+                screen.println("The sector is clear!");
+                screen.println("Accuracy: " + blastManager.getAccuracy());
                 screen.println("Score: " + score);
-                screen.println("Press C to go to title screen");
+                screen.println("[C] To title screen");
                 if(Button.C.justPressed()){
+                    reset();
                     Game.changeState(new TitleScene());
                 }
+                break;
+            case 5://GAME OVER
+                screen.setTextPosition(0, 10);
+                screen.setTextColor(8);
+                screen.println("Your Bot was destroyed");
+                screen.println("\n[C] To title screen");
+                if(Button.C.justPressed()){
+                    reset();
+                    Game.changeState(new TitleScene());
+                }
+                
                 break;
         }
         

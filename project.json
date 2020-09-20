@@ -459,6 +459,9 @@
 		},
 		"/SaveManager.java": {
 			"sdcard": false
+		},
+		"/managers/WormBossManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

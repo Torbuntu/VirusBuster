@@ -1,16 +1,22 @@
 import managers.BlastManager;
 
+import audio.Explode;
+
 import sprites.WormBoss;
 import sprites.WormBody;
 
 public class WormBossManager {
     WormBoss sprite;
     Body[] body;
+    Explode explode;
     int health = 25;
-    int sx = 1, sy = 0, speed = 1;
+    int sx = 1, sy = 0, speed = 1, shoot = 150;
     boolean clear = false, angry = false;
     
+    float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
+    
     WormBossManager(){
+        explode = new Explode(1);
         sprite = new WormBoss();
         sprite.x = -32;
         sprite.y = 120;
@@ -100,14 +106,40 @@ public class WormBossManager {
             if(blastManager.hitEnemy(sprite.x+18, sprite.y+18, 16)){
                 health--;
                 if(health <= 0){
+                    explode.play();
                     clear = true;
                 }
+            }
+            
+            shoot--;
+            if(shoot <= 0){
+                shoot = 100;
+                blastX = sprite.x + 18;
+                blastY = sprite.y + 18;
+                if(bx > blastX){
+                    bvx = 2;
+                }else{
+                    bvx = -2;
+                }
+                if(by > blastY){
+                    bvy = 2;
+                }else{
+                    bvy = -2;
+                }
+            }
+            blastX += bvx;
+            blastY += bvy;
+            if(Main.checkCollides(blastX, blastY, bx+8, by+8, 4, 8)){
+                blastX = -10;
+                blastY = -10;
+                Main.shield -= 10;
             }
         }else{
            for(Body b : body){
                 if(b.last && b.alive && blastManager.hitEnemy(b.body.x+14, b.body.y+14, 12.0f)){
                     b.hit();
                     if(!b.alive){
+                        explode.play();
                         if(b.id > 1){
                             //id's are 1 indexed, so we need to subtract 2 in order to get the correct index based on the id offset
                             body[b.id-2].last = true;
@@ -138,6 +170,10 @@ public class WormBossManager {
     }
     
     void render(){
+        
+        if(bodyDestroyed()){
+            Main.screen.drawCircle(blastX, blastY, 8, 8, false);
+        }
 
         for(Body b : body){
             b.render();

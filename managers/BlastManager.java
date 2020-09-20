@@ -103,7 +103,7 @@ public class BlastManager {
     public int getAccuracy(){
         if(hit == 0)return 0;
         if(shots == 0) return 0;
-        return Math.abs(hit / shots * 100);
+        return Math.abs(hit * 100 / shots);
     }
 }
 
