@@ -151,28 +151,45 @@ public class VirusManager{
     //TODO: add Sector info
     public void initWave(int sector){
         currentWave = 0;
-        switch(sector){
-            case 0:
-                waves = new int[]{3};
-                total = 3;
-                break;
-            case 1:
-                waves = new int[]{3, 5, 5, 7};
-                total = 20;
-                break;
-            case 2:
-                waves = new int[]{3, 5, 5, 7};
-                total = 20;
-                break;
-            case 7:
-                waves = new int[]{5, 8, 12, 16};
-                total = 41;
-                break;
+        switch(Main.ZONE){
             default:
-                waves = new int[]{3, 5, 5, 7};
-                total = 20;
-                break;
+                switch(sector){
+                    case 0:
+                        waves = new int[]{3, 5, 7};
+                        total = 15;
+                        break;
+                    case 1:
+                        waves = new int[]{3, 5, 5, 7};
+                        total = 20;
+                        break;
+                    case 2:
+                        waves = new int[]{3, 5, 5, 7, 10};
+                        total = 30;
+                        break;
+                    case 3:
+                        waves = new int[]{3, 5, 5, 7, 10};
+                        total = 30;
+                        break;
+                    case 5:
+                        waves = new int[]{3, 5, 5, 7, 10};
+                        total = 30;
+                        break;
+                    case 6:
+                        waves = new int[]{3, 5, 5, 7, 10};
+                        total = 30;
+                        break;
+                    case 7:
+                        waves = new int[]{5, 8, 12, 16};
+                        total = 41;
+                        break;
+                    default:
+                        waves = new int[]{3, 5, 5, 7};
+                        total = 20;
+                        break;
+                }
+            break;
         }
+        
         max = total;
         active = waves[currentWave];
     }

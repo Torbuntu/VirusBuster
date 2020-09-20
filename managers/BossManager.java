@@ -11,10 +11,10 @@ public class BossManager {
     };
     
 
-    public void init(int number, int[] types){
+    public void init(int number){
         activeBosses = number;
         for(int i = 0; i < activeBosses; i++){
-            bosses[i].init(types[i]);
+            bosses[i].init();
         }
     }
     

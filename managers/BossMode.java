@@ -5,7 +5,7 @@ import audio.Explode;
 public class BossMode{
     Explode explode;
     BossBlast[] blasts;
-    int bossType = 0, hurt = 0;
+    int hurt = 0;
     float sx = 0, sy = 0;//speed variables
     SmallBoss virus;
     int health, maxHealth;
@@ -14,7 +14,7 @@ public class BossMode{
     
     boolean alive = true;
     
-    public void init(int t){
+    public void init(){
         explode = new Explode(1);
         virus = new SmallBoss();
         int dir = Math.random(0, 4);
@@ -34,26 +34,21 @@ public class BossMode{
             virus.x = 100;
             virus.y = 160;
         }
-        bossType = t;
-        switch(bossType){
-            case 0:
-            default:
-                health = 50;
-                maxHealth = health;
-                shootReady = 250;
-                blasts = new BossBlast[]{
-                    new BossBlast(),
-                    new BossBlast(),
-                    new BossBlast(),
-                    new BossBlast(),
-                    new BossBlast(),
-                    new BossBlast(),
-                    new BossBlast(),
-                    new BossBlast()
-                };
-                break;
-        }
-        
+ 
+        health = 50;
+        maxHealth = health;
+        shootReady = 250;
+        blasts = new BossBlast[]{
+            new BossBlast(),
+            new BossBlast(),
+            new BossBlast(),
+            new BossBlast(),
+            new BossBlast(),
+            new BossBlast(),
+            new BossBlast(),
+            new BossBlast()
+        };
+
     }
     
     void update(BlastManager blastManager, float bx, float by){
@@ -162,15 +157,6 @@ public class BossMode{
     public void checkBlastHits(BlastManager blastManager){
         if(alive && blastManager.hitEnemy(virus.x+16, virus.y+16, 14.0f)){
             hit(1);
-            if(!alive){
-                switch(bossType){
-                    case 0:
-                        //spawn viruses
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
     
@@ -181,11 +167,7 @@ public class BossMode{
             return;
         }
         if(alive){
-            switch(bossType){
-                case 0:
-                    virus.draw(Main.screen);
-                    break;
-            }
+            virus.draw(Main.screen);
             
             for(BossBlast b : blasts){
                 if(b.isActive()) b.render();
@@ -244,49 +226,26 @@ public class BossMode{
         }
         shooting = 25;
         shootReady = 250;
-        switch(bossType){
-            case 0:
-                blasts[0].init(-2, 0, virus.x+16, virus.y+16);
-                blasts[1].init(2, 0, virus.x+16, virus.y+16);
-                blasts[2].init(0, 2, virus.x+16, virus.y+16);
-                blasts[3].init(0, -2, virus.x+16, virus.y+16);
-                break;
-            default:
-            break;
-        }
+
+        blasts[0].init(-2, 0, virus.x+16, virus.y+16);
+        blasts[1].init(2, 0, virus.x+16, virus.y+16);
+        blasts[2].init(0, 2, virus.x+16, virus.y+16);
+        blasts[3].init(0, -2, virus.x+16, virus.y+16);
     }
     
     public float getX(){
-        switch(bossType){
-            case 0:
-                return virus.x;
-            default:
-                return 0;
-        }
+        return virus.x;
     }
     
     public float getY(){
-        switch(bossType){
-            case 0:
-                return virus.y;
-            default:
-                return 0;
-        }
+        return virus.y;
     }
     
     public void incX(float x){
-        switch(bossType){
-            case 0:
-                virus.x += x;
-                break;
-        }
+        virus.x += x;
     }
     public void incY(float y){
-        switch(bossType){
-            case 0:
-                virus.y += y;
-                break;
-        }
+        virus.y += y;
     }
     
     public void setSpeedX(float x){
@@ -313,40 +272,16 @@ public class BossMode{
     void walk(){}
     void die(){}
     void hurtA(){
-        switch(bossType){
-            case 0:
-                virus.hurtA();
-                break;
-            default:
-            break;
-        }
+        virus.hurtA();
     }
     void hurtB(){
-        switch(bossType){
-            case 0:
-                virus.hurtB();
-                break;
-            default:
-            break;
-        }
+        virus.hurtB();
     }
     void hurtC(){
-        switch(bossType){
-            case 0:
-                virus.hurtC();
-                break;
-            default:
-            break;
-        }
+        virus.hurtC();
     }
     void hurtD(){
-        switch(bossType){
-            case 0:
-                virus.hurtD();
-                break;
-            default:
-            break;
-        }
+        virus.hurtD();
     }
 }
 

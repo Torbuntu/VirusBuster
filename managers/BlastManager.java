@@ -7,6 +7,8 @@ public class BlastManager {
     // rate    -3 how many blasts are active at a time
     int cooldown = 0, refresh = 30, rate = 3;
     BlastObject[] blasts;
+    int shots = 0;
+    int hit = 0;
     
     public BlastManager(){
         blasts = new BlastObject[]{
@@ -46,6 +48,7 @@ public class BlastManager {
                         blasts[i].setDir(0.0f, 2.0f);
                     }
                     blasts[i].draw = true;
+                    shots++;
                     return;
                 }
             }
@@ -60,6 +63,7 @@ public class BlastManager {
         for(BlastObject b : blasts){
             if(b.active() && Main.checkCollides(b.getX()+4, b.getY()+4, ex, ey, 4, er)){
                 b.hit();
+                hit++;
                 return true;
             }
         }
@@ -94,6 +98,13 @@ public class BlastManager {
     public int getRate(){
         return rate;
     }
+    
+    //TODO: This is always returning 0 for some reason. 
+    public int getAccuracy(){
+        if(hit == 0)return 0;
+        if(shots == 0) return 0;
+        return Math.abs(hit / shots * 100);
+    }
 }
 
 
@@ -106,19 +117,16 @@ class BlastObject {
     public BlastObject(){
         blast = new Blast();
         blast.fire();
-        
         shoot = new Shoot(0);
     }
     
     void update(){
         if(sx != 0 && (blast.x < -8 || blast.x > 250) ){
             draw = false;
-            return;
         }
         
         if(sy != 0 && (blast.y < -8 || blast.y > 170)){
             draw = false;
-            return;
         }
         blast.x += sx;
         blast.y += sy;

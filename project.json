@@ -423,6 +423,42 @@
 		},
 		"/audio/Coin0.wav": {
 			"sdcard": false
+		},
+		"/sprites/WormBoss.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/WormBoss.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/WormBoss.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/managers/WormBoss.java": {
+			"sdcard": false
+		},
+		"/sprites/WormBody.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/WormBody.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/WormBody.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/SaveManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

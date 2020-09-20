@@ -13,20 +13,9 @@ import managers.ItemDropManager;
 import managers.BlastManager;
 import managers.VirusManager;
 import managers.BossManager;
+import managers.WormBossManager;
 
-class SaveManager extends femto.Cookie {
-    SaveManager() {
-        super();
-        begin("VBUST");
-    }
-    boolean firstZoneClear;
-    boolean secondZoneClear;
-    boolean thirdZoneClear;
-    boolean fourthZoneClear;
-    boolean endlessUnlocked;
-    
-    int highScore;
-}
+
 
 public class Main extends State {
     public static void main(String[] args){
@@ -41,6 +30,7 @@ public class Main extends State {
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     BossManager bossManager;
+    WormBossManager wormManager;
     
     public static final String PRESS_C_TRANSPORT = "Press C to transport";
     public static final String SECTOR_CLEAR = "Sector Cleared";
@@ -51,7 +41,7 @@ public class Main extends State {
         ZONE = z;
     }
     
-    int currency = 0, viby = 0;
+    int currency = 0, viby = 0, threatWidth = 0;
     boolean movingRooms = false;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
@@ -78,6 +68,7 @@ public class Main extends State {
         blastManager = new BlastManager();
         virusManager = new VirusManager();
         bossManager = new BossManager();
+        wormManager = new WormBossManager();
         virusManager.initWave(0);
 
         shield = 100;
@@ -105,15 +96,21 @@ public class Main extends State {
         screen.fillRect(136, 2, 78, 8, 2);
         
         // threats or boss health
-        if(sector == 4){
-            int threatWidth = (int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth());
-            screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
-        }else{
-            int threatWidth = (int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats());
-            screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+        switch(sector){
+            case 4:
+                threatWidth = (int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth());
+                screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+                break;
+            case 8:
+                threatWidth = (int)(wormManager.getCurrentHealth() * 78 / wormManager.getTotalHealth());
+                screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+                break;
+            default:
+                threatWidth = (int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats());
+                screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+                break;
         }
-        
-        
+
         //Zone : Sector 
         screen.setTextPosition(98, 3);
         screen.setTextColor(0);
@@ -125,6 +122,9 @@ public class Main extends State {
         
         screen.setTextPosition(140, screen.height()-12);
         screen.print("$$: " + currency);
+        
+        screen.setTextPosition(2, 12);
+        // screen.println(blastManager.getAccuracy());
     }
     
     void drawGrid(){
@@ -198,6 +198,19 @@ public class Main extends State {
                     if(bossManager.cleared()){
                         ROOM_STATUS = 1; // CLEARED!
                     }
+                }else if (sector == 8) {
+                    wormManager.update(blastManager, botManager.getX(), botManager.getY());
+                    
+                    if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
+                    || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
+                        botManager.setY(botManager.getY()+32);
+                        shield-=10;
+                    }
+                    
+                    wormManager.render();
+                    if(wormManager.cleared()){
+                        ROOM_STATUS = 1;
+                    }
                 }else{
                     virusManager.update(botManager.getX(), botManager.getY());
                     virusManager.checkBlastHits(blastManager);
@@ -224,6 +237,13 @@ public class Main extends State {
                 botManager.render();
                 
                 if(Button.C.justPressed()){
+                    if(sector == 8){
+                        switch(ZONE){
+                            case 0: saveManager.firstZoneClear = true; break;
+                        }
+                        saveManager.saveCookie();
+                        ROOM_STATUS = 4;
+                    }
                     botManager.setPos(6, screen.height()/2);
                     virusManager.resetAll();
                     sector++;
@@ -237,15 +257,15 @@ public class Main extends State {
                 screen.fillCircle(screen.width()/2-8+viby, screen.height()/2+viby, 5, 10);
                 
                 if(Button.A.justPressed() && blastManager.getRate() < 10){
-                    currency-=5;
+                    currency -= 2;
                     blastManager.incRate();
                 }
                 if(Button.B.justPressed() && blastManager.getRefresh() > 0){
-                    currency -= 10;
+                    currency -= 2;
                     blastManager.incRefresh();
                 }
                 if(Button.Up.justPressed() && shield < 100){
-                    currency -= 20;
+                    currency -= 10;
                     if(shield + 10 > 100)shield = 100;
                     else{
                         shield+=10;
@@ -254,27 +274,28 @@ public class Main extends State {
 
                 screen.setTextPosition(2, 16);
                 screen.setTextColor(0);
-                screen.println("Rate: " + blastManager.getRate());
-                screen.println("Refresh: " + blastManager.getRefresh());
-                screen.println("Shield: " + shield);
+                screen.println("$2  - Rate: " + blastManager.getRate());
+                screen.println("$2  - Refresh: " + blastManager.getRefresh());
+                screen.println("$10 - Shield: " + shield);
 
                 if(Button.C.justPressed()){
                     if(sector == 4){
                         switch(ZONE){
                             case 0:
-                                bossManager.init(1, new int[]{0});
+                                bossManager.init(1);
                                 break;
                             case 1:
-                                bossManager.init(2, new int[]{0, 0});
+                                bossManager.init(2);
                                 break;
                             case 2:
-                                bossManager.init(3, new int[]{0, 0, 0});
+                                bossManager.init(3);
                                 break;
                             case 3:
-                                bossManager.init(4, new int[]{0, 0, 0, 0});
+                                bossManager.init(4);
                                 break;
                         }
-                        
+                    }else if (sector == 8){
+                        // wormManager.init();
                     }else{
                         virusManager.initWave(sector);
                     }
@@ -291,6 +312,14 @@ public class Main extends State {
                     ROOM_STATUS = 0;
                 }
                 drawHud();
+                break;
+            case 4://Summary!
+                screen.setTextPosition(2, 10);
+                screen.println("Score: " + score);
+                screen.println("Press C to go to title screen");
+                if(Button.C.justPressed()){
+                    Game.changeState(new TitleScene());
+                }
                 break;
         }
         
