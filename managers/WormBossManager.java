@@ -28,14 +28,17 @@ public class WormBossManager {
             new Body(2, false),
             new Body(3, false),
             new Body(4, false),
-            new Body(5, true)
+            new Body(5, false),
+            new Body(6, false),
+            new Body(7, false),
+            new Body(8, true),
         };
     }
     
     private void setDir(){
         sx = 0;
         sy = 0;
-        int stage = 2;
+        int stage = 4;
         if(angry){
             stage = 4;
         }
@@ -93,7 +96,7 @@ public class WormBossManager {
             return false;
         }
         for(Body b : body){
-            if(b.alive && Main.checkCollides(b.body.x+14, b.body.y+14, bx+8, by+8, 12, 8)){
+            if(b.alive && Main.checkCollides(b.body.x+9, b.body.y+9, bx+8, by+8, 7, 8)){
                 return true;
             }
         }
@@ -136,9 +139,10 @@ public class WormBossManager {
             }
         }else{
            for(Body b : body){
-                if(b.last && b.alive && blastManager.hitEnemy(b.body.x+14, b.body.y+14, 12.0f)){
+                if(b.last && b.alive && blastManager.hitEnemy(b.body.x+9, b.body.y+9, 12.0f)){
                     b.hit();
-                    if(!b.alive){
+                    if(b.health == 0){
+                        b.last = false;
                         explode.play();
                         if(b.id > 1){
                             //id's are 1 indexed, so we need to subtract 2 in order to get the correct index based on the id offset
@@ -165,12 +169,11 @@ public class WormBossManager {
         sprite.x += sx * speed;
         
         for(Body b : body){
-            b.update(sprite.x, sprite.y, sx);
+            b.update(sprite.x, sprite.y, sx, sy);
         }
     }
     
     void render(){
-        
         if(bodyDestroyed()){
             Main.screen.drawCircle(blastX, blastY, 8, 8, false);
         }
@@ -190,7 +193,7 @@ public class WormBossManager {
     }
     
     int getTotalHealth(){
-        return 100;
+        return 145;//health + body * 15
     }
     
     public boolean cleared(){
@@ -200,7 +203,7 @@ public class WormBossManager {
 
 class Body {
     WormBody body;
-    int sx = 1, sy = 0, id, health = 15;
+    int sx = 1, sy = 0, id, health = 15, hurt = 0, dying = 0;
     boolean last, alive = true;
     
     Body(int id, boolean last){
@@ -209,20 +212,47 @@ class Body {
         body = new WormBody();
         body.run();
         body.y = 122;
-        body.x = id * -28;
+        body.x = id * -18;
     }
-    
 
-    void update(float x, float y, int dirX){
+    void update(float x, float y, int dirX, int dirY){
         if(!alive) return;
+        if(dying > 0){
+            dying--;
+            body.die();
+            if(dying == 0){
+                alive = false;
+            }
+            return;
+        }
+        if(hurt > 0){
+            hurt--;
+            body.hurt();
+        }else if(last){
+            body.last();
+        }else{
+            body.run();
+        }
         if(health > 5){
             if(dirX > 0){
-                body.x = x + id*28*-dirX;
-              
-            }else{
-                body.x = x + id*28*-dirX;
+                body.x = x + id*18*-dirX;
+            }else if(dirX < 0){
+                body.x = x + 16 + id*18*-dirX;
             }
-            body.y = y+2;
+            if(dirY == 0){
+                body.y = y+7;
+            }
+            
+            if(dirY > 0){
+                body.y = y + id*18*-dirY;
+            }else if(dirY < 0){
+                body.y = y + 16 + id*18*-dirY;
+            }
+            
+            if(dirX == 0){
+                body.x = x + 7;
+            }
+            
         }else{
             if(body.x < 0) {
                 sx = Math.random(1, 4);
@@ -247,18 +277,18 @@ class Body {
     }
     
     void render(){
-        if(alive)body.draw(Main.screen);
+        if(alive || dying > 0)body.draw(Main.screen);
     }
     
     void hit(){
+        hurt = 10;
         if(health == 6){
             sx = -2;
             sy = 2;
         }
         health--;
         if(health <= 0){
-            alive = false;
-            last = false;
+            dying = 20;
         }
     }
     

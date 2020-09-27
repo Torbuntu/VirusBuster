@@ -44,7 +44,7 @@ public class Main extends State {
     int currency = 0, viby = 0, threatWidth = 0;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
-    public static int kills = 0, score = 0, sector = 0, shield = 100;
+    public static int kills = 0, score = 0, sector = 8, shield = 100;
     public static void updateKills(float x, float y){
         kills++;
         score += 10;
@@ -95,6 +95,10 @@ public class Main extends State {
      * 
      */
     void drawHud(){
+        // Fill rects for the top and bottom sections
+        screen.fillRect(0, 0, screen.width(), 16, 3);
+        screen.fillRect(0, screen.height()-14, screen.width(), 16, 3);
+        
         //Bot Shield
         screen.drawRect(6, 0, 80, 10, 0);
         screen.fillRect(8, 2, 78, 8, 2);//background grey
@@ -216,7 +220,13 @@ public class Main extends State {
                     
                     if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
                     || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
-                        botManager.setY(botManager.getY()+32);
+                        // Move bot Y
+                        if(botManager.getY() + 32 < screen.height()-45) botManager.setY(botManager.getY()+32);
+                        else botManager.setY(botManager.getY()-32);
+                        // Move bot X
+                        if(botManager.getX() + 32 < screen.width()-45) botManager.setX(botManager.getX()+32);
+                        else botManager.setX(botManager.getX()-32);
+                        // Subtract shielding
                         shield-=10;
                     }
                     
