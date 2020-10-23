@@ -3,6 +3,7 @@ import sprites.Frag;
 import audio.Explode;
 
 import managers.BlastManager;
+import managers.DebrisManager;
 import Math;
 
 public class VirusManager{
@@ -54,7 +55,7 @@ public class VirusManager{
         };
     }
     
-    public void update(float bx, float by){
+    public void update(float bx, float by, DebrisManager debris){
         checkAvailable();
         if(incoming > 0){
             incoming--;
@@ -84,7 +85,10 @@ public class VirusManager{
                     }
                 }
             }
-            
+            if(debris.checkCollides(viruses[i].getX()+viruses[i].getSpeedX(), viruses[i].getY()+viruses[i].getSpeedY(), viruses[i].getWidth(), viruses[i].getHeight())){
+                viruses[i].setSpeedX(viruses[i].getSpeedX()*-1);
+                viruses[i].setSpeedY(viruses[i].getSpeedY()*-1);
+            }
             viruses[i].updateMovement();
         }
     }
@@ -117,7 +121,7 @@ public class VirusManager{
             }
         }
     }
-
+    
     public void checkAvailable(){
         for(int i = 0; i < waves[currentWave]; i++){
             if(viruses[i].isAlive()){
@@ -296,11 +300,27 @@ class VirusObject{
         }
     }
     
+    float getWidth(){
+        return virus.width();
+    }
+    
+    float getHeight(){
+        return virus.height();
+    }
+    
     void setSpeedX(float s){
         sx = s;
     }
     void setSpeedY(float s){
         sy = s;
+    }
+    
+    float getSpeedX(){
+        return sx;
+    }
+    
+    float getSpeedY(){
+        return sy;
     }
     
     void hit(int damage){

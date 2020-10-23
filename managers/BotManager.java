@@ -1,6 +1,8 @@
 import sprites.Bot;
 import femto.input.Button;
 
+import managers.DebrisManager;
+
 public class BotManager {
     Bot bot;
     float sx = 0, sy = 0;
@@ -30,7 +32,7 @@ public class BotManager {
      * Unable to shoot while dashing.
      * 
      */
-    void updateBotMovement(){
+    void updateBotMovement(DebrisManager debrisManager){
         //START move player
         sx = 0;
         sy = 0;
@@ -96,8 +98,11 @@ public class BotManager {
         else attack = false;
         if(Button.B.isPressed()) attack = false;
         
-        bot.x += sx;
-        bot.y += sy;
+        if(!debrisManager.checkCollides(bot.x+sx, bot.y+sy, bot.width(), bot.height() )){
+            bot.x += sx;
+            bot.y += sy;
+        }
+       
         //END move player
     }
     

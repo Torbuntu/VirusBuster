@@ -14,6 +14,7 @@ import managers.BlastManager;
 import managers.VirusManager;
 import managers.BossManager;
 import managers.WormBossManager;
+import managers.DebrisManager;
 
 
 
@@ -27,6 +28,7 @@ public class Main extends State {
     // Bot bot;
     BotManager botManager;
     BlastManager blastManager;
+    DebrisManager debrisManager;
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     BossManager bossManager;
@@ -44,7 +46,7 @@ public class Main extends State {
     int currency = 0, viby = 0, threatWidth = 0;
     public static boolean createItemDrop = false;
     public static float itemX = 0, itemY = 0;
-    public static int kills = 0, score = 0, sector = 8, shield = 100;
+    public static int kills = 0, score = 0, sector = 0, shield = 100;
     public static void updateKills(float x, float y){
         kills++;
         score += 10;
@@ -77,11 +79,12 @@ public class Main extends State {
     
     void init(){
         botManager = new BotManager();
-        itemDropManager = new ItemDropManager();
         blastManager = new BlastManager();
-        virusManager = new VirusManager();
         bossManager = new BossManager();
+        debrisManager = new DebrisManager();
+        itemDropManager = new ItemDropManager();
         wormManager = new WormBossManager();
+        virusManager = new VirusManager();
         virusManager.initWave(0);
 
         shield = 100;
@@ -139,9 +142,6 @@ public class Main extends State {
         
         screen.setTextPosition(140, screen.height()-12);
         screen.print("$$: " + currency);
-        
-        // screen.setTextPosition(2, 12);
-        // screen.println(blastManager.getAccuracy());
     }
     
     void drawGrid(){
@@ -189,7 +189,7 @@ public class Main extends State {
         
         // If not traveling
         if(ROOM_STATUS != 2){
-            botManager.updateBotMovement();
+            botManager.updateBotMovement(debrisManager);
        
             //START Move Blast
             blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
@@ -209,13 +209,13 @@ public class Main extends State {
                 
                 botManager.render();
                 
-                if(sector == 4){
+                if(sector == 4){ //Mini boss
                     bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
                     bossManager.render();
                     if(bossManager.cleared()){
                         ROOM_STATUS = 1; // CLEARED!
                     }
-                }else if (sector == 8) {
+                }else if (sector == 8) { //Mega boss
                     wormManager.update(blastManager, botManager.getX(), botManager.getY());
                     
                     if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
@@ -234,8 +234,9 @@ public class Main extends State {
                     if(wormManager.cleared()){
                         ROOM_STATUS = 1;
                     }
-                }else{
-                    virusManager.update(botManager.getX(), botManager.getY());
+                }else{ // Normal sector
+                    debrisManager.render();
+                    virusManager.update(botManager.getX(), botManager.getY(), debrisManager);
                     virusManager.checkBlastHits(blastManager);
                     if(virusManager.getThreats() == 0){
                         ROOM_STATUS = 1; // CLEARED!
@@ -347,7 +348,7 @@ public class Main extends State {
                 break;
             case 4://Summary!
                 screen.setTextPosition(0, 10);
-                screen.println("The sector is clear!");
+                screen.println("This zone is clear!");
                 screen.println("Accuracy: " + blastManager.getAccuracy());
                 screen.println("Score: " + score);
                 screen.println("[C] To title screen");

@@ -462,6 +462,9 @@
 		},
 		"/managers/WormBossManager.java": {
 			"sdcard": false
+		},
+		"/managers/DebrisManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
