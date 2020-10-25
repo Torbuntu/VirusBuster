@@ -1,22 +1,35 @@
 import BotManager;
 import VirusManager;
-
+import entities.Debris;
 class DebrisManager {
     private Debris[] debris;
     
     public DebrisManager() {
         debris = new Debris[]{
-            new Debris(),
-            new Debris(),
-//            new Debris(),
-//            new Debris(),
-//            new Debris(),
-            new Debris()
+            new Debris(0),
+            new Debris(0),
+            // new Debris(0),
+            // new Debris(0),
+            new Debris(0),
+            new Debris(1)
         };
+    }
+    
+    public void resetDebris(){
+        for(Debris d : debris){
+            d.reset();
+        }
     }
     
     boolean checkCollides(float fx, float fy, float fw, float fh){
         for(Debris d : debris){
+            if(d.collide(fx, fy, fw, fh)) return true;
+        }
+        return false;
+    }
+    boolean checkVirusCollides(float fx, float fy, float fw, float fh){
+        for(Debris d : debris){
+            if(d.getType() == 1)return false;
             if(d.collide(fx, fy, fw, fh)) return true;
         }
         return false;
@@ -27,30 +40,28 @@ class DebrisManager {
             d.draw();
         }
     }
+    
+    int getSpawnX(){
+        for(Debris d : debris){
+            if(d.getType() == 1){
+                return d.getX();
+            }
+        }
+        return 0;
+    }
+    
+    int getSpawnY(){
+        for(Debris d : debris){
+            if(d.getType() == 1){
+                return d.getY();
+            }
+        }
+        return 0;
+    }
+    
+    Debris[] getDebris(){
+        return debris;
+    }
 }
 
-class Debris {
-    int x, y, w, h;
-    Debris(){
-        x = getCoord();
-        y = getCoord();
-        w = 16;
-        h = 16;
-    }
-    
-    private int getCoord(){
-        int coord = Math.random(30, 200);
-        while(coord % 8 != 0){
-            coord = Math.random(30, 200);
-        }
-        return coord;
-    }
-    
-    boolean collide(float fx, float fy, float fw, float fh){
-        return (x < fx + fw && x + w > fx && y < fy + fh && y + h > fy);
-    }
-    
-    void draw(){
-        Main.screen.fillRect(x, y, w, h, 11);
-    }
-}
+

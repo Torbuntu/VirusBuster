@@ -2,6 +2,8 @@ import sprites.Virus;
 import sprites.Frag;
 import audio.Explode;
 
+import entities.Debris;
+
 import managers.BlastManager;
 import managers.DebrisManager;
 import Math;
@@ -15,43 +17,47 @@ public class VirusManager{
     int max;
     Explode explode;
     
+    int spawnX, spawnY;
+    
     int incoming = 150;
     
-    public VirusManager(){
+    public VirusManager(int x, int y){
+        this.spawnX = x;
+        this.spawnY = y;
         explode = new Explode(1);
         viruses = new VirusObject[]{
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject(),
-            new VirusObject()
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY),
+            new VirusObject(spawnX, spawnY)
         };
     }
     
@@ -68,28 +74,43 @@ public class VirusManager{
                     if(x != i && viruses[x].isAlive()){
                         if(Main.checkCollides(viruses[i].getX()+8, viruses[i].getY()+8, viruses[x].getX()+8, viruses[x].getY()+8, 8, 6)){
                             if(viruses[i].getX() < viruses[x].getX()){
-                                viruses[i].setSpeedX(-1.0f);
-                                viruses[x].virus.x += 1.0f;
+                                viruses[i].setSpeedX(-2.0f);
                             }else{
-                                viruses[i].setSpeedX(1.0f);
-                                viruses[x].virus.x -= 1.0f;
+                                viruses[i].setSpeedX(2.0f);
                             }
                             if(viruses[i].getY() < viruses[x].getY()){
-                                viruses[i].setSpeedY(-1.0f);
-                                viruses[x].virus.y += 1.0f;
+                                viruses[i].setSpeedY(-2.0f);
                             }else{
-                                viruses[i].setSpeedY(1.0f);
-                                viruses[x].virus.y -= 1.0f;
+                                viruses[i].setSpeedY(2.0f);
                             }
                         }
                     }
                 }
+                
+                for(Debris d : debris.getDebris()){
+                    if(d.getType() != 1){
+                        if(d.collide(viruses[i].getX(), viruses[i].getY(), 16, 16)){
+                            if(viruses[i].getX()+6 > d.getX() && viruses[i].getX()+10 < d.getX()+16){
+                                viruses[i].setSpeedY(0);
+                                if(viruses[i].getX() < bx){
+                                    viruses[i].aroundX = 16;
+                                }else{
+                                    viruses[i].aroundX = -16;
+                                }
+                            }else{
+                                viruses[i].setSpeedX(0);
+                                if(viruses[i].getY() < by){
+                                    viruses[i].aroundY = 16;
+                                }else{
+                                    viruses[i].aroundY = -16;
+                                }
+                            }
+                        }
+                    }
+                }
+                viruses[i].updateMovement();
             }
-            if(debris.checkCollides(viruses[i].getX()+viruses[i].getSpeedX(), viruses[i].getY()+viruses[i].getSpeedY(), viruses[i].getWidth(), viruses[i].getHeight())){
-                viruses[i].setSpeedX(viruses[i].getSpeedX()*-1);
-                viruses[i].setSpeedY(viruses[i].getSpeedY()*-1);
-            }
-            viruses[i].updateMovement();
+            
         }
     }
     
@@ -133,7 +154,7 @@ public class VirusManager{
             active = waves[currentWave];
             for(int i = 0; i < waves[currentWave]; i++){
                 int r = Math.random(0, 2);
-                viruses[i].reset(r);
+                viruses[i].reset(r, spawnX, spawnY);
             }
             incoming = 150;
         }
@@ -148,18 +169,20 @@ public class VirusManager{
     
     public void resetAll(){
         for(VirusObject v : viruses){
-            v.reset();
+            v.reset(spawnX, spawnY);
         }
     }
     
     //TODO: add Sector info
-    public void initWave(int sector){
+    public void initWave(int sector, int x, int y){
         currentWave = 0;
+        this.spawnX = x;
+        this.spawnY = y;
         switch(Main.ZONE){
             default:
                 switch(sector){
                     case 0:
-                        waves = new int[]{3, 5, 7};
+                        waves = new int[]{16, 5, 7};
                         total = 15;
                         break;
                     case 1:
@@ -206,16 +229,18 @@ class VirusObject{
     float sx = 0, sy = 0;
     int animationTime = 50;
     
+    public int aroundX = 0, aroundY = 0;
+    
     //0 = normal, 1 = large
     int type = 0;
     int baseHealth = 2;
     int health = 2;
     
-    VirusObject(){
+    VirusObject(int x, int y){
         virus = new Virus();
         virus.walk();
         
-        reset();
+        reset(x, y);
         
         frag = new Frag();
         frag.die();
@@ -267,8 +292,24 @@ class VirusObject{
     }
     
     void updateMovement(){
-        virus.x += sx;
-        virus.y += sy;
+        if(aroundX > 0){
+            aroundX--;
+            virus.x += 1;
+        }else if(aroundX < 0){
+            aroundX++;
+            virus.x += -1;
+        }else{
+            virus.x += sx;
+        }
+        if(aroundY > 0){
+            aroundY--;
+            virus.y += 1;
+        }else if(aroundY < 0){
+            aroundY++;
+            virus.y += -1;
+        }else{
+            virus.y += sy;
+        }
     }
     
     void render(){
@@ -345,29 +386,14 @@ class VirusObject{
         return alive;
     }
 
-    void reset(int t){
+    void reset(int t, int x, int y){
         type = t;
-        reset();
+        reset(x, y);
     }
     
-    void reset(){
-        int dir = Math.random(0, 4);
-        if(dir == 0){
-            virus.x = 0;
-            virus.y = 80;
-        }
-        if(dir == 1){
-            virus.x = 100;
-            virus.y = 0;
-        }
-        if(dir == 2){
-            virus.x = 220;
-            virus.y = 80;
-        }
-        if(dir == 3){
-            virus.x = 100;
-            virus.y = 160;
-        }
+    void reset(int x, int y){
+        virus.x = x;
+        virus.y = y;
         alive = true;
         health = baseHealth;
     }

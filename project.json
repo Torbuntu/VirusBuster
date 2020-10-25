@@ -465,6 +465,12 @@
 		},
 		"/managers/DebrisManager.java": {
 			"sdcard": false
+		},
+		"/Entities": {
+			"sdcard": false
+		},
+		"/entities/Debris.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

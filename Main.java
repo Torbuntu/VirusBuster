@@ -84,8 +84,8 @@ public class Main extends State {
         debrisManager = new DebrisManager();
         itemDropManager = new ItemDropManager();
         wormManager = new WormBossManager();
-        virusManager = new VirusManager();
-        virusManager.initWave(0);
+        virusManager = new VirusManager(debrisManager.getSpawnX(), debrisManager.getSpawnY());
+        virusManager.initWave(0, debrisManager.getSpawnX(), debrisManager.getSpawnY());
 
         shield = 100;
 
@@ -261,9 +261,13 @@ public class Main extends State {
                 botManager.render();
                 
                 if(Button.C.justPressed()){
+                    debrisManager.resetDebris();
                     if(sector == 8){
                         switch(ZONE){
                             case 0: saveManager.firstZoneClear = true; break;
+                            case 1: saveManager.secondZoneClear = true; break;
+                            case 2: saveManager.thirdZoneClear = true; break;
+                            case 3: saveManager.fourthZoneClear = true; break;
                         }
                         saveManager.saveCookie();
                         ROOM_STATUS = 4;
@@ -330,7 +334,7 @@ public class Main extends State {
                     }else if (sector == 8){
                         // wormManager.init();
                     }else{
-                        virusManager.initWave(sector);
+                        virusManager.initWave(sector, debrisManager.getSpawnX(), debrisManager.getSpawnY());
                     }
                     itemDropManager.clear();
                     ROOM_STATUS = 3;
