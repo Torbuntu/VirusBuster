@@ -466,10 +466,19 @@
 		"/managers/DebrisManager.java": {
 			"sdcard": false
 		},
-		"/Entities": {
+		"/entities": {
 			"sdcard": false
 		},
 		"/entities/Debris.java": {
+			"sdcard": false
+		},
+		"/entities/Virus.java": {
+			"sdcard": false
+		},
+		"/entities/Item.java": {
+			"sdcard": false
+		},
+		"/entities/BlastObject.java": {
 			"sdcard": false
 		}
 	},
