@@ -22,6 +22,8 @@ public class BlastManager {
             new BlastObject(),
             new BlastObject()
         };
+        
+        System.out.println("[I] - Blasts initialized");
     }
     
     void update(boolean attack, float x, float y, int dir){
@@ -60,7 +62,7 @@ public class BlastManager {
     
     public boolean hitEnemy(float ex, float ey, float er){
         for(BlastObject b : blasts){
-            if(b.active() && Main.checkCollides(b.getX()+4, b.getY()+4, ex, ey, 4, er)){
+            if(b.active() && Main.circle(b.getX()+4, b.getY()+4, ex, ey, 4, er)){
                 b.hit();
                 hit++;
                 return true;

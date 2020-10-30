@@ -300,7 +300,7 @@ class BossBlast{
     void update(float ex, float ey){
         if(!active)return;
 
-        if(active && Main.checkCollides(x, y, ex, ey, 8, 4)){
+        if(active && Main.circle(x, y, ex, ey, 8, 4)){
             //player hit!
             active = false;
             Main.shield -= 5;

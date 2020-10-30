@@ -16,23 +16,20 @@ import managers.BossManager;
 import managers.WormBossManager;
 import managers.DebrisManager;
 
-
-
 public class Main extends State {
     public static void main(String[] args){
         Game.run(FontC64.font(), new TitleScene());
     }
     public static final SaveManager saveManager = new SaveManager();
     public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
-    
-    // Bot bot;
-    BotManager botManager;
-    BlastManager blastManager;
-    DebrisManager debrisManager;
-    VirusManager virusManager;
-    ItemDropManager itemDropManager;
-    BossManager bossManager;
-    WormBossManager wormManager;
+
+    static BotManager botManager = new BotManager();
+    static BlastManager blastManager = new BlastManager();
+    static BossManager bossManager = new BossManager();
+    static DebrisManager debrisManager = new DebrisManager();
+    static ItemDropManager itemDropManager = new ItemDropManager();
+    static WormBossManager wormManager = new WormBossManager();
+    static VirusManager virusManager = new VirusManager(debrisManager.getSpawnX(), debrisManager.getSpawnY());
     
     public static final String PRESS_C_TRANSPORT = "Press C to transport";
     public static final String SECTOR_CLEAR = "Sector Cleared";
@@ -70,20 +67,13 @@ public class Main extends State {
     }
     
     // helper methods
-    //Deprecated
-    public static boolean checkCollides(float x1, float y1, float x2, float y2, float r1, float r2){
-        float vx = x1 - x2;
-        float vy = y1 - y2;
-        float vr = r1 + r2;
-        return Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
-    }
-    
+
     //Deprecated(potentially slow)
     public static boolean circle(float x1, float y1, float x2, float y2, float r1, float r2){
-        float vx = x1 - x2;
-        float vy = y1 - y2;
-        float vr = r1 + r2;
-        return Math.abs((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
+        int vx = (int)(x1 - x2);
+        int vy = (int)(y1 - y2);
+        int vr = (int)(r1 + r2);
+        return ((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
     }
     
     /**
@@ -94,17 +84,8 @@ public class Main extends State {
     }
     
     void init(){
-        botManager = new BotManager();
-        blastManager = new BlastManager();
-        bossManager = new BossManager();
-        debrisManager = new DebrisManager();
-        itemDropManager = new ItemDropManager();
-        wormManager = new WormBossManager();
-        virusManager = new VirusManager(debrisManager.getSpawnX(), debrisManager.getSpawnY());
         virusManager.initWave(0, debrisManager.getSpawnX(), debrisManager.getSpawnY());
-
         shield = 100;
-
         Mixer.init(8000);
     }
     
@@ -159,41 +140,15 @@ public class Main extends State {
         screen.setTextPosition(140, screen.height()-12);
         screen.print("$$: " + currency);
     }
-    
+
     void drawGrid(){
-        // draw grid
-        if(ZONE % 2 == 1){
-            drawHexGrid();
-        }else{
-            drawRectGrid();
-        }
-    }
-    
-    void drawRectGrid(){
         for(int i = 0; i < 13; i++){
             for(int j = 0; j < 9; j++){
                 screen.drawRect(6+i*16, 16+j*16, 16, 16, 12);
             }
         }
     }
-    
-    void drawHexGrid(){
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 7; j++){
-                int x = 16+i*20;
-                int y = 18+j*20;
-                screen.drawHLine(x,     y,    8,          12);//top
-                screen.drawLine(x+8,    y,    x+14, y+6,  12);
-                screen.drawVLine(x+14,  y+6,  8,          12);//right
-                screen.drawLine(x+14,   y+14, x+8,  y+20, 12);
-                screen.drawHLine(x,     y+20, 8,          12);//bottom
-                screen.drawLine(x,      y+20, x-6,  y+14, 12);
-                screen.drawVLine(x-6,   y+6,  8,          12);//left
-                screen.drawLine(x-6,    y+6,  x,    y,    12);
-            }
-        }
-    }
-    
+
     // TODO: Refactor into more manageable methods.
     void update(){
         screen.clear(3);
@@ -268,13 +223,8 @@ public class Main extends State {
                     currency++;
                 }
                 
-                screen.setTextPosition(screen.width()/2-58, screen.height()/2);
-                screen.setTextColor(0);
-                screen.print(SECTOR_CLEAR);
-                screen.setTextPosition(26, screen.height()/2+16);
-                screen.print(PRESS_C_TRANSPORT);
                 
-                botManager.render();
+                debrisManager.render();
                 
                 if(Button.C.justPressed()){
                     debrisManager.resetDebris();
@@ -287,14 +237,19 @@ public class Main extends State {
                         }
                         saveManager.saveCookie();
                         ROOM_STATUS = 4;
-                        virusManager.resetAll();
                         break;
                     }
                     botManager.setPos(6, screen.height()/2);
-                    virusManager.resetAll();
                     sector++;
                     ROOM_STATUS = 2;
                 }
+                
+                screen.setTextPosition(screen.width()/2-58, screen.height()/2);
+                screen.setTextColor(0);
+                screen.print(SECTOR_CLEAR);
+                screen.setTextPosition(26, screen.height()/2+16);
+                screen.print(PRESS_C_TRANSPORT);
+                botManager.render();
                 
                 drawHud();
                 break;
@@ -351,6 +306,7 @@ public class Main extends State {
                         // wormManager.init();
                     }else{
                         virusManager.initWave(sector, debrisManager.getSpawnX(), debrisManager.getSpawnY());
+                        virusManager.resetAll();
                     }
                     itemDropManager.clear();
                     ROOM_STATUS = 3;
@@ -360,8 +316,10 @@ public class Main extends State {
             case 3://Prep
                 drawGrid();
                 botManager.render();
+                debrisManager.render();
+                
                 screen.drawCircle(screen.width()/2, screen.height()/2, 16, 7);
-                if(checkCollides(botManager.getX()+8, botManager.getY()+8, screen.width()/2, screen.height()/2, 8, 8)){
+                if(circle(botManager.getX()+8, botManager.getY()+8, screen.width()/2, screen.height()/2, 8, 8)){
                     ROOM_STATUS = 0;
                 }
                 drawHud();

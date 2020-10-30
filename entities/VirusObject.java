@@ -26,47 +26,45 @@ class VirusObject{
     }
 
     void update(float bx, float by){
-        if(alive){
-            //START Move Virus
-            sx = 0;
-            sy = 0;
-            
-            // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
-            float dx = Math.abs(virus.x - bx);
-            float dy = Math.abs(virus.y - by);
-            
-            if(dx > dy){
-                if(virus.x < bx){
-                    sx = 0.5f;
-                }
-                if(virus.x > bx){
-                    sx = -0.5f;
-                }
-            }else{
-                if(virus.y > by){
-                    sy = -0.5f;
-                }
-                if(virus.y < by){
-                    sy = 0.5f;
-                }
+        //START Move Virus
+        sx = 0;
+        sy = 0;
+        
+        // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
+        float dx = Math.abs(virus.x - bx);
+        float dy = Math.abs(virus.y - by);
+        
+        if(dx > dy){
+            if(virus.x < bx){
+                sx = 0.5f;
+            }
+            if(virus.x > bx){
+                sx = -0.5f;
+            }
+        }else{
+            if(virus.y > by){
+                sy = -0.5f;
+            }
+            if(virus.y < by){
+                sy = 0.5f;
+            }
+        }
+        
+        //check if close
+        if(bx >= (virus.x - 32) && bx <= (virus.x + 32) && by >= (virus.y - 32) && by <= (virus.y + 32) ){
+            if(bx >= (virus.x - 32) && bx <= virus.x){
+                virus.setMirrored(true);
+            }
+            if(bx <= (virus.x + 32) && bx >= virus.x){
+                virus.setMirrored(false);
+            }
+            if(Main.circle(virus.x+8, virus.y+8, bx+8, by+8, 8, 6)){
+                Main.shield--;
             }
             
-            //check if close
-            if(bx >= (virus.x - 32) && bx <= (virus.x + 32) && by >= (virus.y - 32) && by <= (virus.y + 32) ){
-                if(bx >= (virus.x - 32) && bx <= virus.x){
-                    virus.setMirrored(true);
-                }
-                if(bx <= (virus.x + 32) && bx >= virus.x){
-                    virus.setMirrored(false);
-                }
-                if(Main.checkCollides(virus.x+8, virus.y+8, bx+8, by+8, 8, 6)){
-                    Main.shield--;
-                }
-                
-                virus.bite();
-            }else{
-                virus.walk();
-            }
+            virus.bite();
+        }else{
+            virus.walk();
         }
     }
     

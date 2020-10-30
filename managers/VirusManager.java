@@ -60,6 +60,7 @@ public class VirusManager{
             new VirusObject(spawnX, spawnY),
             new VirusObject(spawnX, spawnY)
         };
+        System.out.println("[I] - Viruses initialized");
     }
     
     public void update(float bx, float by, DebrisManager debris){
@@ -71,13 +72,13 @@ public class VirusManager{
         int spawnClear = 0;
         for(int i = 0; i < spawned; i++){
         // for(int i = 0; i < waves[currentWave]; i++){
-            viruses[i].update(bx, by);
+            
             if(viruses[i].isAlive()){
-                //
+                viruses[i].update(bx, by);
                 checkVirusesCollide(i);
                 
                 for(Debris d : debris.getDebris()){
-                    if(d.getType() != 1){
+                    if(d.getType() == 0){
                         if(d.collide(viruses[i].getX(), viruses[i].getY(), 16, 16)){
                             if(viruses[i].getX()+6 > d.getX() && viruses[i].getX()+10 < d.getX()+16){
                                 viruses[i].setSpeedY(0);
@@ -105,8 +106,17 @@ public class VirusManager{
             }
         }
         if(spawnClear == 0){
-            if(spawned < waves[currentWave]) spawned++;
+            if(spawned < waves[currentWave]){
+                spawn();
+            } 
         }
+    }
+    
+    void spawn(){
+        spawned++;
+        int p = Math.random(1,3);
+        System.out.println(p);
+        viruses[spawned].reset(Main.debrisManager.getSpawnX(p), Main.debrisManager.getSpawnY(p));
     }
     
     void checkVirusesCollide(int i){
@@ -171,10 +181,11 @@ public class VirusManager{
             currentWave++;
             active = waves[currentWave];
             // for(int i = 0; i < waves[currentWave]; i++){
-            for(int i = 0; i < spawned; i++){
+            for(int i = 0; i < waves[currentWave]; i++){
                 int r = Math.random(0, 2);
                 viruses[i].reset(r, spawnX, spawnY);
             }
+            spawned = 1;
             incoming = 150;
         }
     }
@@ -201,8 +212,8 @@ public class VirusManager{
             default:
                 switch(sector){
                     case 0:
-                        waves = new int[]{16, 5, 7};
-                        total = 15;
+                        waves = new int[]{30, 5, 7};
+                        total = 42;
                         break;
                     case 1:
                         waves = new int[]{3, 5, 5, 7};

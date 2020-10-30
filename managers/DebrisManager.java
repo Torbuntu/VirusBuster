@@ -9,10 +9,11 @@ class DebrisManager {
             new Debris(0),
             new Debris(0),
             // new Debris(0),
-            // new Debris(0),
+            new Debris(2),
             new Debris(0),
             new Debris(1)
         };
+        System.out.println("[I] - Debris initialized");
     }
     
     public void resetDebris(){
@@ -39,6 +40,24 @@ class DebrisManager {
         for(Debris d : debris){
             d.draw();
         }
+    }
+    
+    int getSpawnX(int p){
+        for(Debris d : debris){
+            if(d.getType() == p){
+                return d.getX();
+            }
+        }
+        return 0;
+    }
+    
+    int getSpawnY(int p){
+        for(Debris d : debris){
+            if(d.getType() == p){
+                return d.getY();
+            }
+        }
+        return 0;
     }
     
     int getSpawnX(){

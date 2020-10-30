@@ -480,6 +480,9 @@
 		},
 		"/entities/BlastObject.java": {
 			"sdcard": false
+		},
+		"/entities/VirusObject.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

@@ -86,7 +86,7 @@ public class WormBossManager {
     }
     
     boolean headCollidesWithBot(float bx, float by){
-        if(Main.checkCollides(sprite.x+18, sprite.y+18, bx+8, by+8, 14, 8)){
+        if(Main.circle(sprite.x+18, sprite.y+18, bx+8, by+8, 14, 8)){
             return true;
         }
         return false;
@@ -96,7 +96,7 @@ public class WormBossManager {
             return false;
         }
         for(Body b : body){
-            if(b.alive && Main.checkCollides(b.body.x+9, b.body.y+9, bx+8, by+8, 7, 8)){
+            if(b.alive && Main.circle(b.body.x+9, b.body.y+9, bx+8, by+8, 7, 8)){
                 return true;
             }
         }
@@ -132,7 +132,7 @@ public class WormBossManager {
             }
             blastX += bvx;
             blastY += bvy;
-            if(Main.checkCollides(blastX, blastY, bx+8, by+8, 4, 8)){
+            if(Main.circle(blastX, blastY, bx+8, by+8, 4, 8)){
                 blastX = -10;
                 blastY = -10;
                 Main.shield -= 10;
