@@ -1,57 +1,62 @@
-{ "frames": {
-   "Frag 0.png": {
-    "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
+{ "frames": [
+   {
+    "filename": "Frag 0.ase",
+    "frame": { "x": 0, "y": 0, "w": 16, "h": 13 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 13 },
+    "sourceSize": { "w": 16, "h": 13 },
     "duration": 100
    },
-   "Frag 1.png": {
-    "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
+   {
+    "filename": "Frag 1.ase",
+    "frame": { "x": 16, "y": 0, "w": 16, "h": 13 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 13 },
+    "sourceSize": { "w": 16, "h": 13 },
     "duration": 100
    },
-   "Frag 2.png": {
-    "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
+   {
+    "filename": "Frag 2.ase",
+    "frame": { "x": 32, "y": 0, "w": 16, "h": 13 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 13 },
+    "sourceSize": { "w": 16, "h": 13 },
     "duration": 100
    },
-   "Frag 3.png": {
-    "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
+   {
+    "filename": "Frag 3.ase",
+    "frame": { "x": 48, "y": 0, "w": 16, "h": 13 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 13 },
+    "sourceSize": { "w": 16, "h": 13 },
     "duration": 100
    },
-   "Frag 4.png": {
-    "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
+   {
+    "filename": "Frag 4.ase",
+    "frame": { "x": 64, "y": 0, "w": 16, "h": 13 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 150
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 13 },
+    "sourceSize": { "w": 16, "h": 13 },
+    "duration": 100
    }
- },
+ ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.11-x64",
-  "image": "Frag-sheet.png",
+  "version": "1.2.25-x64",
+  "image": "Frag.png",
   "format": "RGBA8888",
-  "size": { "w": 80, "h": 16 },
+  "size": { "w": 80, "h": 13 },
   "scale": "1",
   "frameTags": [
    { "name": "die", "from": 0, "to": 4, "direction": "forward" }
   ],
   "layers": [
-   { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
+   { "name": "Layer", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]

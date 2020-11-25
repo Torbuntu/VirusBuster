@@ -483,6 +483,12 @@
 		},
 		"/entities/VirusObject.java": {
 			"sdcard": false
+		},
+		"/sprites/Virus.ase": {
+			"sdcard": false
+		},
+		"/sprites/Frag.ase": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

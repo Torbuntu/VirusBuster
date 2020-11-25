@@ -33,7 +33,7 @@ class Debris {
     }
     
     private int getCoordX(){
-        int id = Math.random(0, 13);
+        int id = Math.random(1, 12);
         while(id == 6 || id == 7){
             id = Math.random(0, 13);
         }
@@ -42,7 +42,7 @@ class Debris {
     }
     
     private int getCoordY(){
-        int id = Math.random(0, 9);
+        int id = Math.random(1, 8);
         while(id == 4 || id == 5){
             id = Math.random(0, 9);
         }

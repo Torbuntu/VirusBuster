@@ -1,21 +1,24 @@
-{ "frames": {
-   "Virus 0.png": {
+{ "frames": [
+   {
+    "filename": "Virus 0.ase",
     "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
+    "duration": 200
    },
-   "Virus 1.png": {
+   {
+    "filename": "Virus 1.ase",
     "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
+    "duration": 160
    },
-   "Virus 2.png": {
+   {
+    "filename": "Virus 2.ase",
     "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +26,8 @@
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    },
-   "Virus 3.png": {
+   {
+    "filename": "Virus 3.ase",
     "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -31,33 +35,36 @@
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    },
-   "Virus 4.png": {
+   {
+    "filename": "Virus 4.ase",
     "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
+    "duration": 160
    },
-   "Virus 5.png": {
+   {
+    "filename": "Virus 5.ase",
     "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
+    "duration": 160
    }
- },
+ ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.11-x64",
-  "image": "Virus-sheet.png",
+  "version": "1.2.25-x64",
+  "image": "Virus.png",
   "format": "RGBA8888",
   "size": { "w": 96, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "walk", "from": 0, "to": 3, "direction": "forward" },
-   { "name": "bite", "from": 4, "to": 5, "direction": "forward" }
+   { "name": "walk", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "bite", "from": 2, "to": 3, "direction": "forward" },
+   { "name": "hit", "from": 4, "to": 5, "direction": "forward" }
   ],
   "layers": [
    { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }

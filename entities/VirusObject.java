@@ -7,6 +7,7 @@ class VirusObject{
     boolean alive = true;
     float sx = 0, sy = 0;
     int animationTime = 50;
+    int hitTime = 0;
     
     public int aroundX = 0, aroundY = 0;
     
@@ -26,6 +27,14 @@ class VirusObject{
     }
 
     void update(float bx, float by){
+        if(hitTime > 0){
+            hitTime--;
+            virus.hit();
+            return;
+        }
+        if(!alive){
+            return;
+        }
         //START Move Virus
         sx = 0;
         sy = 0;
@@ -69,23 +78,25 @@ class VirusObject{
     }
     
     void updateMovement(){
-        if(aroundX > 0){
-            aroundX--;
-            virus.x += 1;
-        }else if(aroundX < 0){
-            aroundX++;
-            virus.x += -1;
-        }else{
-            virus.x += sx;
-        }
-        if(aroundY > 0){
-            aroundY--;
-            virus.y += 1;
-        }else if(aroundY < 0){
-            aroundY++;
-            virus.y += -1;
-        }else{
-            virus.y += sy;
+        if(hitTime == 0 && alive){
+            if(aroundX > 0){
+                aroundX--;
+                virus.x += 1;
+            }else if(aroundX < 0){
+                aroundX++;
+                virus.x += -1;
+            }else{
+                virus.x += sx;
+            }
+            if(aroundY > 0){
+                aroundY--;
+                virus.y += 1;
+            }else if(aroundY < 0){
+                aroundY++;
+                virus.y += -1;
+            }else{
+                virus.y += sy;
+            }
         }
     }
     
@@ -142,6 +153,9 @@ class VirusObject{
     }
     
     void hit(int damage){
+        if(hitTime == 0 && alive){
+            hitTime = 10;
+        }
         health = health - damage;
         if(health <= 0){
             kill();
@@ -172,6 +186,7 @@ class VirusObject{
         virus.x = x;
         virus.y = y;
         alive = true;
+        hitTime = 0;
         health = baseHealth;
     }
 }

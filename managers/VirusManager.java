@@ -63,7 +63,7 @@ public class VirusManager{
         System.out.println("[I] - Viruses initialized");
     }
     
-    public void update(float bx, float by, DebrisManager debris){
+    public void update(float bx, float by, DebrisManager debris, BlastManager blastManager){
         checkAvailable();
         if(incoming > 0){
             incoming--;
@@ -71,8 +71,15 @@ public class VirusManager{
         }
         int spawnClear = 0;
         for(int i = 0; i < spawned; i++){
-        // for(int i = 0; i < waves[currentWave]; i++){
-            
+            if(viruses[i].isAlive() && blastManager.hitEnemy(viruses[i].getX(), viruses[i].getY(), 6.0f)){
+                viruses[i].hit(1);
+                if(!viruses[i].isAlive()){
+                    explode.play();
+                    total--;
+                    active--;
+                    Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
+                }
+            }
             if(viruses[i].isAlive()){
                 viruses[i].update(bx, by);
                 checkVirusesCollide(i);
@@ -150,23 +157,6 @@ public class VirusManager{
         // for(int i = 0; i < waves[currentWave]; i++){
         for(int i = 0; i < spawned; i++){
             viruses[i].render();
-        }
-    }
-    
-    public void checkBlastHits(BlastManager blastManager){
-        if(incoming <= 0){
-            // for(int i = 0; i < waves[currentWave]; i++){
-            for(int i = 0; i < spawned; i++){
-                if(viruses[i].isAlive() &&  blastManager.hitEnemy(viruses[i].getX()+8, viruses[i].getY()+8, 6.0f)){
-                    viruses[i].hit(1);
-                    if(!viruses[i].isAlive()){
-                        explode.play();
-                        total--;
-                        active--;
-                        Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
-                    }
-                }
-            }
         }
     }
     
