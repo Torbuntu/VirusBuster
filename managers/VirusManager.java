@@ -21,44 +21,45 @@ public class VirusManager{
     int spawnX, spawnY;
     
     int incoming = 150;
+    boolean toggle = false;
     
     public VirusManager(int x, int y){
         this.spawnX = x;
         this.spawnY = y;
         explode = new Explode(1);
         viruses = new VirusObject[]{
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY),
-            new VirusObject(spawnX, spawnY)
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0),
+            new VirusObject(spawnX, spawnY, 1),
+            new VirusObject(spawnX, spawnY, 0)
+            // new VirusObject(spawnX, spawnY, 1),
+            // new VirusObject(spawnX, spawnY, 0),
+            // new VirusObject(spawnX, spawnY, 1),
+            // new VirusObject(spawnX, spawnY, 0),
+            // new VirusObject(spawnX, spawnY, 1),
+            // new VirusObject(spawnX, spawnY, 0),
+            // new VirusObject(spawnX, spawnY, 1),
+            // new VirusObject(spawnX, spawnY, 0),
+            // new VirusObject(spawnX, spawnY, 1)
         };
         System.out.println("[I] - Viruses initialized");
     }
@@ -70,7 +71,11 @@ public class VirusManager{
             return;
         }
         int spawnClear = 0;
+        toggle = !toggle;
         for(int i = 0; i < spawned; i++){
+            if(toggle && viruses[i].getType() == 1){
+                continue;
+            }
             if(viruses[i].isAlive() && blastManager.hitEnemy(viruses[i].getX(), viruses[i].getY(), 6.0f)){
                 viruses[i].hit(1);
                 if(!viruses[i].isAlive()){
@@ -202,8 +207,8 @@ public class VirusManager{
             default:
                 switch(sector){
                     case 0:
-                        waves = new int[]{30, 5, 7};
-                        total = 42;
+                        waves = new int[]{22, 5, 7};
+                        total = 34;
                         break;
                     case 1:
                         waves = new int[]{3, 5, 5, 7};

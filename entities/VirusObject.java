@@ -10,13 +10,13 @@ class VirusObject{
     int hitTime = 0;
     
     public int aroundX = 0, aroundY = 0;
-    
-    //0 = normal, 1 = large
-    int type = 0;
+
+    int type;
     int baseHealth = 2;
     int health = 2;
     
-    VirusObject(int x, int y){
+    VirusObject(int x, int y, int t){
+        type = t;
         virus = new Virus();
         virus.walk();
         
@@ -152,6 +152,18 @@ class VirusObject{
         return sy;
     }
     
+    int getType(){
+        return type;
+    }
+    
+    int getHealth(){
+        return health;
+    }
+    
+    boolean isAlive(){
+        return alive;
+    }
+    
     void hit(int damage){
         if(hitTime == 0 && alive){
             hitTime = 10;
@@ -162,10 +174,6 @@ class VirusObject{
         }
     }
     
-    int getHealth(){
-        return health;
-    }
-    
     void kill(){
         animationTime = 50;
         alive = false;
@@ -173,10 +181,6 @@ class VirusObject{
         frag.y = virus.y;
     }
     
-    boolean isAlive(){
-        return alive;
-    }
-
     void reset(int t, int x, int y){
         type = t;
         reset(x, y);
