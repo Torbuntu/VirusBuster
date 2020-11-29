@@ -62,7 +62,7 @@ public class BlastManager {
     
     public boolean hitEnemy(float ex, float ey, float er){
         for(BlastObject b : blasts){
-            if(b.active() && Main.boundingBox(b.getX()+1, b.getY()+1,6, ex+1, ey+1, 14)){
+            if(b.active() && Main.boundingBox(b.getX()+1, b.getY()+1,6, ex, ey, er)){
                 b.hit();
                 hit++;
                 return true;

@@ -32,7 +32,7 @@ public class BotManager {
      * Unable to shoot while dashing.
      * 
      */
-    void updateBotMovement(DebrisManager debrisManager){
+    void updateBotMovement(DebrisManager debrisManager, boolean checkDebris){
         //START move player
         sx = 0;
         sy = 0;
@@ -98,11 +98,12 @@ public class BotManager {
         else attack = false;
         if(Button.B.isPressed()) attack = false;
         
-        if(!debrisManager.checkCollides(bot.x+sx, bot.y+sy, bot.width(), bot.height() )){
-            bot.x += sx;
-            bot.y += sy;
+        if(checkDebris && debrisManager.checkCollides(bot.x+sx, bot.y+sy, bot.width(), bot.height() )){
+            sx = 0;
+            sy = 0;
         }
-       
+        bot.x += sx;
+        bot.y += sy;
         //END move player
     }
     

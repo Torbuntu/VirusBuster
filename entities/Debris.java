@@ -51,6 +51,7 @@ class Debris {
     }
     
     boolean collide(float fx, float fy, float fw, float fh){
+        //Main.screen.drawRect(fx, fy, fw, fh, 9, true);
         return (x < fx + fw && x + w > fx && y < fy + fh && y + h > fy);
     }
     

@@ -103,8 +103,6 @@ class VirusObject{
     void render(){
         if(alive){
             virus.draw(Main.screen);
-            //debug circle
-            // Main.screen.drawCircle(virus.x+8, virus.y+8, 8, 10, false);
         }else{
             if(animationTime != 0){
                 frag.draw(Main.screen);

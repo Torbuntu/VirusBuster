@@ -155,7 +155,8 @@ public class BossMode{
     }
     
     public void checkBlastHits(BlastManager blastManager){
-        if(alive && blastManager.hitEnemy(virus.x+16, virus.y+16, 14.0f)){
+        //Main.screen.drawRect(virus.x+2, virus.y+2, 28, 28, 8, true);
+        if(alive && blastManager.hitEnemy(virus.x+2, virus.y+2, 28.0f)){
             hit(1);
         }
     }
@@ -303,7 +304,7 @@ class BossBlast{
         if(active && Main.circle(x, y, ex, ey, 8, 4)){
             //player hit!
             active = false;
-            Main.shield -= 5;
+            Main.shield -= 15;
         }
         
         x += dx;
@@ -311,6 +312,7 @@ class BossBlast{
         if(x > 220 || x < 0 || y < 0 || y > 170)active = false;
     }
     
+    //TODO: Make a blast sprite?
     void render(){
         if(active)
             Main.screen.drawCircle(x, y, 8, 8, false);

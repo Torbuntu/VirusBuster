@@ -18,7 +18,7 @@ public class VirusManager{
     int max;
     Explode explode;
     
-    int spawnX, spawnY;
+    int spawnX, spawnY, spawnClear = 60;
     
     int incoming = 150;
     boolean toggle = false;
@@ -70,22 +70,23 @@ public class VirusManager{
             incoming--;
             return;
         }
-        int spawnClear = 0;
+        spawnClear--;
         toggle = !toggle;
         for(int i = 0; i < spawned; i++){
             if(toggle && viruses[i].getType() == 1){
                 continue;
             }
-            if(viruses[i].isAlive() && blastManager.hitEnemy(viruses[i].getX(), viruses[i].getY(), 6.0f)){
-                viruses[i].hit(1);
-                if(!viruses[i].isAlive()){
-                    explode.play();
-                    total--;
-                    active--;
-                    Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
-                }
-            }
             if(viruses[i].isAlive()){
+                if(blastManager.hitEnemy(viruses[i].getX(), viruses[i].getY(), 16.0f)){
+                    viruses[i].hit(1);
+                    if(!viruses[i].isAlive()){
+                        explode.play();
+                        total--;
+                        active--;
+                        Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
+                    }
+                }
+            
                 viruses[i].update(bx, by);
                 checkVirusesCollide(i);
                 
@@ -108,16 +109,13 @@ public class VirusManager{
                                 }
                             }
                         }
-                    }else{
-                        if(d.collide(viruses[i].getX(), viruses[i].getY(), 20, 20)){
-                            spawnClear++;
-                        }
                     }
                 }
                 viruses[i].updateMovement();
             }
         }
         if(spawnClear == 0){
+            spawnClear = 45;
             if(spawned < waves[currentWave]){
                 spawn();
             } 
@@ -127,12 +125,10 @@ public class VirusManager{
     void spawn(){
         spawned++;
         int p = Math.random(1,3);
-        System.out.println(p);
         viruses[spawned].reset(Main.debrisManager.getSpawnX(p), Main.debrisManager.getSpawnY(p));
     }
     
     void checkVirusesCollide(int i){
-        // for(int x = 0; x < waves[currentWave]; x++){
         for(int x = 0; x < spawned; x++){
             if(x != i && viruses[x].isAlive()){
                 if(Main.boundingBox(viruses[i].getX(), viruses[i].getY(), 8, viruses[x].getX(), viruses[x].getY(), 8)){
@@ -159,28 +155,29 @@ public class VirusManager{
             Main.screen.print("<Incoming>");
             return;
         }
-        // for(int i = 0; i < waves[currentWave]; i++){
         for(int i = 0; i < spawned; i++){
             viruses[i].render();
         }
     }
     
     public void checkAvailable(){
-        // for(int i = 0; i < waves[currentWave]; i++){
         for(int i = 0; i < spawned; i++){
             if(viruses[i].isAlive()){
                 return;
             }
         }
+        if(spawned < waves[currentWave]){
+            return;
+        }
         if(total > 0){
             currentWave++;
             active = waves[currentWave];
-            // for(int i = 0; i < waves[currentWave]; i++){
             for(int i = 0; i < waves[currentWave]; i++){
                 int r = Math.random(0, 2);
                 viruses[i].reset(r, spawnX, spawnY);
             }
             spawned = 1;
+            spawnClear = 45;
             incoming = 150;
         }
     }
@@ -204,11 +201,14 @@ public class VirusManager{
         this.spawnX = x;
         this.spawnY = y;
         switch(Main.ZONE){
+            case 0:
+                zoneZero(sector);
+                break;
             default:
                 switch(sector){
                     case 0:
-                        waves = new int[]{22, 5, 7};
-                        total = 34;
+                        waves = new int[]{2, 3, 5};
+                        total = 10;
                         break;
                     case 1:
                         waves = new int[]{3, 5, 5, 7};
@@ -244,5 +244,26 @@ public class VirusManager{
         spawned = 1;
         max = total;
         active = waves[currentWave];
+    }
+    
+    void zoneZero(int sector){
+        switch(sector){
+            case 0:
+                waves = new int[]{2, 3, 5};
+                total = 10;
+                break;
+            case 1:
+                waves = new int[]{3, 5, 5, 7};
+                total = 20;
+                break;
+            case 2:
+                waves = new int[]{5, 5, 8, 10};
+                total = 28;
+                break;
+            case 3:
+                waves = new int[]{5, 5, 10, 15};
+                total = 35;
+                break;
+        }
     }
 }
