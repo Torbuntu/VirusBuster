@@ -10,8 +10,8 @@ public class WormBossManager {
     Body[] body;
     Explode explode;
     int health = 25;
-    int sx = 1, sy = 0, speed = 1, shoot = 150;
-    boolean clear = false, angry = false;
+    int sx = 1, sy = 0, speed = 1, shoot = 150, dying = 150;
+    boolean clear = false, angry = false, alive = true;
     
     float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
     
@@ -33,6 +33,21 @@ public class WormBossManager {
             new Body(7, false),
             new Body(8, true),
         };
+    }
+    
+    public void reset(){
+        dying = 150;
+        alive = true;
+        angry = false;
+        clear = false;
+        sprite.x = -32;
+        sprite.y = 120;
+        sprite.hori();
+        int id = 1;
+        for(Body b : body){
+            b.reset(id, id == 8);
+            id++;
+        }
     }
     
     private void setDir(){
@@ -104,13 +119,14 @@ public class WormBossManager {
     }
     
     void update(BlastManager blastManager, float bx, float by){
+        if(!alive)return;
         if(bodyDestroyed()){
             speed = 2;
-            if(blastManager.hitEnemy(sprite.x+18, sprite.y+18, 16)){
+            if(blastManager.hitEnemy(sprite.x, sprite.y, 32)){
                 health--;
                 if(health <= 0){
                     explode.play();
-                    clear = true;
+                    alive = false;
                 }
             }
             
@@ -139,7 +155,7 @@ public class WormBossManager {
             }
         }else{
            for(Body b : body){
-                if(b.last && b.alive && blastManager.hitEnemy(b.body.x+9, b.body.y+9, 12.0f)){
+                if(b.last && b.alive && blastManager.hitEnemy(b.body.x, b.body.y, 18.0f)){
                     b.hit();
                     if(b.health == 0){
                         b.last = false;
@@ -152,24 +168,25 @@ public class WormBossManager {
                 }
             } 
         }
-        
-        if(sprite.x > Main.screen.width()+140){
-            setDir();
-        }
-        if(sprite.x < -172){
-            setDir();
-        }
-        if(sprite.y > Main.screen.height()+140){
-            setDir();
-        }
-        if(sprite.y < -172){
-            setDir();
-        }
-        sprite.y += sy * speed;
-        sprite.x += sx * speed;
-        
-        for(Body b : body){
-            b.update(sprite.x, sprite.y, sx, sy);
+        if(health > 0){
+            if(sprite.x > Main.screen.width()+140){
+                setDir();
+            }
+            if(sprite.x < -172){
+                setDir();
+            }
+            if(sprite.y > Main.screen.height()+140){
+                setDir();
+            }
+            if(sprite.y < -172){
+                setDir();
+            }
+            sprite.y += sy * speed;
+            sprite.x += sx * speed;
+            
+            for(Body b : body){
+                b.update(sprite.x, sprite.y, sx, sy);
+            }
         }
     }
     
@@ -180,6 +197,24 @@ public class WormBossManager {
 
         for(Body b : body){
             b.render();
+        }
+        if(!alive && dying > 0){
+            switch(dying){
+                case 150:
+                    explode.play();
+                    break;
+                case 100:
+                    explode.play();
+                    break;
+                case 50:
+                    explode.play();
+                    break;
+                case 1:
+                    explode.play();
+                    break;
+            }
+            dying--;
+            sprite.die();
         }
         sprite.draw(Main.screen);
     }
@@ -196,8 +231,9 @@ public class WormBossManager {
         return 145;//health + body * 15
     }
     
+    // ensure we draw the full enemy death animation
     public boolean cleared(){
-        return clear;
+        return dying == 0; 
     }
 }
 
@@ -213,6 +249,16 @@ class Body {
         body.run();
         body.y = 122;
         body.x = id * -18;
+    }
+    
+    void reset(int id, boolean last){
+        this.id = id;
+        this.last = last;
+        health = 15;
+        alive = true;
+        body.run();
+        body.x = 122;
+        body.y = id * -18;
     }
 
     void update(float x, float y, int dirX, int dirY){

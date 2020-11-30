@@ -276,7 +276,7 @@ public class Main extends State {
                                 break;
                         }
                     }else if (SECTOR == 8){
-                        // wormManager.init();
+                        wormManager.reset();
                     }else{
                         virusManager.initWave(SECTOR, debrisManager.getSpawnX(), debrisManager.getSpawnY());
                         virusManager.resetAll();

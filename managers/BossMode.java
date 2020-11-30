@@ -264,10 +264,10 @@ public class BossMode{
         return health;
     }
     
+    // ensure we draw the full enemy death animation
     public boolean getAlive(){
-        return dying > 0; // ensure we draw the full enemy death animation
+        return dying > 0; 
     }
-    
     
     void bite(){}
     void walk(){}
