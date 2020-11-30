@@ -170,16 +170,8 @@ public class Main extends State {
                 }
                 
                 botManager.render();
-                switch(ZONE){
-                    case 0:
-                        updateZoneZero();
-                        break;
-                    case 1:
-                        updateZoneOne();
-                        break;
-                    case 2:break;
-                    case 3:break;
-                }
+                
+                updateZone();
                 
                 drawHud();
                 break;
@@ -220,6 +212,7 @@ public class Main extends State {
                 screen.setTextPosition(screen.width()/2-58, screen.height()/2);
                 screen.setTextColor(0);
                 screen.print(SECTOR_CLEAR);
+                
                 screen.setTextPosition(26, screen.height()/2+16);
                 screen.print(PRESS_C_TRANSPORT);
                 botManager.render();
@@ -329,6 +322,37 @@ public class Main extends State {
         screen.flush();
     }
     
+    void updateMiniBoss(){
+        // We set false because there is no debris in the boss battles
+        botManager.updateBotMovement(debrisManager, false);
+        bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
+        bossManager.render();
+        if(bossManager.cleared()){
+            // CLEARED!
+            ROOM_STATUS = 1;
+        }
+    }
+    
+    void updateWormBoss(){
+        wormManager.update(blastManager, botManager.getX(), botManager.getY());
+        if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
+        || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
+            // Move bot Y
+            if(botManager.getY() + 32 < screen.height()-45) botManager.setY(botManager.getY()+32);
+            else botManager.setY(botManager.getY()-32);
+            // Move bot X
+            if(botManager.getX() + 32 < screen.width()-45) botManager.setX(botManager.getX()+32);
+            else botManager.setX(botManager.getX()-32);
+            // Subtract shielding
+            shield-=10;
+        }
+        
+        wormManager.render();
+        if(wormManager.cleared()){
+            ROOM_STATUS = 1;
+        }  
+    }
+    
     /**
      *   This is the typical virus spawning wave shooter event. 
      *   Increasing waves of enemy viruses attack.
@@ -343,72 +367,32 @@ public class Main extends State {
             ROOM_STATUS = 1; // CLEARED!
         }
         virusManager.render();
-        
     }
     
     /**
-     * Update for ZONE 0. This will manage updating all the SECTORs.
-     * In ZONE 0 there are 5 SECTORs (0 throgh 4)
-     * In ZONE 0 the mega boss is the typical mini boss, but on SECTOR 4 instead of 8
-     */
-    void updateZoneZero() {
-        switch(SECTOR){
-            default:
-                updateVirusRoom();
-                break;
-            case 4: 
-                bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
-                bossManager.render();
-                if(bossManager.cleared()){
-                    // CLEARED!
-                    ROOM_STATUS = 1;
-                }
-                botManager.updateBotMovement(debrisManager, false);
-                break;
-        }
-               
-        //START update Blast
-        blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
-        blastManager.render();
-    }
-    
-    /**
-     * ZONE 1 has 9 sectors (0 through 8)
+     * ZONE's have 9 sectors (0 through 8), except ZONE 0, which ends after 4
      * Sector 4 is another mini boss battle. 8 is the boss battle with The Worm
      */ 
-    void updateZoneOne(){
+    void updateZone(){
         switch(SECTOR){
             default:
                 updateVirusRoom();
                 break;
             case 4:
-                bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
-                bossManager.render();
-                if(bossManager.cleared()){
-                    // CLEARED!
-                    ROOM_STATUS = 1; 
-                }
-                // We set false because there is no debris in the boss battles
-                botManager.updateBotMovement(debrisManager, false);
+                updateMiniBoss();
                 break;
             case 8:
-                wormManager.update(blastManager, botManager.getX(), botManager.getY());
-                if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
-                || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
-                    // Move bot Y
-                    if(botManager.getY() + 32 < screen.height()-45) botManager.setY(botManager.getY()+32);
-                    else botManager.setY(botManager.getY()-32);
-                    // Move bot X
-                    if(botManager.getX() + 32 < screen.width()-45) botManager.setX(botManager.getX()+32);
-                    else botManager.setX(botManager.getX()-32);
-                    // Subtract shielding
-                    shield-=10;
+                switch(ZONE){
+                    case 1:
+                        updateWormBoss();
+                        break;
+                    case 2:
+                        //TODO: update Fork Bomb
+                        break;
+                    case 3:
+                        //TODO: update grabby mc grab face
+                        break;
                 }
-                
-                wormManager.render();
-                if(wormManager.cleared()){
-                    ROOM_STATUS = 1;
-                }  
                 botManager.updateBotMovement(debrisManager, false);
                 break;
         }
@@ -416,4 +400,6 @@ public class Main extends State {
         blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         blastManager.render();
     }
+    
+    void updateEndless(){}
 }

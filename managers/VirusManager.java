@@ -13,7 +13,6 @@ public class VirusManager{
     int[] waves;
     int currentWave;
     int spawned;
-    int active;
     int total;
     int max;
     Explode explode;
@@ -51,15 +50,6 @@ public class VirusManager{
             new VirusObject(spawnX, spawnY, 0),
             new VirusObject(spawnX, spawnY, 1),
             new VirusObject(spawnX, spawnY, 0)
-            // new VirusObject(spawnX, spawnY, 1),
-            // new VirusObject(spawnX, spawnY, 0),
-            // new VirusObject(spawnX, spawnY, 1),
-            // new VirusObject(spawnX, spawnY, 0),
-            // new VirusObject(spawnX, spawnY, 1),
-            // new VirusObject(spawnX, spawnY, 0),
-            // new VirusObject(spawnX, spawnY, 1),
-            // new VirusObject(spawnX, spawnY, 0),
-            // new VirusObject(spawnX, spawnY, 1)
         };
         System.out.println("[I] - Viruses initialized");
     }
@@ -82,7 +72,6 @@ public class VirusManager{
                     if(!viruses[i].isAlive()){
                         explode.play();
                         total--;
-                        active--;
                         Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
                     }
                 }
@@ -171,7 +160,6 @@ public class VirusManager{
         }
         if(total > 0){
             currentWave++;
-            active = waves[currentWave];
             for(int i = 0; i < waves[currentWave]; i++){
                 int r = Math.random(0, 2);
                 viruses[i].reset(r, spawnX, spawnY);
@@ -243,7 +231,6 @@ public class VirusManager{
         }
         spawned = 1;
         max = total;
-        active = waves[currentWave];
     }
     
     void zoneZero(int sector){
