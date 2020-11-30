@@ -85,7 +85,6 @@ public class Main extends State {
     }
     
     void init(){
-        bossManager.init(1);//tmp
         debrisManager.resetDebris();
         virusManager.initWave(0, debrisManager.getSpawnX(), debrisManager.getSpawnY());
         virusManager.resetAll();
@@ -175,55 +174,12 @@ public class Main extends State {
                     case 0:
                         updateZoneZero();
                         break;
-                    case 1:break;
+                    case 1:
+                        updateZoneOne();
+                        break;
                     case 2:break;
                     case 3:break;
                 }
-                // switch(SECTOR){
-                //     case 4:
-                //         bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
-                //         bossManager.render();
-                //         if(bossManager.cleared()){
-                //             ROOM_STATUS = 1; // CLEARED!
-                //         }
-                //     break;
-                //     case 8:
-                //         switch(ZONE){
-                //             case 1:
-                //                 wormManager.update(blastManager, botManager.getX(), botManager.getY());
-                            
-                //                 if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
-                //                 || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
-                //                     // Move bot Y
-                //                     if(botManager.getY() + 32 < screen.height()-45) botManager.setY(botManager.getY()+32);
-                //                     else botManager.setY(botManager.getY()-32);
-                //                     // Move bot X
-                //                     if(botManager.getX() + 32 < screen.width()-45) botManager.setX(botManager.getX()+32);
-                //                     else botManager.setX(botManager.getX()-32);
-                //                     // Subtract shielding
-                //                     shield-=10;
-                //                 }
-                                
-                //                 wormManager.render();
-                //                 if(wormManager.cleared()){
-                //                     ROOM_STATUS = 1;
-                //                 }  
-                //                 break;
-                //             case 2:break;
-                //             case 3:break;
-                //         }
-  
-                //     break;
-                //     default:// Normal SECTOR
-                //         debrisManager.render();
-                //         virusManager.update(botManager.getX(), botManager.getY(), debrisManager, blastManager);
-                //         //virusManager.checkBlastHits(blastManager);
-                //         if(virusManager.getThreats() == 0){
-                //             ROOM_STATUS = 1; // CLEARED!
-                //         }
-                //         virusManager.render();
-                //     break;
-                // }
                 
                 drawHud();
                 break;
@@ -376,6 +332,7 @@ public class Main extends State {
     /**
      *   This is the typical virus spawning wave shooter event. 
      *   Increasing waves of enemy viruses attack.
+     *   When updating the bot movement, we pass `true` so it knows to check debris collisions.
      */
     void updateVirusRoom(){
         botManager.updateBotMovement(debrisManager, true);
@@ -403,12 +360,58 @@ public class Main extends State {
                 bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
                 bossManager.render();
                 if(bossManager.cleared()){
-                    ROOM_STATUS = 1; // CLEARED!
+                    // CLEARED!
+                    ROOM_STATUS = 1;
                 }
                 botManager.updateBotMovement(debrisManager, false);
                 break;
         }
                
+        //START update Blast
+        blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        blastManager.render();
+    }
+    
+    /**
+     * ZONE 1 has 9 sectors (0 through 8)
+     * Sector 4 is another mini boss battle. 8 is the boss battle with The Worm
+     */ 
+    void updateZoneOne(){
+        switch(SECTOR){
+            default:
+                updateVirusRoom();
+                break;
+            case 4:
+                bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
+                bossManager.render();
+                if(bossManager.cleared()){
+                    // CLEARED!
+                    ROOM_STATUS = 1; 
+                }
+                // We set false because there is no debris in the boss battles
+                botManager.updateBotMovement(debrisManager, false);
+                break;
+            case 8:
+                wormManager.update(blastManager, botManager.getX(), botManager.getY());
+                if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
+                || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
+                    // Move bot Y
+                    if(botManager.getY() + 32 < screen.height()-45) botManager.setY(botManager.getY()+32);
+                    else botManager.setY(botManager.getY()-32);
+                    // Move bot X
+                    if(botManager.getX() + 32 < screen.width()-45) botManager.setX(botManager.getX()+32);
+                    else botManager.setX(botManager.getX()-32);
+                    // Subtract shielding
+                    shield-=10;
+                }
+                
+                wormManager.render();
+                if(wormManager.cleared()){
+                    ROOM_STATUS = 1;
+                }  
+                botManager.updateBotMovement(debrisManager, false);
+                break;
+        }
         //START update Blast
         blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         blastManager.render();
