@@ -1,13 +1,13 @@
 import managers.BlastManager;
-import managers.BossMode;
+import entities.MiniBoss;
 
-public class BossManager {
+public class MiniBossManager {
     int activeBosses = 1;
-    BossMode[] bosses = new BossMode[]{
-        new BossMode(),
-        new BossMode(),
-        new BossMode(),
-        new BossMode()
+    MiniBoss[] bosses = new MiniBoss[]{
+        new MiniBoss(),
+        new MiniBoss(),
+        new MiniBoss(),
+        new MiniBoss()
     };
     
 

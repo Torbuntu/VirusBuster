@@ -2,7 +2,7 @@ import sprites.SmallBoss;
 import managers.BlastManager;
 import audio.Explode;
 
-public class BossMode{
+public class MiniBoss{
     Explode explode;
     BossBlast[] blasts;
     int hurt = 0;

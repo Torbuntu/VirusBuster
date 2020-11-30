@@ -12,7 +12,7 @@ import managers.BotManager;
 import managers.ItemDropManager;
 import managers.BlastManager;
 import managers.VirusManager;
-import managers.BossManager;
+import managers.MiniBossManager;
 import managers.WormBossManager;
 import managers.DebrisManager;
 
@@ -25,19 +25,21 @@ public class Main extends State {
 
     static BotManager botManager = new BotManager();
     static BlastManager blastManager = new BlastManager();
-    static BossManager bossManager = new BossManager();
+    static MiniBossManager bossManager = new MiniBossManager();
     static DebrisManager debrisManager = new DebrisManager();
     static ItemDropManager itemDropManager = new ItemDropManager();
     static WormBossManager wormManager = new WormBossManager();
     static VirusManager virusManager = new VirusManager(debrisManager.getSpawnX(), debrisManager.getSpawnY());
     
-    public static final String PRESS_C_TRANSPORT = "Press C to transport";
-    public static final String SECTOR_CLEAR = "Sector Cleared";
+    public final String PRESS_C_TRANSPORT = "Press C to transport";
+    public final String SECTOR_CLEAR = "Sector Cleared";
     
     public static int SECTOR = 0;
     public static int ROOM_STATUS = 0; 
     public static int ZONE = 0;
     public static void setZone(int z){
+        //Always start  sector at 0
+        SECTOR = 0;
         ZONE = z;
     }
     

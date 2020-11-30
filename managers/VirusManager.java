@@ -1,4 +1,3 @@
-
 import audio.Explode;
 
 import entities.Debris;
@@ -63,16 +62,16 @@ public class VirusManager{
         spawnClear--;
         toggle = !toggle;
         for(int i = 0; i < spawned; i++){
-            if(toggle && viruses[i].getType() == 1){
+            if(toggle && viruses[i].type == 1){
                 continue;
             }
-            if(viruses[i].isAlive()){
+            if(viruses[i].alive){
                 if(blastManager.hitEnemy(viruses[i].getX(), viruses[i].getY(), 16.0f)){
                     viruses[i].hit(1);
-                    if(!viruses[i].isAlive()){
+                    if(!viruses[i].alive){
                         explode.play();
                         total--;
-                        Main.updateKills(viruses[i].frag.x, viruses[i].frag.y);
+                        Main.updateKills(viruses[i].virus.x, viruses[i].virus.y);
                     }
                 }
             
@@ -119,7 +118,7 @@ public class VirusManager{
     
     void checkVirusesCollide(int i){
         for(int x = 0; x < spawned; x++){
-            if(x != i && viruses[x].isAlive()){
+            if(x != i && viruses[x].alive){
                 if(Main.boundingBox(viruses[i].getX(), viruses[i].getY(), 8, viruses[x].getX(), viruses[x].getY(), 8)){
                     if(viruses[i].getX() < viruses[x].getX()){
                         viruses[i].setSpeedX(-2.0f);
@@ -151,7 +150,7 @@ public class VirusManager{
     
     public void checkAvailable(){
         for(int i = 0; i < spawned; i++){
-            if(viruses[i].isAlive()){
+            if(viruses[i].alive){
                 return;
             }
         }

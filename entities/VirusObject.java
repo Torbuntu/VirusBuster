@@ -1,9 +1,7 @@
 import sprites.Virus;
-import sprites.Frag;
 
 class VirusObject{
     Virus virus;
-    Frag frag;//dead virus
     boolean alive = true;
     float sx = 0, sy = 0;
     int animationTime = 50;
@@ -21,9 +19,6 @@ class VirusObject{
         virus.walk();
         
         reset(x, y);
-        
-        frag = new Frag();
-        frag.die();
     }
 
     void update(float bx, float by){
@@ -105,26 +100,19 @@ class VirusObject{
             virus.draw(Main.screen);
         }else{
             if(animationTime != 0){
-                frag.draw(Main.screen);
+                virus.die();
+                virus.draw(Main.screen);
                 animationTime--;
             }
         }
     }
     
     float getX(){
-        if(alive){
-            return virus.x;
-        }else{
-            return frag.x;
-        }
+        return virus.x;
     }
     
     float getY(){
-        if(alive){
-            return virus.y;
-        }else{
-            return frag.y;
-        }
+        return virus.y;
     }
     
     float getWidth(){
@@ -149,19 +137,7 @@ class VirusObject{
     float getSpeedY(){
         return sy;
     }
-    
-    int getType(){
-        return type;
-    }
-    
-    int getHealth(){
-        return health;
-    }
-    
-    boolean isAlive(){
-        return alive;
-    }
-    
+
     void hit(int damage){
         if(hitTime == 0 && alive){
             hitTime = 10;
@@ -175,8 +151,6 @@ class VirusObject{
     void kill(){
         animationTime = 50;
         alive = false;
-        frag.x = virus.x;
-        frag.y = virus.y;
     }
     
     void reset(int t, int x, int y){

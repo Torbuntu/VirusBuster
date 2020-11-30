@@ -1,16 +1,16 @@
 { "frames": [
    {
     "filename": "WormBoss 0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 0, "y": 0, "w": 30, "h": 32 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 0, "w": 30, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 200
    },
    {
     "filename": "WormBoss 1.aseprite",
-    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 30, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
@@ -19,16 +19,16 @@
    },
    {
     "filename": "WormBoss 2.aseprite",
-    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 62, "y": 0, "w": 32, "h": 30 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 32, "h": 30 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 200
    },
    {
     "filename": "WormBoss 3.aseprite",
-    "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 94, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
@@ -37,7 +37,7 @@
    },
    {
     "filename": "WormBoss 4.aseprite",
-    "frame": { "x": 128, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 126, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
@@ -46,7 +46,7 @@
    },
    {
     "filename": "WormBoss 5.aseprite",
-    "frame": { "x": 160, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 158, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
@@ -59,7 +59,7 @@
   "version": "1.2.25-x64",
   "image": "WormBoss.png",
   "format": "RGBA8888",
-  "size": { "w": 192, "h": 32 },
+  "size": { "w": 190, "h": 32 },
   "scale": "1",
   "frameTags": [
    { "name": "vert", "from": 0, "to": 1, "direction": "forward" },

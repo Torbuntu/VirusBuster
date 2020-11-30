@@ -1,57 +1,84 @@
 { "frames": [
    {
     "filename": "Virus 0.ase",
-    "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "frame": { "x": 0, "y": 0, "w": 16, "h": 11 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 5, "w": 16, "h": 11 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 200
    },
    {
     "filename": "Virus 1.ase",
-    "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
+    "frame": { "x": 16, "y": 0, "w": 16, "h": 14 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 16, "h": 14 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 160
    },
    {
     "filename": "Virus 2.ase",
-    "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
+    "frame": { "x": 32, "y": 0, "w": 14, "h": 16 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 0, "w": 14, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    },
    {
     "filename": "Virus 3.ase",
-    "frame": { "x": 48, "y": 0, "w": 16, "h": 16 },
+    "frame": { "x": 46, "y": 0, "w": 14, "h": 16 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 0, "w": 14, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    },
    {
     "filename": "Virus 4.ase",
-    "frame": { "x": 64, "y": 0, "w": 16, "h": 16 },
+    "frame": { "x": 60, "y": 0, "w": 16, "h": 13 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 2, "w": 16, "h": 13 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 160
    },
    {
     "filename": "Virus 5.ase",
-    "frame": { "x": 80, "y": 0, "w": 16, "h": 16 },
+    "frame": { "x": 76, "y": 0, "w": 16, "h": 14 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 16, "h": 14 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 160
+   },
+   {
+    "filename": "Virus 6.ase",
+    "frame": { "x": 92, "y": 0, "w": 16, "h": 14 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 16, "h": 14 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Virus 7.ase",
+    "frame": { "x": 108, "y": 0, "w": 16, "h": 15 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 16, "h": 15 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Virus 8.ase",
+    "frame": { "x": 124, "y": 0, "w": 16, "h": 14 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 2, "w": 16, "h": 14 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 200
    }
  ],
  "meta": {
@@ -59,12 +86,13 @@
   "version": "1.2.25-x64",
   "image": "Virus.png",
   "format": "RGBA8888",
-  "size": { "w": 96, "h": 16 },
+  "size": { "w": 140, "h": 16 },
   "scale": "1",
   "frameTags": [
    { "name": "walk", "from": 0, "to": 1, "direction": "forward" },
    { "name": "bite", "from": 2, "to": 3, "direction": "forward" },
-   { "name": "hit", "from": 4, "to": 5, "direction": "forward" }
+   { "name": "hit", "from": 4, "to": 5, "direction": "forward" },
+   { "name": "die", "from": 6, "to": 8, "direction": "forward" }
   ],
   "layers": [
    { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }

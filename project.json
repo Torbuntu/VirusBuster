@@ -226,24 +226,6 @@
 			"palette": "[default]",
 			"palOffset": 0
 		},
-		"/sprites/Frag-sheet.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Frag.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Frag.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
 		"/sprites/Virus-sheet.png": {
 			"sdcard": false,
 			"implements": "",
@@ -487,7 +469,13 @@
 		"/sprites/Virus.ase": {
 			"sdcard": false
 		},
-		"/sprites/Frag.ase": {
+		"/entities/BossMode.java": {
+			"sdcard": false
+		},
+		"/entities/MiniBoss.java": {
+			"sdcard": false
+		},
+		"/managers/MiniBossManager.java": {
 			"sdcard": false
 		}
 	},
