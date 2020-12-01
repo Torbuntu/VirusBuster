@@ -6,9 +6,11 @@ import entities.BossBlast;
 public class MiniBoss{
     Explode explode;
     BossBlast[] blasts;
+    SmallBoss virus;
+        
     int hurt = 0;
     float sx = 0, sy = 0;//speed variables
-    SmallBoss virus;
+
     int health, maxHealth;
     int shooting = 0, shootReady = 250, dying = 150, berserk = 0;
     boolean damaged = false;

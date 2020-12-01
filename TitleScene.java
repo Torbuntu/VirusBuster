@@ -15,8 +15,9 @@ public class TitleScene extends State {
     void update(){
         
         if(Button.B.justPressed()){
-            Main.setZone(select);
-            Game.changeState(new Main());
+            Globals.ZONE = select;
+            Globals.shield = 100; //going in full health
+            Game.changeState(new NormalSector());
         }
         
         Main.screen.clear(3);

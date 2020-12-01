@@ -13,10 +13,10 @@ class BossBlast {
     void update(float ex, float ey){
         if(!active)return;
 
-        if(active && Main.circle(x, y, ex, ey, 8, 4)){
+        if(active && Globals.circle(x, y, ex, ey, 8, 4)){
             //player hit!
             active = false;
-            Main.shield -= 15;
+            Globals.shield -= 15;
         }
         
         x += dx;

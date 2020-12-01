@@ -22,7 +22,7 @@ public class Main extends State {
     }
     public static final SaveManager saveManager = new SaveManager();
     public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
-
+/*
     static BotManager botManager = new BotManager();
     static BlastManager blastManager = new BlastManager();
     
@@ -55,6 +55,7 @@ public class Main extends State {
         itemY = y;
         createItemDrop = true;
     }
+
     
     void reset(){
         currency = 0;
@@ -71,7 +72,7 @@ public class Main extends State {
     }
     
     // helper methods
-
+*/
     //Deprecated(potentially slow)
     public static boolean circle(float x1, float y1, float x2, float y2, float r1, float r2){
         int vx = (int)(x1 - x2);
@@ -79,7 +80,7 @@ public class Main extends State {
         int vr = (int)(r1 + r2);
         return ((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
     }
-    
+ 
     /**
     * Takes two square objects and checks if they intersect, given x,y and size
     */
@@ -88,11 +89,13 @@ public class Main extends State {
     }
     
     void init(){
+        /*
         debrisManager.resetDebris();
         virusManager.initWave(0, debrisManager.getSpawnX(), debrisManager.getSpawnY());
         virusManager.resetAll();
         shield = 100;
         Mixer.init(8000);
+        */
     }
     
     /**
@@ -100,6 +103,7 @@ public class Main extends State {
      * as well as displaying the Score, currency and current ZONE:SECTOR.
      * 
      */
+     /*
     void drawHud(){
         // Fill rects for the top and bottom sections
         screen.fillRect(0, 0, screen.width(), 16, 3);
@@ -150,11 +154,11 @@ public class Main extends State {
     void drawGrid(){
         screen.drawRect(6, 16, screen.width()-12, screen.height()-32, 12, true);
     }
-
+*/
     // TODO: Refactor into more manageable methods.
     void update(){
         screen.clear(3);
-
+/*
         if(createItemDrop){
             createItemDrop = false;
             itemDropManager.newDrop(itemX, itemY);
@@ -321,21 +325,11 @@ public class Main extends State {
                 
                 break;
         }
-        
+        */
         screen.flush();
     }
-    
-    void updateMiniBoss(){
-        // We set false because there is no debris in the boss battles
-        botManager.updateBotMovement(debrisManager, false);
-        bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
-        bossManager.render();
-        if(bossManager.cleared()){
-            // CLEARED!
-            ROOM_STATUS = 1;
-        }
-    }
-    
+    /*
+
     void updateWormBoss(){
         wormManager.update(blastManager, botManager.getX(), botManager.getY());
         if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
@@ -355,27 +349,19 @@ public class Main extends State {
             ROOM_STATUS = 1;
         }  
     }
-    
+    */
     /**
      *   This is the typical virus spawning wave shooter event. 
      *   Increasing waves of enemy viruses attack.
      *   When updating the bot movement, we pass `true` so it knows to check debris collisions.
      */
-    void updateVirusRoom(){
-        botManager.updateBotMovement(debrisManager, true);
-        debrisManager.render();
-        virusManager.update(botManager.getX(), botManager.getY(), debrisManager, blastManager);
+     /*
 
-        if(virusManager.getThreats() == 0){
-            ROOM_STATUS = 1; // CLEARED!
-        }
-        virusManager.render();
-    }
-    
     /**
      * ZONE's have 9 sectors (0 through 8), except ZONE 0, which ends after 4
      * Sector 4 is another mini boss battle. 8 is the boss battle with The Worm
      */ 
+     /*
     void updateZone(){
         switch(SECTOR){
             default:
@@ -405,4 +391,5 @@ public class Main extends State {
     }
     
     void updateEndless(){}
+    */
 }

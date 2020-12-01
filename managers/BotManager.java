@@ -26,13 +26,7 @@ public class BotManager {
         bot.y = y;
     }
     
-    /**
-     * updateBotMovement controls the logic for bot movement and animation type
-     * When dashing, player shield is lower and thus they take more damage.
-     * Unable to shoot while dashing.
-     * 
-     */
-    void updateBotMovement(DebrisManager debrisManager, boolean checkDebris){
+    void updateBotMovement(){
         //START move player
         sx = 0;
         sy = 0;
@@ -97,13 +91,27 @@ public class BotManager {
         if(Button.A.isPressed()) attack = true;
         else attack = false;
         if(Button.B.isPressed()) attack = false;
-        
-        if(checkDebris && debrisManager.checkCollides(bot.x+sx, bot.y+sy, bot.width(), bot.height() )){
-            sx = 0;
-            sy = 0;
-        }
+
         bot.x += sx;
         bot.y += sy;
+        //END move player
+    }
+    
+    /**
+     * updateBotMovement controls the logic for bot movement and animation type
+     * When dashing, player shield is lower and thus they take more damage.
+     * Unable to shoot while dashing.
+     * 
+     */
+    void updateBotMovement(DebrisManager debrisManager, boolean checkDebris){
+        //START move player
+
+        updateBotMovement();
+        if(checkDebris && debrisManager.checkCollides(bot.x+sx, bot.y+sy, bot.width(), bot.height() )){
+            bot.x -= sx;
+            bot.y -= sy;
+        }
+
         //END move player
     }
     

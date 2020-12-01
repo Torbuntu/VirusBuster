@@ -23,7 +23,7 @@ public class MiniBossManager {
             bosses[i].update(blastManager, bx, by);
             for(int x = 0; x < activeBosses; x++){
                 if(x != i){
-                    if(Main.circle(bosses[i].getX()+16, bosses[i].getY()+16, bosses[x].getX()+16, bosses[x].getY()+16, 14, 14)){
+                    if(Globals.circle(bosses[i].getX()+16, bosses[i].getY()+16, bosses[x].getX()+16, bosses[x].getY()+16, 14, 14)){
                         if(bosses[i].getX() < bosses[x].getX()) {
                             bosses[i].setSpeedX(-2.0f);
                             bosses[x].incX(2.0f);

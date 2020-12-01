@@ -71,7 +71,7 @@ public class VirusManager{
                     if(!viruses[i].alive){
                         explode.play();
                         total--;
-                        Main.updateKills(viruses[i].virus.x, viruses[i].virus.y);
+                        Globals.updateKills(viruses[i].virus.x, viruses[i].virus.y);
                     }
                 }
             
@@ -105,21 +105,21 @@ public class VirusManager{
         if(spawnClear == 0){
             spawnClear = 45;
             if(spawned < waves[currentWave]){
-                spawn();
+                spawn(debris);
             } 
         }
     }
     
-    void spawn(){
+    void spawn(DebrisManager debrisManager){
         spawned++;
         int p = Math.random(1,3);
-        viruses[spawned].reset(Main.debrisManager.getSpawnX(p), Main.debrisManager.getSpawnY(p));
+        viruses[spawned].reset(debrisManager.getSpawnX(p), debrisManager.getSpawnY(p));
     }
     
     void checkVirusesCollide(int i){
         for(int x = 0; x < spawned; x++){
             if(x != i && viruses[x].alive){
-                if(Main.boundingBox(viruses[i].getX(), viruses[i].getY(), 8, viruses[x].getX(), viruses[x].getY(), 8)){
+                if(Globals.boundingBox(viruses[i].getX(), viruses[i].getY(), 8, viruses[x].getX(), viruses[x].getY(), 8)){
                     if(viruses[i].getX() < viruses[x].getX()){
                         viruses[i].setSpeedX(-2.0f);
                     }else{
@@ -187,7 +187,7 @@ public class VirusManager{
         currentWave = 0;
         this.spawnX = x;
         this.spawnY = y;
-        switch(Main.ZONE){
+        switch(Globals.ZONE){
             case 0:
                 zoneZero(sector);
                 break;

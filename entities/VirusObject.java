@@ -62,8 +62,8 @@ class VirusObject{
             if(bx <= (virus.x + 32) && bx >= virus.x){
                 virus.setMirrored(false);
             }
-            if(Main.circle(virus.x+8, virus.y+8, bx+8, by+8, 8, 6)){
-                Main.shield--;
+            if(Globals.circle(virus.x+8, virus.y+8, bx+8, by+8, 8, 6)){
+                Globals.shield--;
             }
             
             virus.bite();

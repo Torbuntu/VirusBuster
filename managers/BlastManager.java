@@ -4,10 +4,8 @@ public class BlastManager {
     
     // refresh -30 how quickly blasts refresh
     // rate    -3 how many blasts are active at a time
-    int cooldown = 0, refresh = 30, rate = 3;
+    int cooldown = 0;
     BlastObject[] blasts;
-    int shots = 0;
-    int hit = 0;
     
     public BlastManager(){
         blasts = new BlastObject[]{
@@ -31,8 +29,8 @@ public class BlastManager {
             cooldown--;
         }
         if(attack && cooldown == 0){
-            cooldown = refresh;
-            for(int i = 0; i < rate; i++){
+            cooldown = Globals.refresh;
+            for(int i = 0; i < Globals.rate; i++){
                 if(!blasts[i].active()){
                     blasts[i].setX(x);
                     blasts[i].setY(y);
@@ -49,22 +47,22 @@ public class BlastManager {
                         blasts[i].setDir(0.0f, 2.0f);
                     }
                     blasts[i].draw = true;
-                    shots++;
+                    Globals.shots++;
                     return;
                 }
             }
         }
         
-        for(int i = 0; i < rate; i++){
+        for(int i = 0; i < Globals.rate; i++){
             blasts[i].update();
         }
     }
     
     public boolean hitEnemy(float ex, float ey, float er){
         for(BlastObject b : blasts){
-            if(b.active() && Main.boundingBox(b.getX()+1, b.getY()+1,6, ex, ey, er)){
+            if(b.active() && Globals.boundingBox(b.getX()+1, b.getY()+1,6, ex, ey, er)){
                 b.hit();
-                hit++;
+                Globals.hit++;
                 return true;
             }
         }
@@ -72,39 +70,12 @@ public class BlastManager {
     }
     
     void render(){
-        int cooldownWidth = (int)(cooldown * 78 / refresh);
+        int cooldownWidth = (int)(cooldown * 78 / Globals.refresh);
         Main.screen.drawHLine(6, 13, cooldownWidth, 8);
-        for(int i = 0; i < rate; i++){
+        for(int i = 0; i < Globals.rate; i++){
             blasts[i].render();
         }
     }
-    
-    public void incRate(){
-        if(rate > 10) rate = 10;
-        else rate++;
-    }
-    public void decRate(){
-        if(rate > 3) rate--;
-    }
-    public void incRefresh(){
-        refresh-=5;
-        if(refresh < 5) refresh = 5;
-    }
-    public void decRefresh(){
-        refresh+=5;
-    }
-    public int getRefresh(){
-        return refresh;
-    }
-    public int getRate(){
-        return rate;
-    }
-    
-    //TODO: This is always returning 0 for some reason. 
-    public int getAccuracy(){
-        if(hit == 0)return 0;
-        if(shots == 0) return 0;
-        return Math.abs(hit * 100 / shots);
-    }
+
 }
 
