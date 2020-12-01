@@ -477,6 +477,24 @@
 		},
 		"/managers/MiniBossManager.java": {
 			"sdcard": false
+		},
+		"/entities/BossBlastObject.java": {
+			"sdcard": false
+		},
+		"/entities/BossBlast.java": {
+			"sdcard": false
+		},
+		"/managers/ForkBombManager.java": {
+			"sdcard": false
+		},
+		"/entities/ForkBomb.java": {
+			"sdcard": false
+		},
+		"/entities/Grabby.java": {
+			"sdcard": false
+		},
+		"/managers/GrabbyManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

@@ -1,5 +1,6 @@
 import audio.Shoot;
 import sprites.Blast;
+
 class BlastObject {
     float sx = 0, sy = 0;
     boolean draw = false;

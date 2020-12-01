@@ -25,6 +25,7 @@ public class Main extends State {
 
     static BotManager botManager = new BotManager();
     static BlastManager blastManager = new BlastManager();
+    
     static MiniBossManager bossManager = new MiniBossManager();
     static DebrisManager debrisManager = new DebrisManager();
     static ItemDropManager itemDropManager = new ItemDropManager();
