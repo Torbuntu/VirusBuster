@@ -29,12 +29,11 @@ class MiniBossStage extends State {
     }
     void update(){
         Main.screen.clear(3);
-        // We set false because there is no debris in the boss battles
-        botManager.updateBotMovement();
-        botManager.render();
         
+        // Update
+        botManager.updateBotMovement();
         bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
-        bossManager.render();
+        
         if(bossManager.cleared()){
             // CLEARED!
             Main.screen.setTextPosition(Main.screen.width()/2-58, Main.screen.height()/2);
@@ -50,8 +49,12 @@ class MiniBossStage extends State {
             Globals.ROOM_STATUS = 1;
         }
         
-        //START update Blast
+        // START update Blast
         blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        
+        // Render
+        botManager.render();
+        bossManager.render();
         blastManager.render();
         
         Main.screen.flush();

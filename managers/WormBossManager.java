@@ -151,7 +151,7 @@ public class WormBossManager {
             if(Main.circle(blastX, blastY, bx+8, by+8, 4, 8)){
                 blastX = -10;
                 blastY = -10;
-                Main.shield -= 10;
+                Globals.shield -= 10;
             }
         }else{
            for(Body b : body){
