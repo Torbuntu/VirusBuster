@@ -35,10 +35,7 @@ class VirusObject{
         sy = 0;
         
         // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
-        float dx = Math.abs(virus.x - bx);
-        float dy = Math.abs(virus.y - by);
-        
-        if(dx > dy){
+        if(Math.abs(virus.x - bx) > Math.abs(virus.y - by)){
             if(virus.x < bx){
                 sx = 0.5f;
             }

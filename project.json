@@ -519,6 +519,24 @@
 		},
 		"/MiniBossStage.java": {
 			"sdcard": false
+		},
+		"/sprites/Debris.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Chip.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Spawn.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,

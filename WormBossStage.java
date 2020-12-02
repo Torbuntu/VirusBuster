@@ -24,6 +24,8 @@ class WormBossStage extends State {
     void update(){
         Main.screen.clear(3);
         
+        Globals.drawGrid();
+        
         if(wormManager.cleared()){
             // CLEARED!
             Main.screen.setTextPosition(Main.screen.width()/2-58, Main.screen.height()/2);
@@ -58,6 +60,9 @@ class WormBossStage extends State {
         
         botManager.render();
         wormManager.render();
+        
+        Globals.drawHud((int)(wormManager.getCurrentHealth() * 78 / wormManager.getTotalHealth()));
+        
         blastManager.render();
 
         Main.screen.flush();

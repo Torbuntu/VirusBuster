@@ -7,7 +7,7 @@ class Globals {
     
     static final SaveManager saveManager = new SaveManager();
     
-    static int ZONE = 0, SECTOR = 3, ROOM_STATUS = 0;
+    static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
     static int score = 0, currency = 0, kills = 0;
     static int shield = 100, rate = 1, refresh = 30, hit = 0, shots = 0;
     static boolean createItemDrop = false;
@@ -60,5 +60,46 @@ class Globals {
         if(hit == 0)return 0;
         if(shots == 0) return 0;
         return Math.abs(hit * 100 / shots);
+    }
+    
+    /**
+     * drawHud displays the top progress bar indicators for shield/threats/boss health 
+     * as well as displaying the Score, currency and current ZONE:SECTOR.
+     * 
+     */
+    static void drawHud(int threatWidth){
+        // Fill rects for the top and bottom sections
+        Main.screen.fillRect(0, 0, Main.screen.width(), 16, 3);
+        Main.screen.fillRect(0, Main.screen.height()-14, Main.screen.width(), 16, 3);
+        
+        //Bot Shield
+        Main.screen.drawRect(6, 0, 80, 10, 0);
+        Main.screen.fillRect(8, 2, 78, 8, 2);//background grey
+        
+        // bot shield
+        Main.screen.fillRect(8, 2, (int)(Globals.shield * 78 / 100), 8, 15);
+        
+        //Threats or Boss Shield
+        Main.screen.drawRect(134, 0, 80, 10, 0);
+        Main.screen.fillRect(136, 2, 78, 8, 2);
+        
+        // threats health
+        Main.screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+
+        //Zone : SECTOR
+        Main.screen.setTextPosition(98, 3);
+        Main.screen.setTextColor(0);
+        Main.screen.print(Globals.ZONE + ":" + Globals.SECTOR);
+        
+        //Score and Currency 
+        Main.screen.setTextPosition(3, Main.screen.height()-12);
+        Main.screen.print("Score: "+Globals.score);
+        
+        Main.screen.setTextPosition(140, Main.screen.height()-12);
+        Main.screen.print("$$: " + Globals.currency);
+    }
+
+    static void drawGrid(){
+        Main.screen.drawRect(6, 16, Main.screen.width()-12, Main.screen.height()-32, 12, true);
     }
 }

@@ -36,7 +36,7 @@ public class ItemDropManager {
     public boolean checkCollect(float x, float y){
         for(Item i : items){
             if(i.getAvailable()){
-                if(Main.circle(i.loot.x+4, i.loot.y+4, x, y, 6, 8)){
+                if(Globals.circle(i.loot.x+4, i.loot.y+4, x, y, 6, 8)){
                     i.reset();
                     coin.play();
                     return true;

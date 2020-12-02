@@ -46,22 +46,22 @@ public class TitleScene extends State {
             }
             switch(i){
                 case 0:
-                    if(Main.saveManager.firstZoneClear){
+                    if(Globals.saveManager.firstZoneClear){
                         Main.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 1:
-                    if(Main.saveManager.secondZoneClear){
+                    if(Globals.saveManager.secondZoneClear){
                         Main.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 2:
-                    if(Main.saveManager.thirdZoneClear){
+                    if(Globals.saveManager.thirdZoneClear){
                         Main.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 3:
-                    if(Main.saveManager.fourthZoneClear){
+                    if(Globals.saveManager.fourthZoneClear){
                         Main.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;

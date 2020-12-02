@@ -33,12 +33,14 @@ class Shop extends State {
             }
         }
 
+
         Main.screen.setTextPosition(0, 16);
         Main.screen.setTextColor(0);
-        Main.screen.println("$2  - [A]  Rate: " + Globals.rate);
-        Main.screen.println("$2  - [B]  Refresh: " + Globals.refresh);
-        Main.screen.println("$10 - [Up] Shield: " + Globals.shield);
-        Main.screen.println("\n$$" + Globals.currency);
+        Main.screen.print(
+          "$2  - [A]  Rate: " + Globals.rate
+        + "\n$2  - [B]  Refresh: " + Globals.refresh
+        + "\n$10 - [Up] Shield: " + Globals.shield
+        + "\n\n$$" + Globals.currency);
 
         if(Button.C.justPressed()){
             /*

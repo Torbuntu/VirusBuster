@@ -17,11 +17,13 @@ import managers.WormBossManager;
 import managers.DebrisManager;
 
 public class Main extends State {
+    
+    public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
+    
     public static void main(String[] args){
         Game.run(FontC64.font(), new TitleScene());
     }
-    public static final SaveManager saveManager = new SaveManager();
-    public static HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
+    
 /*
     static BotManager botManager = new BotManager();
     static BlastManager blastManager = new BlastManager();
@@ -74,19 +76,23 @@ public class Main extends State {
     // helper methods
 */
     //Deprecated(potentially slow)
+    /*
     public static boolean circle(float x1, float y1, float x2, float y2, float r1, float r2){
         int vx = (int)(x1 - x2);
         int vy = (int)(y1 - y2);
         int vr = (int)(r1 + r2);
         return ((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
     }
+    */
  
     /**
     * Takes two square objects and checks if they intersect, given x,y and size
     */
+    /*
     public static boolean boundingBox(float x1, float y1, float s1, float x2, float y2, float s2){
         return (x1 < x2 + s2 && x1 + s1 > x2 && y1 < y2 + s2 && y1 + s1 > y2);
     }
+    */
     
     void init(){
         /*

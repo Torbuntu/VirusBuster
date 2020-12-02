@@ -1,4 +1,8 @@
+import sprites.Chip;
+import sprites.Spawn;
+
 class Debris {
+    
     int x, y, w, h;
     
     /*
@@ -6,6 +10,9 @@ class Debris {
     * or a circuit chip of some sort (which blocks player and viruses from moving freely)
     */
     int type;
+    
+    Chip chip = new Chip();
+    Spawn spawn = new Spawn();
     
     Debris(int t){
         type = t;
@@ -57,9 +64,9 @@ class Debris {
     
     void draw(){
         if(type != 0){
-            Main.screen.fillRect(x, y, w, h, 7);
+            spawn.draw(Main.screen, x, y);
         }else{
-            Main.screen.fillRect(x, y, w, h, 11);
+            chip.draw(Main.screen, x, y);
         }
     }
 }

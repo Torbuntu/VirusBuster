@@ -1,6 +1,5 @@
-import BotManager;
-import VirusManager;
 import entities.Debris;
+
 class DebrisManager {
     private Debris[] debris;
     
