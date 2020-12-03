@@ -6,9 +6,9 @@ class ForkBombManager {
     ForkBomb forkBomb;
     Explode explode;
     
-    int health, total, dying, hurt;
+    int health, total, dying, hurt, charge = 500, retreat = 0, sliding = 400, index = 0, shoot = 15;
     float sx, sy, height;
-    int[] spikes;
+    Spike[] spikes;
     
     void init() {
         explode = new Explode(1);
@@ -17,7 +17,17 @@ class ForkBombManager {
         forkBomb.x = 92;
         forkBomb.y = -32;
         
-        spikes = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+        spikes = new Spike[] {
+            new Spike(),
+            new Spike(),
+            new Spike(),
+            new Spike(),
+            new Spike(),
+            new Spike(),
+            new Spike(),
+            new Spike(),
+            new Spike()
+        };
         
         dying = 150;
         total = 10;
@@ -32,24 +42,77 @@ class ForkBombManager {
         
     }
     
-    void update(BlastManager blastManager) {
+    /**
+     * Start: Move side to side (noticed by shadow)
+     * Stops to drop down. Then moves side to side for X iterations
+     * When charge is ready, stops to spread spikes.
+     * Flies back up off the screen.
+     * goto:start
+     * 
+     */ 
+    void update(BlastManager blastManager, float bx, float by, boolean dash) {
         if(health == 0)return;
-        if(blastManager.hitEnemy(forkBomb.x, forkBomb.y, 32)){
+        if(blastManager.hitEnemy(forkBomb.x+8, forkBomb.y+17, 14)){
             health--;
             if(health <= 0){
                 explode.play();
-                //alive = false;
             }
-            if(hurt == 0)hurt = 25;
+            if(hurt == 0)hurt = 35;
         }
         
         sy = 0;
+        // move side side, randomly adjusting the height variable
+        if(sliding > 0){
+            sliding--;
+            if(forkBomb.x < 16 || forkBomb.x > 172) sx = -sx;
+            height += Math.random(-1, 2);
+            if(height < 32) height = 32;
+            if(height > 110) height = 110;
+        }
         
-        if(forkBomb.y < height){
+        // Stops sliding, drops down to the height variable.
+        if(sliding == 0 && forkBomb.y < height){
             sy = 2;
         } else {
-            if(forkBomb.x < 16 || forkBomb.x > 172) sx = -sx;
             forkBomb.x += sx;
+        }
+        
+        // Slide and charge
+        if(sliding == 0 && retreat == 0 && forkBomb.y >= height){
+            if(charge > 0){
+                charge--;
+                // slide while charging
+                if(forkBomb.x < 16 || forkBomb.x > 172) sx = -sx;
+            }else{
+                //don't move while shooting
+                sx = 0;
+                if(shoot > 0) shoot--;
+                else {
+                    System.out.println("[I] - Fork Bomb pew pew");
+                    fire();
+                    shoot = 15;
+                }
+                if(index >= spikes.length) {
+                    index = 0;
+                    charge = 500;
+                    retreat = 150;
+                }
+            }
+        }
+        
+        // retreat
+        if(retreat > 0){
+            retreat--;
+            sy = -1;
+            if(retreat == 0){
+                sx = 1;
+                sliding = 400;
+            }
+        }
+        
+        // update spikes
+        for(Spike s : spikes){
+            if(s.active) s.update(bx, by, dash);
         }
         
         forkBomb.y += sy;
@@ -68,10 +131,31 @@ class ForkBombManager {
         }else{
             forkBomb.bite();
         }
+        for(Spike s : spikes){
+            if(s.active)s.render();
+        }
         
         forkBomb.draw(Globals.screen);
         //shadow
         if(forkBomb.y < height) Globals.screen.drawCircle(forkBomb.x+16, height+16, 16, 8, true);
+    }
+    
+    boolean allActive(){
+        for(Spike s : spikes){
+            if(!s.active)return false;
+        }
+        return true;
+    }
+    
+    void fire(){
+        System.out.println("[I] - Index: " + index);
+        spikes[index].x = forkBomb.x+16;
+        spikes[index].y = forkBomb.y+16;
+        spikes[index].sx = Math.random(-1, 2);
+        spikes[index].sy = Math.random(-1, 2);
+        spikes[index].active = true;
+        spikes[index].move = 20;
+        if(index < spikes.length)index++;
     }
     
     
@@ -85,5 +169,26 @@ class ForkBombManager {
     
     int getTotalHealth() {
         return total;
+    }
+}
+
+class Spike{
+    boolean active = false;
+    float x, y;
+    int sx, sy, move;
+    
+    void update(float bx, float by, boolean dash){
+        if(Globals.circle(x, y, bx+8, by+8, 3, 8)){
+            if(dash) active = false;
+            else Globals.shield -= 5;
+        }
+        if(move > 0){
+            move--;
+            x+=sx;
+            y+=sy;
+        }
+    }
+    void render(){
+        Globals.screen.drawCircle(x, y, 6, 8, true);
     }
 }
