@@ -6,6 +6,8 @@ public class BlastManager {
     // rate    -3 how many blasts are active at a time
     int cooldown = 0;
     BlastObject[] blasts;
+    float swordX = 0, swordY = 0;
+    boolean sword = false;
     
     public BlastManager(){
         blasts = new BlastObject[]{
@@ -30,25 +32,42 @@ public class BlastManager {
         }
         if(attack && cooldown == 0){
             cooldown = Globals.refresh;
-            for(int i = 0; i < Globals.rate; i++){
-                if(!blasts[i].active()){
-                    blasts[i].setX(x);
-                    blasts[i].setY(y);
-                    if(dir == 0){//left
-                        blasts[i].setDir(-2.0f, 0.0f);
+            if(sword){
+                switch(dir){
+                    case 0:// Left
+                        swordX = x-16;
+                        swordY = y;
+                        break;
+                    case 1:// Up
+                        break;
+                    case 2://Right
+                        swordX = x+8;
+                        swordY = y;
+                        break;
+                    case 3:// Down
+                        break;
+                }
+            }else{
+                for(int i = 0; i < Globals.rate; i++){
+                    if(!blasts[i].active()){
+                        blasts[i].setX(x);
+                        blasts[i].setY(y);
+                        if(dir == 0){//left
+                            blasts[i].setDir(-2.0f, 0.0f);
+                        }
+                        if(dir == 1){//up
+                            blasts[i].setDir(0.0f, -2.0f);
+                        }
+                        if(dir == 2){//right
+                            blasts[i].setDir(2.0f, 0.0f);
+                        }
+                        if(dir == 3){//down
+                            blasts[i].setDir(0.0f, 2.0f);
+                        }
+                        blasts[i].draw = true;
+                        Globals.shots++;
+                        return;
                     }
-                    if(dir == 1){//up
-                        blasts[i].setDir(0.0f, -2.0f);
-                    }
-                    if(dir == 2){//right
-                        blasts[i].setDir(2.0f, 0.0f);
-                    }
-                    if(dir == 3){//down
-                        blasts[i].setDir(0.0f, 2.0f);
-                    }
-                    blasts[i].draw = true;
-                    Globals.shots++;
-                    return;
                 }
             }
         }
@@ -72,8 +91,12 @@ public class BlastManager {
     void render(){
         int cooldownWidth = (int)(cooldown * 78 / Globals.refresh);
         Globals.screen.drawHLine(6, 13, cooldownWidth, 8);
-        for(int i = 0; i < Globals.rate; i++){
-            blasts[i].render();
+        if(sword){
+            Globals.screen.drawLine(swordX, swordY+8, swordX-4, swordY-4, 6, true);
+        }else{
+            for(int i = 0; i < Globals.rate; i++){
+                blasts[i].render();
+            }
         }
     }
 
