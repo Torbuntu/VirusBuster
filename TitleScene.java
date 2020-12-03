@@ -16,7 +16,7 @@ public class TitleScene extends State {
         
         if(Button.B.justPressed()){
             Globals.ZONE = select;
-            Globals.SECTOR = 8; 
+            Globals.SECTOR = 0; // TODO: revert this to start at 0
             Globals.shield = 100; //going in full health
             Game.changeState(new ForkBombStage());
             // Game.changeState(new NormalSector());

@@ -191,6 +191,8 @@ public class WormBossManager {
     }
     
     void render(){
+        // Don't render if dead.
+        if(dying == 0)return;
         if(bodyDestroyed()){
             Globals.screen.drawCircle(blastX, blastY, 8, 8, false);
         }

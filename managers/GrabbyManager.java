@@ -1,13 +1,16 @@
-import entities.Grabby;
+//import sprites.Grabby;
 
 class GrabbyManager {
-    Grabby grabby = new Grabby();
+    //Grabby grabby;
 
     void init(){
+        //grabby = new Grabby();
     }
 
     void update(){}
     
-    void render(){}
+    void render(){
+        //grabby.draw(Globals.screen);
+    }
     
 }
