@@ -71,7 +71,7 @@ public class BlastManager {
     
     void render(){
         int cooldownWidth = (int)(cooldown * 78 / Globals.refresh);
-        Main.screen.drawHLine(6, 13, cooldownWidth, 8);
+        Globals.screen.drawHLine(6, 13, cooldownWidth, 8);
         for(int i = 0; i < Globals.rate; i++){
             blasts[i].render();
         }

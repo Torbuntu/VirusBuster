@@ -32,7 +32,7 @@ class NormalSector extends State {
     }
     
     void update(){
-        Main.screen.clear(3);
+        Globals.screen.clear(3);
         
         if(Globals.createItemDrop){
             Globals.createItemDrop = false;
@@ -56,12 +56,12 @@ class NormalSector extends State {
 
         if(virusManager.getThreats() == 0){
             Globals.ROOM_STATUS = 1; // CLEARED!
-            Main.screen.setTextPosition(Main.screen.width()/2-58, Main.screen.height()/2);
-            Main.screen.setTextColor(0);
-            Main.screen.print(Globals.SECTOR_CLEAR);
+            Globals.screen.setTextPosition(Globals.screen.width()/2-58, Globals.screen.height()/2);
+            Globals.screen.setTextColor(0);
+            Globals.screen.print(Globals.SECTOR_CLEAR);
             
-            Main.screen.setTextPosition(26, Main.screen.height()/2+16);
-            Main.screen.print(Globals.PRESS_C_TRANSPORT);
+            Globals.screen.setTextPosition(26, Globals.screen.height()/2+16);
+            Globals.screen.print(Globals.PRESS_C_TRANSPORT);
             if(Button.C.justPressed()){
                 Globals.SECTOR++;
                 Game.changeState(new Shop());
@@ -77,7 +77,7 @@ class NormalSector extends State {
         //Need to draw the blast manager after the hud or else some items don't render 
         blastManager.render();
         
-        Main.screen.flush();
+        Globals.screen.flush();
     }
     
     

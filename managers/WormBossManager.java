@@ -60,32 +60,32 @@ public class WormBossManager {
         switch(Math.random(0, stage)){
             case 0://going left
                 sprite.hori();
-                sprite.x = Main.screen.width();
+                sprite.x = Globals.screen.width();
                 sx = -1;
                 sprite.setMirrored(true);
-                sprite.y = Math.random(16, Main.screen.height()-40);
+                sprite.y = Math.random(16, Globals.screen.height()-40);
                 break;
             case 1://going right
                 sprite.hori();
                 sprite.x = -32;
                 sx = 1;
                 sprite.setMirrored(false);
-                sprite.y = Math.random(16, Main.screen.height()-40);
+                sprite.y = Math.random(16, Globals.screen.height()-40);
                 break;
                 
             case 2://going Up
                 sprite.vert();
-                sprite.y = Main.screen.height();
+                sprite.y = Globals.screen.height();
                 sy = -1;
                 sprite.setFlipped(false);
-                sprite.x = Math.random(8, Main.screen.width()-40);
+                sprite.x = Math.random(8, Globals.screen.width()-40);
                 break;
             case 3://going down
                 sprite.vert();
                 sprite.y = -32;
                 sy = 1;
                 sprite.setFlipped(true);
-                sprite.x = Math.random(8, Main.screen.width()-40);
+                sprite.x = Math.random(8, Globals.screen.width()-40);
                 break;
         }
     }
@@ -169,13 +169,13 @@ public class WormBossManager {
             } 
         }
         if(health > 0){
-            if(sprite.x > Main.screen.width()+140){
+            if(sprite.x > Globals.screen.width()+140){
                 setDir();
             }
             if(sprite.x < -172){
                 setDir();
             }
-            if(sprite.y > Main.screen.height()+140){
+            if(sprite.y > Globals.screen.height()+140){
                 setDir();
             }
             if(sprite.y < -172){
@@ -192,7 +192,7 @@ public class WormBossManager {
     
     void render(){
         if(bodyDestroyed()){
-            Main.screen.drawCircle(blastX, blastY, 8, 8, false);
+            Globals.screen.drawCircle(blastX, blastY, 8, 8, false);
         }
 
         for(Body b : body){
@@ -216,7 +216,7 @@ public class WormBossManager {
             dying--;
             sprite.die();
         }
-        sprite.draw(Main.screen);
+        sprite.draw(Globals.screen);
     }
     
     int getCurrentHealth(){
@@ -304,7 +304,7 @@ class Body {
                 sx = Math.random(1, 4);
                 sy = Math.random(-3, 2);
             }
-            if(body.x > Main.screen.width()-28){
+            if(body.x > Globals.screen.width()-28){
                 sx = Math.random(-4, -1);
                 sy = Math.random(-3, 2);
             } 
@@ -312,7 +312,7 @@ class Body {
                 sy = Math.random(1, 4);
                 sx = Math.random(-3, 2);
             }
-            if(body.y > Main.screen.height()-28) {
+            if(body.y > Globals.screen.height()-28) {
                 sy = Math.random(-4, -1);
                 sx = Math.random(-3, 2);
             }
@@ -323,7 +323,7 @@ class Body {
     }
     
     void render(){
-        if(alive || dying > 0)body.draw(Main.screen);
+        if(alive || dying > 0)body.draw(Globals.screen);
     }
     
     void hit(){

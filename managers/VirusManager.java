@@ -137,10 +137,10 @@ public class VirusManager{
     
     public void render(){
         if(incoming > 0){
-            Main.screen.fillRect(Main.screen.width()/2-50, 150-incoming-2, 94, 12, 3);
-            Main.screen.setTextPosition(Main.screen.width()/2-48, 150-incoming);
-            Main.screen.setTextColor(8);
-            Main.screen.print("<Incoming>");
+            Globals.screen.fillRect(Globals.screen.width()/2-50, 150-incoming-2, 94, 12, 3);
+            Globals.screen.setTextPosition(Globals.screen.width()/2-48, 150-incoming);
+            Globals.screen.setTextColor(8);
+            Globals.screen.print("<Incoming>");
             return;
         }
         for(int i = 0; i < spawned; i++){

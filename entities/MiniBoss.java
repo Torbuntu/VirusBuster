@@ -57,13 +57,13 @@ public class MiniBoss{
     void update(BlastManager blastManager, float bx, float by){
         if(berserk > 0){
             berserk--;
-            if(virus.x+32 > Main.screen.width()){
+            if(virus.x+32 > Globals.screen.width()){
                 sx = -2.5f;
             }
             if(virus.x < 0){
                 sx = 2.5f;
             }
-            if(virus.y+32 > Main.screen.height()){
+            if(virus.y+32 > Globals.screen.height()){
                 sy = -2.5f;
             }
             if(virus.y < 0){
@@ -158,7 +158,7 @@ public class MiniBoss{
     }
     
     public void checkBlastHits(BlastManager blastManager){
-        //Main.screen.drawRect(virus.x+2, virus.y+2, 28, 28, 8, true);
+        //Globals.screen.drawRect(virus.x+2, virus.y+2, 28, 28, 8, true);
         if(alive && blastManager.hitEnemy(virus.x+2, virus.y+2, 28.0f)){
             hit(1);
         }
@@ -167,11 +167,11 @@ public class MiniBoss{
     void render(){
         if(berserk > 0){
             virus.bite();
-            virus.draw(Main.screen);
+            virus.draw(Globals.screen);
             return;
         }
         if(alive){
-            virus.draw(Main.screen);
+            virus.draw(Globals.screen);
             
             for(BossBlast b : blasts){
                 if(b.isActive()) b.render();
@@ -193,7 +193,7 @@ public class MiniBoss{
             }
             dying--;
             virus.die();
-            virus.draw(Main.screen);
+            virus.draw(Globals.screen);
         }
     }
     

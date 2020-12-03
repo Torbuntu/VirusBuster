@@ -11,8 +11,8 @@ public class BotManager {
     
     public BotManager(){
         bot = new Bot();
-        bot.x = Main.screen.width()/2;
-        bot.y = Main.screen.height()/2;
+        bot.x = Globals.screen.width()/2;
+        bot.y = Globals.screen.height()/2;
     }
     
     public boolean getAttacking(){return attack;}
@@ -34,7 +34,7 @@ public class BotManager {
         if(Button.B.isPressed()){
             speed = 2;
         }
-        if(Button.Down.isPressed() && bot.y+1 < Main.screen.height()-32){
+        if(Button.Down.isPressed() && bot.y+1 < Globals.screen.height()-32){
             if(speed==2){
                 bot.dashVert();
             }else{
@@ -58,7 +58,7 @@ public class BotManager {
             }
         }
         if(sy == 0){
-            if(Button.Right.isPressed() && bot.x+1 < Main.screen.width()-20){
+            if(Button.Right.isPressed() && bot.x+1 < Globals.screen.width()-20){
                 bot.setMirrored( true );
                 if(speed==2){
                     bot.dashHori();
@@ -123,45 +123,45 @@ public class BotManager {
         // dashing and actually moving
         if(speed==2){
             if(dir == 0){//l
-                Main.screen.drawHLine((int)bot.x+14, (int)bot.y+9, Math.random(2, 5), 10);
+                Globals.screen.drawHLine((int)bot.x+14, (int)bot.y+9, Math.random(2, 5), 10);
             }
             if(dir == 1){//u
-                Main.screen.drawVLine((int)bot.x+4, (int)bot.y+16, Math.random(2, 5), 10);
-                Main.screen.drawVLine((int)bot.x+9, (int)bot.y+16, Math.random(2, 5), 10);
+                Globals.screen.drawVLine((int)bot.x+4, (int)bot.y+16, Math.random(2, 5), 10);
+                Globals.screen.drawVLine((int)bot.x+9, (int)bot.y+16, Math.random(2, 5), 10);
             }
             if(dir == 2){//r
-                Main.screen.drawHLine((int)bot.x, (int)bot.y+9, -Math.random(2, 5), 10);
+                Globals.screen.drawHLine((int)bot.x, (int)bot.y+9, -Math.random(2, 5), 10);
             }
             if(dir == 3){//d
-                Main.screen.drawVLine((int)bot.x+4, (int)bot.y, -Math.random(2, 5), 10);
-                Main.screen.drawVLine((int)bot.x+9, (int)bot.y, -Math.random(2, 5), 10);
+                Globals.screen.drawVLine((int)bot.x+4, (int)bot.y, -Math.random(2, 5), 10);
+                Globals.screen.drawVLine((int)bot.x+9, (int)bot.y, -Math.random(2, 5), 10);
                 
                 //eyes
-                Main.screen.fillRect((int)bot.x+3, (int)bot.y+5, 2, 2, 8);
-                Main.screen.fillRect((int)bot.x+9, (int)bot.y+5, 2, 2, 8);
+                Globals.screen.fillRect((int)bot.x+3, (int)bot.y+5, 2, 2, 8);
+                Globals.screen.fillRect((int)bot.x+9, (int)bot.y+5, 2, 2, 8);
             }
         }
         if (speed != 2){
             if(dir == 0){
-                Main.screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
+                Globals.screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
             }
             if(dir == 2){
-                Main.screen.drawHLine((int)bot.x+10, (int)bot.y+4, 2, 8);
+                Globals.screen.drawHLine((int)bot.x+10, (int)bot.y+4, 2, 8);
             }
             if(dir == 3){
-                Main.screen.drawHLine((int)bot.x+3, (int)bot.y+4, 2, 8);
-                Main.screen.drawHLine((int)bot.x+9, (int)bot.y+4, 2, 8);
+                Globals.screen.drawHLine((int)bot.x+3, (int)bot.y+4, 2, 8);
+                Globals.screen.drawHLine((int)bot.x+9, (int)bot.y+4, 2, 8);
             }
         }
     }
     
     public void render(){
-        bot.draw(Main.screen);
+        bot.draw(Globals.screen);
         drawBotVisor();
     }
     
     public void render(float x, float y){
-        bot.draw(Main.screen, x, y);
+        bot.draw(Globals.screen, x, y);
         drawBotVisor();
     }
     

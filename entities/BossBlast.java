@@ -27,7 +27,7 @@ class BossBlast {
     //TODO: Make a blast sprite?
     void render(){
         if(active)
-            Main.screen.drawCircle(x, y, 8, 8, false);
+            Globals.screen.drawCircle(x, y, 8, 8, false);
     }
     
     boolean isActive(){

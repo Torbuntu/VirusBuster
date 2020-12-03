@@ -64,9 +64,9 @@ class Debris {
     
     void draw(){
         if(type != 0){
-            spawn.draw(Main.screen, x, y);
+            spawn.draw(Globals.screen, x, y);
         }else{
-            chip.draw(Main.screen, x, y);
+            chip.draw(Globals.screen, x, y);
         }
     }
 }

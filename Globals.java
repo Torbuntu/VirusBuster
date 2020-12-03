@@ -1,3 +1,7 @@
+import femto.mode.HiRes16Color;
+import femto.palette.UltimaViSharpX68000;
+import femto.font.FontC64;
+
 /**
  * Globals contains all of the globally used variables as well as 
  * a couple of useful helper methods.
@@ -7,11 +11,13 @@ class Globals {
     
     static final SaveManager saveManager = new SaveManager();
     
+    static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
+    
     static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
     static int score = 0, currency = 0, kills = 0;
     static int shield = 100, rate = 1, refresh = 30, hit = 0, shots = 0;
     static boolean createItemDrop = false;
-    static float itemX, itemY;
+    static float itemX = 0, itemY = 0;
         
     static final String PRESS_C_TRANSPORT = "Press C to transport";
     static final String SECTOR_CLEAR = "Sector Cleared";
@@ -69,37 +75,37 @@ class Globals {
      */
     static void drawHud(int threatWidth){
         // Fill rects for the top and bottom sections
-        Main.screen.fillRect(0, 0, Main.screen.width(), 16, 3);
-        Main.screen.fillRect(0, Main.screen.height()-14, Main.screen.width(), 16, 3);
+        screen.fillRect(0, 0, screen.width(), 16, 3);
+        screen.fillRect(0, screen.height()-14, screen.width(), 16, 3);
         
         //Bot Shield
-        Main.screen.drawRect(6, 0, 80, 10, 0);
-        Main.screen.fillRect(8, 2, 78, 8, 2);//background grey
+        screen.drawRect(6, 0, 80, 10, 0);
+        screen.fillRect(8, 2, 78, 8, 2);//background grey
         
         // bot shield
-        Main.screen.fillRect(8, 2, (int)(Globals.shield * 78 / 100), 8, 15);
+        screen.fillRect(8, 2, (int)(Globals.shield * 78 / 100), 8, 15);
         
         //Threats or Boss Shield
-        Main.screen.drawRect(134, 0, 80, 10, 0);
-        Main.screen.fillRect(136, 2, 78, 8, 2);
+        screen.drawRect(134, 0, 80, 10, 0);
+        screen.fillRect(136, 2, 78, 8, 2);
         
         // threats health
-        Main.screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+        screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
 
         //Zone : SECTOR
-        Main.screen.setTextPosition(98, 3);
-        Main.screen.setTextColor(0);
-        Main.screen.print(Globals.ZONE + ":" + Globals.SECTOR);
+        screen.setTextPosition(98, 3);
+        screen.setTextColor(0);
+        screen.print(Globals.ZONE + ":" + Globals.SECTOR);
         
         //Score and Currency 
-        Main.screen.setTextPosition(3, Main.screen.height()-12);
-        Main.screen.print("Score: "+Globals.score);
+        screen.setTextPosition(3, screen.height()-12);
+        screen.print("Score: "+Globals.score);
         
-        Main.screen.setTextPosition(140, Main.screen.height()-12);
-        Main.screen.print("$$: " + Globals.currency);
+        screen.setTextPosition(140, screen.height()-12);
+        screen.print("$$: " + Globals.currency);
     }
 
     static void drawGrid(){
-        Main.screen.drawRect(6, 16, Main.screen.width()-12, Main.screen.height()-32, 12, true);
+        screen.drawRect(6, 16, screen.width()-12, screen.height()-32, 12, true);
     }
 }

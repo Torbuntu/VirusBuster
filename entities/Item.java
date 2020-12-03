@@ -16,10 +16,10 @@ class Item {
     void render(){
         if(life < 25){
             if(life%2==0){
-                loot.draw(Main.screen);
+                loot.draw(Globals.screen);
             }
         }else{
-            loot.draw(Main.screen);
+            loot.draw(Globals.screen);
         }
     }
     

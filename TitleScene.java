@@ -16,18 +16,20 @@ public class TitleScene extends State {
         
         if(Button.B.justPressed()){
             Globals.ZONE = select;
+            Globals.SECTOR = 8; 
             Globals.shield = 100; //going in full health
-            Game.changeState(new NormalSector());
+            Game.changeState(new ForkBombStage());
+            // Game.changeState(new NormalSector());
         }
         
-        Main.screen.clear(3);
+        Globals.screen.clear(3);
         
-        Main.screen.setTextPosition(10, 10);
-        Main.screen.setTextColor(0);
-        Main.screen.print("Press B to begin Demo.");
+        Globals.screen.setTextPosition(10, 10);
+        Globals.screen.setTextColor(0);
+        Globals.screen.print("Press B to begin Demo.");
         
-        Main.screen.setTextPosition(10, 32);
-        Main.screen.print("Select Zone to Begin");
+        Globals.screen.setTextPosition(10, 32);
+        Globals.screen.print("Select Zone to Begin");
         
         
         if(Button.Right.justPressed() && select < 3){
@@ -40,40 +42,40 @@ public class TitleScene extends State {
         count++;
         for(int i = 0; i < 4; i++){
             if(select == i && count > 10){
-                Main.screen.drawRect((11+i*50), 44, 17, 17, 8);
+                Globals.screen.drawRect((11+i*50), 44, 17, 17, 8);
             }else{
-                Main.screen.drawRect((12+i*50), 45, 16, 16, 0);
+                Globals.screen.drawRect((12+i*50), 45, 16, 16, 0);
             }
             switch(i){
                 case 0:
                     if(Globals.saveManager.firstZoneClear){
-                        Main.screen.fillCircle(20+i*50, 52, 6, 11);
+                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 1:
                     if(Globals.saveManager.secondZoneClear){
-                        Main.screen.fillCircle(20+i*50, 52, 6, 11);
+                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 2:
                     if(Globals.saveManager.thirdZoneClear){
-                        Main.screen.fillCircle(20+i*50, 52, 6, 11);
+                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 3:
                     if(Globals.saveManager.fourthZoneClear){
-                        Main.screen.fillCircle(20+i*50, 52, 6, 11);
+                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
             }
         }
-        Main.screen.fillRect(10, 70, 200, 50, 8+select);
-        Main.screen.setTextPosition(15, 75);
-        Main.screen.setTextColor(3);
-        Main.screen.print("About zone " + select);
+        Globals.screen.fillRect(10, 70, 200, 50, 8+select);
+        Globals.screen.setTextPosition(15, 75);
+        Globals.screen.setTextColor(3);
+        Globals.screen.print("About zone " + select);
         
         if(count > 20) count = 0;
         
-        Main.screen.flush();
+        Globals.screen.flush();
     }
 }

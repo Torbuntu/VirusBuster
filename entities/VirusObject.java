@@ -94,11 +94,11 @@ class VirusObject{
     
     void render(){
         if(alive){
-            virus.draw(Main.screen);
+            virus.draw(Globals.screen);
         }else{
             if(animationTime != 0){
                 virus.die();
-                virus.draw(Main.screen);
+                virus.draw(Globals.screen);
                 animationTime--;
             }
         }

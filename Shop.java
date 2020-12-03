@@ -8,7 +8,7 @@ class Shop extends State {
     }
     
     void update() {
-        Main.screen.clear(3);
+        Globals.screen.clear(3);
         if(Button.A.justPressed() && Globals.rate < 10){
             if(Globals.currency >= 2){
                 Globals.currency -= 2;
@@ -34,9 +34,9 @@ class Shop extends State {
         }
 
 
-        Main.screen.setTextPosition(0, 16);
-        Main.screen.setTextColor(0);
-        Main.screen.print(
+        Globals.screen.setTextPosition(0, 16);
+        Globals.screen.setTextColor(0);
+        Globals.screen.print(
           "$2  - [A]  Rate: " + Globals.rate
         + "\n$2  - [B]  Refresh: " + Globals.refresh
         + "\n$10 - [Up] Shield: " + Globals.shield
@@ -71,7 +71,7 @@ class Shop extends State {
             // Globals.ROOM_STATUS = 3;
         }
         
-        Main.screen.flush();
+        Globals.screen.flush();
     }
     
     void shutdown() {

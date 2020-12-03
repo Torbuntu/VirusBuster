@@ -27,7 +27,7 @@ class BlastObject {
     
     void render(){
         if(draw){
-            blast.draw(Main.screen);
+            blast.draw(Globals.screen);
         }
     }
     

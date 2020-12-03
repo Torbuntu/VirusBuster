@@ -537,6 +537,21 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/sprites/ForkBomb.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/ForkBomb.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/ForkBomb.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,
