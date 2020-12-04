@@ -33,7 +33,7 @@ class NormalSector extends State {
     
     void update(){
         Globals.screen.clear(3);
-        
+
         if(Globals.createItemDrop){
             Globals.createItemDrop = false;
             itemDropManager.newDrop(Globals.itemX, Globals.itemY);

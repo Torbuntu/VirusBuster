@@ -27,6 +27,7 @@ class BlastObject {
     
     void render(){
         if(draw){
+            // blast.rotoscale(Globals.screen, blast.x+blast.y, 1);
             blast.draw(Globals.screen);
         }
     }

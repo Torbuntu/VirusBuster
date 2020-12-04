@@ -29,7 +29,7 @@ class ForkBombManager {
             new Spike()
         };
         
-        dying = 150;
+        dying = 100;
         total = 10;
         health = total;
         hurt = 0;
@@ -52,10 +52,11 @@ class ForkBombManager {
      */ 
     void update(BlastManager blastManager, float bx, float by, boolean dash) {
         if(health == 0)return;
-        if(blastManager.hitEnemy(forkBomb.x+8, forkBomb.y+17, 14)){
+        if(hurt == 0 && blastManager.hitEnemy(forkBomb.x+8, forkBomb.y+17, 14)){
             health--;
             if(health <= 0){
                 explode.play();
+                forkBomb.die();
             }
             if(hurt == 0)hurt = 35;
         }
@@ -127,7 +128,7 @@ class ForkBombManager {
         }else if(health == 0 && dying > 0){
             dying--;
             if(dying == 50) explode.play();
-            forkBomb.die();
+            if(forkBomb.getCurrentFrame()==forkBomb.getEndFrame()) forkBomb.dead();
         }else{
             forkBomb.bite();
         }
@@ -151,8 +152,12 @@ class ForkBombManager {
         System.out.println("[I] - Index: " + index);
         spikes[index].x = forkBomb.x+16;
         spikes[index].y = forkBomb.y+16;
-        spikes[index].sx = Math.random(-1, 2);
-        spikes[index].sy = Math.random(-1, 2);
+        int sx = Math.random(-1, 2);
+        int sy = Math.random(-1, 2);
+        if(sx == 0) sx = 1;
+        if(sy == 0) sy = 0;
+        spikes[index].sx = sx;
+        spikes[index].sy = sy;
         spikes[index].active = true;
         spikes[index].move = 20;
         if(index < spikes.length)index++;
@@ -179,8 +184,8 @@ class Spike{
     
     void update(float bx, float by, boolean dash){
         if(Globals.circle(x, y, bx+8, by+8, 3, 8)){
-            if(dash) active = false;
-            else Globals.shield -= 5;
+            if(!dash) Globals.shield -= 5;
+            active = false;
         }
         if(move > 0){
             move--;

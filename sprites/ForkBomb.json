@@ -72,7 +72,8 @@
   "scale": "1",
   "frameTags": [
    { "name": "bite", "from": 0, "to": 1, "direction": "forward" },
-   { "name": "die", "from": 2, "to": 6, "direction": "forward" }
+   { "name": "die", "from": 2, "to": 6, "direction": "forward" },
+   { "name": "dead", "from": 6, "to": 6, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

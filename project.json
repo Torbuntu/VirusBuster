@@ -552,6 +552,24 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/sprites/Blast.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/GrabbyHand.ase": {
+			"sdcard": false
+		},
+		"/sprites/GrabbyHand.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/GrabbyHand.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,
