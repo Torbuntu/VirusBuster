@@ -18,8 +18,8 @@ public class TitleScene extends State {
             Globals.ZONE = select;
             Globals.SECTOR = 0; // TODO: revert this to start at 0
             Globals.shield = 100; //going in full health
-            Game.changeState(new GrabbyMcStage());
-            //Game.changeState(new NormalSector());
+            // Game.changeState(new GrabbyMcStage());
+            Game.changeState(new NormalSector());
         }
         
         Globals.screen.clear(3);

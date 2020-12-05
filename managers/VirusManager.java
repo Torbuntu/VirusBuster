@@ -235,8 +235,8 @@ public class VirusManager{
     void zoneZero(int sector){
         switch(sector){
             case 0:
-                waves = new int[]{2, 3, 5};
-                total = 10;
+                waves = new int[]{22, 3, 5};
+                total = 30;
                 break;
             case 1:
                 waves = new int[]{3, 5, 5, 7};

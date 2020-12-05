@@ -15,7 +15,7 @@ class Globals {
     
     static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
     static int score = 0, currency = 0, kills = 0;
-    //1, 50
+    //rate:1, refresh:50
     static int shield = 100, rate = 10, refresh = 5, hit = 0, shots = 0;
     static boolean createItemDrop = false;
     static float itemX = 0, itemY = 0;
