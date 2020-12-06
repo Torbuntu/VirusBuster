@@ -7,6 +7,7 @@ class Shop extends State {
         
     }
     
+    //TODO: Balance the price to benefit ratio for upgrades
     void update() {
         Globals.screen.clear(3);
         if(Button.A.justPressed() && Globals.rate < 10){
@@ -33,7 +34,6 @@ class Shop extends State {
             }
         }
 
-
         Globals.screen.setTextPosition(0, 16);
         Globals.screen.setTextColor(0);
         Globals.screen.print(
@@ -43,32 +43,7 @@ class Shop extends State {
         + "\n\n$$" + Globals.currency);
 
         if(Button.C.justPressed()){
-            /*
-            if(Globals.SECTOR == 4){
-                switch(Globals.ZONE){
-                    case 0:
-                        bossManager.init(1);
-                        break;
-                    case 1:
-                        bossManager.init(2);
-                        break;
-                    case 2:
-                        bossManager.init(3);
-                        break;
-                    case 3:
-                        bossManager.init(4);
-                        break;
-                }
-            }else if (Globals.SECTOR == 8){
-                wormManager.reset();
-            }else{
-              */
-                Game.changeState(SectorZoneManager.getNextState());
-                // virusManager.initWave(SECTOR, debrisManager.getSpawnX(), debrisManager.getSpawnY());
-                // virusManager.resetAll();
-            //}
-            // itemDropManager.clear();
-            // Globals.ROOM_STATUS = 3;
+            Game.changeState(SectorZoneManager.getNextState());
         }
         
         Globals.screen.flush();

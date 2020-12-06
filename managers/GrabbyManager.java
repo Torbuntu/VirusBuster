@@ -7,8 +7,10 @@ class GrabbyManager {
     //Grabby grabby;
     GrabbyHand hand;
     
-    float leftX, rightX, leftY, rightY, leftMove=1.2, rightMove=-1.5;
-    int shooting = 0;
+    boolean ready = false;
+    
+    float leftX, rightX, leftY, rightY;
+    int shooting = 0, dying = 100, leftMove=1, rightMove=-2, bounce = 0, meet = 100;
     
     void init(){
         leftX = 0;
@@ -22,25 +24,47 @@ class GrabbyManager {
     }
 
     void update(BlastManager blastManager, float bx, float by){
-        if(leftY < 16 || leftY > 140)leftMove = -leftMove;
-        if(rightY < 16 || rightY > 140)rightMove = -rightMove;
         
         if(shooting == 0){
+            if(leftY < 16 || leftY > 140){
+                leftMove = -leftMove;
+                bounce++;   
+            }
+            if(rightY < 16 || rightY > 140){
+                rightMove = -rightMove;
+                bounce++;   
+            }
             leftY += leftMove;
             rightY += rightMove;
         }else{
-            if(leftY > 16){
-                leftY-=1.0f;
-                rightY-=1.0f;
-            }
-            shooting--;
-            if(shooting == 0) {
-                leftY += 2.0f;
-                rightY += 3.0f;
+            if(ready){
+                if(leftY > 16){
+                    leftY-=1.0f;
+                    rightY-=1.0f;
+                }
+                shooting--;
+                if(shooting == 0) {
+                    rightY += 3.0f;
+                }
+            }else{
+                if(leftY == meet && rightY == meet){
+                    ready = true;
+                }else{
+                    
+                    if(leftY > meet)leftY -= 1;
+                    else leftY += 1;
+                    
+                    if(rightY > meet) rightY -= 1;
+                    else rightY += 1;
+                }
+                
             }
         }
         
-        if((int)leftY == (int)rightY && shooting == 0){
+        if(bounce > 4 && shooting == 0){
+            ready = false;
+            meet = Math.random(45, 130);
+            bounce = 0;
             shooting = 100;
             rightY = leftY;
         }
@@ -72,6 +96,10 @@ class GrabbyManager {
     
     int getTotalHealth(){
         return 100;
+    }
+    
+    boolean cleared(){
+        return dying == 0;
     }
     
 }

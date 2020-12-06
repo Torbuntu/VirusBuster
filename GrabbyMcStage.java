@@ -24,6 +24,10 @@ class GrabbyMcStage extends State {
         Globals.screen.clear(3);
         Globals.drawGrid();
         
+        if(grabbyManager.cleared()){
+            Globals.drawCleared(true);
+        }
+        
         // Update
         botManager.updateBotMovement();
         grabbyManager.update(blastManager, botManager.getX(), botManager.getY());

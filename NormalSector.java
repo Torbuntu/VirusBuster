@@ -55,17 +55,7 @@ class NormalSector extends State {
         virusManager.update(botManager.getX(), botManager.getY(), debrisManager, blastManager);
 
         if(virusManager.getThreats() == 0){
-            Globals.ROOM_STATUS = 1; // CLEARED!
-            Globals.screen.setTextPosition(Globals.screen.width()/2-58, Globals.screen.height()/2);
-            Globals.screen.setTextColor(0);
-            Globals.screen.print(Globals.SECTOR_CLEAR);
-            
-            Globals.screen.setTextPosition(26, Globals.screen.height()/2+16);
-            Globals.screen.print(Globals.PRESS_C_TRANSPORT);
-            if(Button.C.justPressed()){
-                Globals.SECTOR++;
-                Game.changeState(new Shop());
-            }
+            Globals.drawCleared(false);
         }
         virusManager.render();
 

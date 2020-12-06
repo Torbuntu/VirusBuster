@@ -8,35 +8,22 @@ import femto.State;
  */
 class SectorZoneManager {
     static State getNextState(){
-        System.out.println("Sector: " + Globals.SECTOR);
-        
-        // Sector 4 is always mini boss stage.
-        if(Globals.SECTOR == 4) return new MiniBossStage();
+
         // There are no sectors passed 8, send to title.
         if(Globals.SECTOR > 8) return new TitleScene();
         
-        switch(Globals.ZONE){
-            case 0:
-                if(Globals.SECTOR > 4){
-                    return new TitleScene();
-                }
-                break;
-            case 1:
-                if(Globals.SECTOR == 8){
-                    return new WormBossStage();
-                }
-                break;
-            case 2:
-                if(Globals.SECTOR == 8){
-                    return new ForkBombStage();
-                }
-                break;
-            case 3:
-                if(Globals.SECTOR == 8){
-                    return new GrabbyMcStage();
-                }
-                break;
+        // Sector 4 is always mini boss stage.
+        if(Globals.SECTOR == 4) return new MiniBossStage();
+        if(Globals.SECTOR == 8){
+            switch(Globals.ZONE){
+                case 1: return new WormBossStage(); break;
+                case 2: return new ForkBombStage(); break;
+                case 3: return new GrabbyMcStage(); break;
+            }
         }
+        
+        // There are no sectors beyond 4 on ZONE 0
+        if(Globals.ZONE == 0 && Globals.SECTOR > 4) return new TitleScene();
         
         // Default return NormalSector. VirusManager will be initialized with the Globals.SECTOR variable.
         return new NormalSector();

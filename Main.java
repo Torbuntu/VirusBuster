@@ -12,7 +12,6 @@ public class Main extends State {
     void init(){
     }
     
-    // TODO: Refactor into more manageable methods.
     void update(){
     }
 

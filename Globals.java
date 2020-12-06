@@ -1,3 +1,5 @@
+import femto.Game;
+import femto.input.Button;
 import femto.mode.HiRes16Color;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
@@ -84,7 +86,7 @@ class Globals {
         screen.fillRect(8, 2, 78, 8, 2);//background grey
         
         // bot shield
-        screen.fillRect(8, 2, (int)(Globals.shield * 78 / 100), 8, 15);
+        screen.fillRect(8, 2, (int)(shield * 78 / 100), 8, 15);
         
         //Threats or Boss Shield
         screen.drawRect(134, 0, 80, 10, 0);
@@ -96,18 +98,33 @@ class Globals {
         //Zone : SECTOR
         screen.setTextPosition(98, 3);
         screen.setTextColor(0);
-        screen.print(Globals.ZONE + ":" + Globals.SECTOR);
+        screen.print(ZONE + ":" + SECTOR);
         
         //Score and Currency 
         screen.setTextPosition(3, screen.height()-12);
-        screen.print("Score: "+Globals.score);
+        screen.print("Score: "+score);
         
         screen.setTextPosition(140, screen.height()-12);
-        screen.print("$$: " + Globals.currency);
+        screen.print("$$: " + currency);
     }
 
     static void drawGrid(){
         screen.drawRect(6, 16, screen.width()-12, screen.height()-32, 12, true);
+    }
+    
+    static void drawCleared(boolean boss){
+        ROOM_STATUS = 1; // CLEARED!
+        screen.setTextPosition(screen.width()/2-58, screen.height()/2);
+        screen.setTextColor(0);
+        screen.print(SECTOR_CLEAR);
+        
+        screen.setTextPosition(26, screen.height()/2+16);
+        screen.print(PRESS_C_TRANSPORT);
+        if(Button.C.justPressed()){
+            SECTOR++;
+            if(boss) Game.changeState(SectorZoneManager.getNextState());
+            else Game.changeState(new Shop());
+        }
     }
     
 }
