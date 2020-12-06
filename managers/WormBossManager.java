@@ -10,9 +10,9 @@ public class WormBossManager {
     Body[] body;
     Explode explode;
     int health = 25;
-    int sx = 1, sy = 0, speed = 1, shoot = 150, dying = 150;
+    int sx = 1, sy = 0, shoot = 150, dying = 150;
     boolean clear = false, angry = false, alive = true;
-    
+    float speed = 1;
     float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
     
     WormBossManager(){
@@ -53,11 +53,8 @@ public class WormBossManager {
     private void setDir(){
         sx = 0;
         sy = 0;
-        int stage = 4;
-        if(angry){
-            stage = 4;
-        }
-        switch(Math.random(0, stage)){
+
+        switch(Math.random(0, 4)){
             case 0://going left
                 sprite.hori();
                 sprite.x = Globals.screen.width();
@@ -121,7 +118,7 @@ public class WormBossManager {
     void update(BlastManager blastManager, float bx, float by){
         if(!alive)return;
         if(bodyDestroyed()){
-            speed = 2;
+            speed = 1.4;
             if(blastManager.hitEnemy(sprite.x, sprite.y, 32)){
                 health--;
                 if(health <= 0){

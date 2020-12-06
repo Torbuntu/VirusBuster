@@ -16,20 +16,24 @@ public class TitleScene extends State {
         
         if(Button.B.justPressed()){
             Globals.ZONE = select;
-            Globals.SECTOR = 0; // TODO: revert this to start at 0
-            Globals.shield = 100; //going in full health
-            Game.changeState(new GrabbyMcStage());
-            // Game.changeState(new NormalSector());
+            
+            // Begin at the first sector (0)
+            Globals.SECTOR = 0;
+            
+            // going in full health
+            Globals.shield = 100;
+            // Game.changeState(new GrabbyMcStage());
+            Game.changeState(new NormalSector());
         }
         
         Globals.screen.clear(3);
         
         Globals.screen.setTextPosition(10, 10);
         Globals.screen.setTextColor(0);
-        Globals.screen.print("Press B to begin Demo.");
-        
-        Globals.screen.setTextPosition(10, 32);
-        Globals.screen.print("Select Zone to Begin");
+        Globals.screen.print(
+            "Press B to begin Demo." +
+            "\nSelect Zone to Begin"
+            );
         
         
         if(Button.Right.justPressed() && select < 3){
