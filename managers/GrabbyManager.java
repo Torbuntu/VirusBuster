@@ -9,7 +9,7 @@ class GrabbyManager {
     
     boolean ready = false;
     
-    float leftX, rightX, leftY, rightY;
+    int leftX, rightX, leftY, rightY;
     int shooting = 0, dying = 100, leftMove=1, rightMove=-2, bounce = 0, meet = 100;
     
     void init(){
@@ -39,20 +39,21 @@ class GrabbyManager {
         }else{
             if(ready){
                 if(leftY > 16){
-                    leftY-=1.0f;
-                    rightY-=1.0f;
+                    leftY-=1;
+                    rightY-=1;
                 }
                 shooting--;
                 if(shooting == 0) {
-                    rightY += 3.0f;
+                    rightY += 3;
+                    if(leftMove > 1){
+                        rightMove = 2;
+                        leftMove = -1;
+                    }else{
+                        leftMove = 2;
+                        rightMove = -1;
+                    }
                 }
-                if(leftMove > 1){
-                    rightMove = 2;
-                    leftMove = -1;
-                }else{
-                    leftMove = 2;
-                    rightMove = -1;
-                }
+                
             }else{
                 System.out.println("Left: " + leftY + ", Right: " + rightY + ", Meet: " + meet);
                 if(leftY == meet && rightY == meet){
@@ -65,7 +66,6 @@ class GrabbyManager {
                     if(rightY > meet) rightY -= 1;
                     else rightY += 1;
                 }
-                
             }
         }
         
@@ -74,7 +74,6 @@ class GrabbyManager {
             meet = Math.random(100, 140);
             bounce = 0;
             shooting = 100;
-            rightY = leftY;
         }
     }
     
