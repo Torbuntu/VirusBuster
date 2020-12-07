@@ -22,6 +22,7 @@ public class TitleScene extends State {
             
             // going in full health
             Globals.shield = 100;
+            // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
             Game.changeState(new NormalSector());
         }

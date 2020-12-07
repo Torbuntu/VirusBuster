@@ -46,7 +46,15 @@ class GrabbyManager {
                 if(shooting == 0) {
                     rightY += 3.0f;
                 }
+                if(leftMove > 1){
+                    rightMove = 2;
+                    leftMove = -1;
+                }else{
+                    leftMove = 2;
+                    rightMove = -1;
+                }
             }else{
+                System.out.println("Left: " + leftY + ", Right: " + rightY + ", Meet: " + meet);
                 if(leftY == meet && rightY == meet){
                     ready = true;
                 }else{
@@ -61,9 +69,9 @@ class GrabbyManager {
             }
         }
         
-        if(bounce > 4 && shooting == 0){
+        if(bounce > 14 && shooting == 0){
             ready = false;
-            meet = Math.random(45, 130);
+            meet = Math.random(100, 140);
             bounce = 0;
             shooting = 100;
             rightY = leftY;
@@ -71,7 +79,7 @@ class GrabbyManager {
     }
     
     void render(){
-        if(shooting > 0){
+        if(shooting > 0 && ready){
             Globals.screen.drawHLine(13, (int)(leftY+16), 204, 8);
         }
         //grabby.draw(Globals.screen);
