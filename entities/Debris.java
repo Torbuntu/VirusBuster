@@ -11,11 +11,17 @@ class Debris {
     */
     int type;
     
-    Chip chip = new Chip();
-    Spawn spawn = new Spawn();
+    Chip chip;
+    Spawn spawn;
     
     Debris(int t){
         type = t;
+        if(type != 0){
+            spawn = new Spawn();
+            spawn.idle();
+        }else{
+            chip = new Chip();
+        }
         x = getCoordX();
         y = getCoordY();
         w = 16;

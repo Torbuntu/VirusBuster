@@ -24,15 +24,7 @@ class Globals {
         
     static final String PRESS_C_TRANSPORT = "Press C to transport";
     static final String SECTOR_CLEAR = "Sector Cleared";
-    
-    //Deprecated(potentially slow)
-    public static boolean circle(float x1, float y1, float x2, float y2, float r1, float r2){
-        int vx = (int)(x1 - x2);
-        int vy = (int)(y1 - y2);
-        int vr = (int)(r1 + r2);
-        return ((vx) * (vx) + (vy) * (vy)) < (vr) * (vr);
-    }
-    
+
     /**
     * Takes two square objects and checks if they intersect, given x,y and size
     * The boxing shape is always a square

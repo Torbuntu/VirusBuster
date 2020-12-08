@@ -57,32 +57,32 @@ public class WormBossManager {
         switch(Math.random(0, 4)){
             case 0://going left
                 sprite.hori();
-                sprite.x = Globals.screen.width();
+                sprite.x = 220;//Globals.screen.width();
                 sx = -1;
                 sprite.setMirrored(true);
-                sprite.y = Math.random(16, Globals.screen.height()-40);
+                sprite.y = Math.random(16, 136);
                 break;
             case 1://going right
                 sprite.hori();
                 sprite.x = -32;
                 sx = 1;
                 sprite.setMirrored(false);
-                sprite.y = Math.random(16, Globals.screen.height()-40);
+                sprite.y = Math.random(16, 136);
                 break;
                 
             case 2://going Up
                 sprite.vert();
-                sprite.y = Globals.screen.height();
+                sprite.y = 176;
                 sy = -1;
                 sprite.setFlipped(false);
-                sprite.x = Math.random(8, Globals.screen.width()-40);
+                sprite.x = Math.random(8, 180);
                 break;
             case 3://going down
                 sprite.vert();
                 sprite.y = -32;
                 sy = 1;
                 sprite.setFlipped(true);
-                sprite.x = Math.random(8, Globals.screen.width()-40);
+                sprite.x = Math.random(8, 180);
                 break;
         }
     }
@@ -98,7 +98,7 @@ public class WormBossManager {
     }
     
     boolean headCollidesWithBot(float bx, float by){
-        if(Globals.circle(sprite.x+18, sprite.y+18, bx+8, by+8, 14, 8)){
+        if(Globals.boundingBox(sprite.x, sprite.y, 28, bx, by, 16)){
             return true;
         }
         return false;
@@ -108,7 +108,7 @@ public class WormBossManager {
             return false;
         }
         for(Body b : body){
-            if(b.alive && Globals.circle(b.body.x+9, b.body.y+9, bx+8, by+8, 7, 8)){
+            if(b.alive && Globals.boundingBox(b.body.x+2, b.body.y+2, 14, bx, by, 16)){
                 return true;
             }
         }
@@ -145,7 +145,7 @@ public class WormBossManager {
             }
             blastX += bvx;
             blastY += bvy;
-            if(Globals.circle(blastX, blastY, bx+8, by+8, 4, 8)){
+            if(Globals.boundingBox(blastX, blastY, 8, bx, by, 16)){
                 blastX = -10;
                 blastY = -10;
                 Globals.shield -= 10;
@@ -166,13 +166,13 @@ public class WormBossManager {
             } 
         }
         if(health > 0){
-            if(sprite.x > Globals.screen.width()+140){
+            if(sprite.x > 360){
                 setDir();
             }
             if(sprite.x < -172){
                 setDir();
             }
-            if(sprite.y > Globals.screen.height()+140){
+            if(sprite.y > 316){
                 setDir();
             }
             if(sprite.y < -172){
@@ -303,7 +303,7 @@ class Body {
                 sx = Math.random(1, 4);
                 sy = Math.random(-3, 2);
             }
-            if(body.x > Globals.screen.width()-28){
+            if(body.x > 192){
                 sx = Math.random(-4, -1);
                 sy = Math.random(-3, 2);
             } 
@@ -311,7 +311,7 @@ class Body {
                 sy = Math.random(1, 4);
                 sx = Math.random(-3, 2);
             }
-            if(body.y > Globals.screen.height()-28) {
+            if(body.y > 148) {
                 sy = Math.random(-4, -1);
                 sx = Math.random(-3, 2);
             }

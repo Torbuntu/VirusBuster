@@ -17,7 +17,6 @@ class VirusObject{
         type = t;
         virus = new Virus();
         virus.walk();
-        
         reset(x, y);
     }
 
@@ -59,7 +58,7 @@ class VirusObject{
             if(bx <= (virus.x + 32) && bx >= virus.x){
                 virus.setMirrored(false);
             }
-            if(Globals.circle(virus.x+8, virus.y+8, bx+8, by+8, 8, 6)){
+            if(Globals.boundingBox(virus.x+2, virus.y+2, 12, bx+2, by+2, 12)){
                 Globals.shield--;
             }
             
@@ -101,6 +100,7 @@ class VirusObject{
                 virus.draw(Globals.screen);
                 animationTime--;
             }
+            // else we don't render anything
         }
     }
     

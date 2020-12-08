@@ -9,7 +9,7 @@ public class MiniBoss{
     SmallBoss virus;
         
     int hurt = 0;
-    float sx = 0, sy = 0;//speed variables
+    float dx, dy, sx = 0, sy = 0;//speed variables
 
     int health, maxHealth;
     int shooting = 0, shootReady = 250, dying = 150, berserk = 0;
@@ -75,7 +75,7 @@ public class MiniBoss{
         }
         if(alive){
             for(BossBlast b : blasts){
-                if(b.isActive()) b.update(bx, by);
+                if(b.active) b.update(bx, by);
             }
             
             shootReady--;
@@ -103,7 +103,7 @@ public class MiniBoss{
                 virus.x += sx;
                 virus.y += sy;
             }
-            if(getHealth() < getMaxHealth()/2){
+            if(health < maxHealth/2){
                 if(!damaged){
                     damaged = true;
                     berserk = 500;
@@ -122,8 +122,8 @@ public class MiniBoss{
         sy = 0;
         
         // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
-        float dx = Math.abs(virus.x - bx);
-        float dy = Math.abs(virus.y - by);
+        dx = Math.abs(virus.x - bx);
+        dy = Math.abs(virus.y - by);
         
         if(dx > dy){
             if(virus.x < bx){
@@ -149,11 +149,9 @@ public class MiniBoss{
             if(bx <= (virus.x + 80) && bx >= virus.x){
                 virus.setMirrored(false);
             }
-            if(hurt==0)
-                virus.bite();
+            if(hurt==0) virus.bite();
         }else{
-            if(hurt==0)
-                virus.walk();
+            if(hurt==0) virus.walk();
         }
     }
     
@@ -174,7 +172,7 @@ public class MiniBoss{
             virus.draw(Globals.screen);
             
             for(BossBlast b : blasts){
-                if(b.isActive()) b.render();
+                if(b.active) b.render();
             }
         }else if(dying > 0){
             switch(dying){
@@ -200,19 +198,18 @@ public class MiniBoss{
     void hit(int damage){
         health -= damage;
         if(hurt==0){
-            int hurtType = Math.random(0, 4);
-            switch(hurtType){
+            switch(Math.random(0, 4)){
                 case 0:
-                    hurtA();
+                    virus.hurtA();
                     break;
                 case 1:
-                    hurtB();
+                    virus.hurtB();
                     break;
                 case 2:
-                    hurtC();
+                    virus.hurtC();
                     break;
                 case 3:
-                    hurtD();
+                    virus.hurtD();
                     break;
             }
         }
@@ -224,9 +221,7 @@ public class MiniBoss{
     
     void checkActiveBlasts(){
         for(BossBlast b : blasts){
-            if(b.isActive()){
-                return;
-            }
+            if(b.active)return;
         }
         shooting = 25;
         shootReady = 250;
@@ -236,55 +231,9 @@ public class MiniBoss{
         blasts[2].init(0, 2, virus.x+16, virus.y+16);
         blasts[3].init(0, -2, virus.x+16, virus.y+16);
     }
-    
-    public float getX(){
-        return virus.x;
-    }
-    
-    public float getY(){
-        return virus.y;
-    }
-    
-    public void incX(float x){
-        virus.x += x;
-    }
-    public void incY(float y){
-        virus.y += y;
-    }
-    
-    public void setSpeedX(float x){
-        sx = x;
-    }
-    public void setSpeedY(float y){
-        sy = y;
-    }
-    
-    public int getMaxHealth(){
-        return maxHealth;
-    }
-    
-    public int getHealth(){
-        return health;
-    }
-    
+
     // ensure we draw the full enemy death animation
     public boolean getAlive(){
         return dying > 0; 
-    }
-    
-    void bite(){}
-    void walk(){}
-    void die(){}
-    void hurtA(){
-        virus.hurtA();
-    }
-    void hurtB(){
-        virus.hurtB();
-    }
-    void hurtC(){
-        virus.hurtC();
-    }
-    void hurtD(){
-        virus.hurtD();
     }
 }

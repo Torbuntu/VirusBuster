@@ -1,6 +1,7 @@
 import managers.BlastManager;
 //import sprites.Grabby;
 import sprites.GrabbyHand;
+import femto.mode.HiRes16Color;
 
 class GrabbyManager {
     
@@ -15,8 +16,8 @@ class GrabbyManager {
     void init(){
         leftX = 0;
         leftY = 16;
-        rightX = Globals.screen.width()-16;
-        rightY = Globals.screen.height()-40;
+        rightX = 204; // 220-16;
+        rightY = 136; // 176-40;
         
         hand = new GrabbyHand();
         hand.move();
@@ -43,6 +44,7 @@ class GrabbyManager {
                     rightY-=1;
                 }
                 shooting--;
+                //TODO: Check if hitting bot
                 if(shooting == 0) {
                     rightY += 3;
                     if(leftMove > 1){
@@ -78,23 +80,22 @@ class GrabbyManager {
     }
     
     void render(){
+        HiRes16Color screen = Globals.screen;
         if(shooting > 0 && ready){
-            Globals.screen.drawHLine(13, (int)(leftY+16), 204, 8);
+            screen.drawHLine(13, (int)(leftY+16), 204, 8);
         }
         //grabby.draw(Globals.screen);
         hand.setMirrored(false);
         hand.setFlipped(false);
-        hand.draw(Globals.screen, leftX, leftY);
+        hand.draw(screen, leftX, leftY);
         hand.setFlipped(true);
-        hand.draw(Globals.screen, leftX, leftY+16);
+        hand.draw(screen, leftX, leftY+16);
         
         hand.setMirrored(true);
         hand.setFlipped(false);
-        hand.draw(Globals.screen, rightX, rightY);
+        hand.draw(screen, rightX, rightY);
         hand.setFlipped(true);
-        hand.draw(Globals.screen, rightX, rightY+16);
-        
-        
+        hand.draw(screen, rightX, rightY+16);
     }
     
     int getCurrentHealth(){

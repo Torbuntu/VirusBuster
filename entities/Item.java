@@ -38,7 +38,4 @@ class Item {
         }
     }
     
-    boolean getAvailable(){
-        return available; 
-    }
 }

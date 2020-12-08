@@ -13,7 +13,7 @@ class BossBlast {
     void update(float ex, float ey){
         if(!active)return;
 
-        if(active && Globals.circle(x, y, ex, ey, 8, 4)){
+        if(active && Globals.boundingBox(x, y, 16, ex, ey, 8)){
             //player hit!
             active = false;
             Globals.shield -= 15;
@@ -29,9 +29,5 @@ class BossBlast {
         if(active)
             Globals.screen.drawCircle(x, y, 8, 8, false);
     }
-    
-    boolean isActive(){
-        return active;
-    }
-    
+
 }

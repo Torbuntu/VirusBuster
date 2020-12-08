@@ -41,7 +41,7 @@ class NormalSector extends State {
 
         Globals.drawGrid();
         itemDropManager.updateAndRender();
-        if(itemDropManager.checkCollect(botManager.getX()+8, botManager.getY()+8)){
+        if(itemDropManager.checkCollect(botManager.getX(), botManager.getY())){
             Globals.currency++;
         }
         if(Globals.shield <= 0){

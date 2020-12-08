@@ -183,7 +183,7 @@ class Spike{
     int sx, sy, move;
     
     void update(float bx, float by, boolean dash){
-        if(Globals.circle(x, y, bx+8, by+8, 3, 8)){
+        if(Globals.boundingBox(x, y, 6, bx, by, 16)){
             if(!dash) Globals.shield -= 5;
             active = false;
         }

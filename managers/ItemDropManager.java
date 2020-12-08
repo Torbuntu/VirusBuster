@@ -16,7 +16,7 @@ public class ItemDropManager {
     
     void newDrop(float x, float y){
         for(Item i : items){
-            if(!i.getAvailable()){
+            if(!i.available){
                 i.init(0, x, y);
                 return;
             }
@@ -25,7 +25,7 @@ public class ItemDropManager {
        
     void updateAndRender(){
         for(Item i : items){
-            if(i.getAvailable()){
+            if(i.available){
                i.update();
                i.render();
             }
@@ -35,8 +35,8 @@ public class ItemDropManager {
     
     public boolean checkCollect(float x, float y){
         for(Item i : items){
-            if(i.getAvailable()){
-                if(Globals.circle(i.loot.x+4, i.loot.y+4, x, y, 6, 8)){
+            if(i.available){
+                if(Globals.boundingBox(i.loot.x, i.loot.y, 8, x, y, 16)){
                     i.reset();
                     coin.play();
                     return true;
