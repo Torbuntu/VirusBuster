@@ -10,6 +10,7 @@ import femto.font.FontC64;
  * 
  */
 class Globals {
+    //TODO: Add a "magnet" variable for having a magnet upgrade to collect items.
     
     static final SaveManager saveManager = new SaveManager();
     
