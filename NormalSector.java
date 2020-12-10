@@ -66,7 +66,7 @@ class NormalSector extends State {
         virusManager.render(screen);
 
         //START update Blast
-        blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         Globals.drawHud((int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats()));
         

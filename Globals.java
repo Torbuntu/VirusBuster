@@ -4,6 +4,9 @@ import femto.mode.HiRes16Color;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
 
+import managers.SaveManager;
+import managers.SectorZoneManager;
+
 /**
  * Globals contains all of the globally used variables as well as 
  * a couple of useful helper methods.
@@ -11,6 +14,7 @@ import femto.font.FontC64;
  */
 class Globals {
     //TODO: Add a "magnet" variable for having a magnet upgrade to collect items.
+    //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
     
     static final SaveManager saveManager = new SaveManager();
     
@@ -18,8 +22,7 @@ class Globals {
     
     static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
     static int score = 0, kills = 0;
-    //rate:1, refresh:50
-    static int shield = 100, hurt=0, hit = 0, shots = 0;
+    static int shield = 100, hurt = 0, hit = 0, shots = 0, charge = 0;
     static boolean createItemDrop = false;
     static float itemX = 0, itemY = 0;
         
@@ -32,6 +35,15 @@ class Globals {
     */
     public static boolean boundingBox(float x1, float y1, float s1, float x2, float y2, float s2){
         return (x1 < x2 + s2 && x1 + s1 > x2 && y1 < y2 + s2 && y1 + s1 > y2);
+    }
+    
+    public static void checkHitBot(float vx, float vy, int vSize, float bx, float by, int bSize){
+        if(boundingBox(vx, vy, vSize, bx, by, bSize)){
+            if(hurt == 0){
+                hurt = 50;
+                shield-=2;
+            }
+        }
     }
     
     /**
@@ -87,7 +99,7 @@ class Globals {
         
         // threats health
         screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
-
+        
         //Zone : SECTOR
         screen.setTextPosition(98, 3);
         screen.setTextColor(0);

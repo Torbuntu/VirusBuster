@@ -4,7 +4,7 @@ import femto.mode.HiRes16Color;
 
 class BlastObject {
     float sx = 0, sy = 0;
-    boolean draw = false;
+    boolean draw = false, charged = false;
     Blast blast;
     Shoot shoot;
     
@@ -28,33 +28,25 @@ class BlastObject {
     
     void render(HiRes16Color screen){
         if(draw){
-            // blast.rotoscale(Globals.screen, blast.x+blast.y, 1);
-            blast.draw(screen);
+            if(charged) blast.rotoscale(screen, 0, 1.4f);
+            else blast.draw(screen);
         }
     }
-    
-    boolean active(){
-        return draw;
-    }
-    
+
     void hit(){
         draw = false;
     }
     
-    void setDir(float x, float y){
+    void setDir(float dx, float dy, float cx, float cy){
+        // Default is non charged. This changed after this method in blast manager
+        charged = false;
         shoot.play();
-        sx = x;
-        sy = y;
+        blast.x = cx;
+        blast.y = cy;
+        sx = dx;
+        sy = dy;
     }
-    
-    void setX(float x){
-        blast.x = x;
-    }
-    
-    void setY(float y){
-        blast.y = y;
-    }
-    
+
     float getX(){
         return blast.x;
     }

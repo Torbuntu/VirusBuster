@@ -64,16 +64,16 @@ public class VirusManager{
         spawnClear--;
         toggle = !toggle;
         for(int i = 0; i < spawned; i++){
-            if(toggle && viruses[i].type == 1){
-                continue;
-            }
+            // Skip every other update for perfs
+            if(toggle && viruses[i].type == 1) continue;
+            
             if(viruses[i].alive){
-                if(blastManager.hitEnemy(viruses[i].getX(), viruses[i].getY(), 16.0f)){
-                    viruses[i].hit(1);
+                if(blastManager.hitVirus(viruses[i])){
                     if(!viruses[i].alive){
                         explode.play();
                         total--;
                         Globals.updateKills(viruses[i].virus.x, viruses[i].virus.y);
+                        continue;
                     }
                 }
             

@@ -3,6 +3,8 @@ import femto.State;
 import femto.input.Button;
 import femto.mode.HiRes16Color;
 
+import managers.SectorZoneManager;
+
 class Shop extends State {
     HiRes16Color screen;
     int currency = 0, rate = 1, refresh = 50;

@@ -171,10 +171,5 @@ public class BotManager {
             }
         }
     }
-    
-    // public void render(float x, float y){
-    //     head.draw(Globals.screen, x, y);
-    //     if(speed != 2) bot.draw(Globals.screen, x, y+10);
-    // }
-    
+
 }

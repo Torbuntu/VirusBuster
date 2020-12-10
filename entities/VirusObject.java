@@ -5,7 +5,7 @@ class VirusObject{
     boolean alive = true;
     float sx = 0, sy = 0;
     int animationTime = 50;
-    int hitTime = 0;
+    int hitTime = 0, updateTime = 0;
     
     public int aroundX = 0, aroundY = 0;
 
@@ -30,25 +30,29 @@ class VirusObject{
             return;
         }
         //START Move Virus
-        sx = 0;
-        sy = 0;
+        if(updateTime == 0){
+            updateTime = 30;
+            sx = 0;
+            sy = 0;
+            
+            // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
+            if(Math.abs(virus.x - bx) > Math.abs(virus.y - by)){
+                if(virus.x < bx){
+                    sx = 0.5f;
+                }
+                if(virus.x > bx){
+                    sx = -0.5f;
+                }
+            }else{
+                if(virus.y > by){
+                    sy = -0.5f;
+                }
+                if(virus.y < by){
+                    sy = 0.5f;
+                }
+            }
+        }else updateTime--;
         
-        // Calculate the absolute distances between the x/y coordinates. Virus moves closer by whichever is further.
-        if(Math.abs(virus.x - bx) > Math.abs(virus.y - by)){
-            if(virus.x < bx){
-                sx = 0.5f;
-            }
-            if(virus.x > bx){
-                sx = -0.5f;
-            }
-        }else{
-            if(virus.y > by){
-                sy = -0.5f;
-            }
-            if(virus.y < by){
-                sy = 0.5f;
-            }
-        }
         
         //check if close
         if(bx >= (virus.x - 32) && bx <= (virus.x + 32) && by >= (virus.y - 32) && by <= (virus.y + 32) ){
@@ -58,12 +62,7 @@ class VirusObject{
             if(bx <= (virus.x + 32) && bx >= virus.x){
                 virus.setMirrored(false);
             }
-            if(Globals.boundingBox(virus.x+2, virus.y+2, 12, bx+2, by+2, 8)){
-                if(Globals.hurt == 0){
-                    Globals.hurt = 50;
-                    Globals.shield-=2;
-                }
-            }
+            Globals.checkHitBot(virus.x+2, virus.y+2, 12, bx+2, by+2, 8);
             
             virus.bite();
         }else{

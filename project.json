@@ -606,6 +606,33 @@
 		},
 		"/SummaryScene.java": {
 			"sdcard": false
+		},
+		"/stage": {
+			"sdcard": false
+		},
+		"/stage/ForkBombStage.java": {
+			"sdcard": false
+		},
+		"/stage/GrabbyMcStage.java": {
+			"sdcard": false
+		},
+		"/stage/MiniBossStage.java": {
+			"sdcard": false
+		},
+		"/stage/WormBossStage.java": {
+			"sdcard": false
+		},
+		"/stage/SummaryStage.java": {
+			"sdcard": false
+		},
+		"/stage/TitleStage.java": {
+			"sdcard": false
+		},
+		"/managers/SaveManager.java": {
+			"sdcard": false
+		},
+		"/managers/SectorZoneManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
