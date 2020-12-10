@@ -1,5 +1,6 @@
 import audio.Shoot;
 import sprites.Blast;
+import femto.mode.HiRes16Color;
 
 class BlastObject {
     float sx = 0, sy = 0;
@@ -25,10 +26,10 @@ class BlastObject {
         blast.y += sy;
     }
     
-    void render(){
+    void render(HiRes16Color screen){
         if(draw){
             // blast.rotoscale(Globals.screen, blast.x+blast.y, 1);
-            blast.draw(Globals.screen);
+            blast.draw(screen);
         }
     }
     

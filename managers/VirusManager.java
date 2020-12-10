@@ -1,3 +1,5 @@
+import femto.mode.HiRes16Color;
+
 import audio.Explode;
 
 import entities.Debris;
@@ -135,12 +137,12 @@ public class VirusManager{
         }
     }
     
-    public void render(){
+    public void render(HiRes16Color screen){
         if(incoming > 0){
-            Globals.screen.fillRect(Globals.screen.width()/2-50, 150-incoming-2, 94, 12, 3);
-            Globals.screen.setTextPosition(Globals.screen.width()/2-48, 150-incoming);
-            Globals.screen.setTextColor(8);
-            Globals.screen.print("<Incoming>");
+            screen.fillRect(60, 150-incoming-2, 94, 12, 3);
+            screen.setTextPosition(62, 150-incoming);
+            screen.setTextColor(8);
+            screen.print("<Incoming>");
             return;
         }
         for(int i = 0; i < spawned; i++){
@@ -235,8 +237,8 @@ public class VirusManager{
     void zoneZero(int sector){
         switch(sector){
             case 0:
-                waves = new int[]{22, 3, 5};
-                total = 30;
+                waves = new int[]{2, 3, 5};
+                total = 10;
                 break;
             case 1:
                 waves = new int[]{3, 5, 5, 7};

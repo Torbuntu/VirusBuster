@@ -10,4 +10,7 @@ public class SaveManager extends femto.Cookie {
     boolean endlessUnlocked;
     
     int highScore;
+    int rate;
+    int refresh;
+    int currency;
 }

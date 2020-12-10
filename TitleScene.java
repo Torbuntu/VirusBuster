@@ -3,10 +3,15 @@ import femto.State;
 import femto.input.Button;
 import femto.sound.Mixer;
 
+import femto.mode.HiRes16Color;
+
 public class TitleScene extends State {
+    
+    HiRes16Color screen;
     int select=0, count=0;
     
     void init(){
+        screen = Globals.screen;
         select = 0;
         count = 0;
         Mixer.init(8000);
@@ -27,11 +32,11 @@ public class TitleScene extends State {
             Game.changeState(new NormalSector());
         }
         
-        Globals.screen.clear(3);
+        screen.clear(3);
         
-        Globals.screen.setTextPosition(10, 10);
-        Globals.screen.setTextColor(0);
-        Globals.screen.print(
+        screen.setTextPosition(10, 10);
+        screen.setTextColor(0);
+        screen.print(
             "Press B to begin Demo." +
             "\nSelect Zone to Begin"
             );
@@ -47,9 +52,9 @@ public class TitleScene extends State {
         count++;
         for(int i = 0; i < 4; i++){
             if(select == i && count > 10){
-                Globals.screen.drawRect((11+i*50), 44, 17, 17, 8);
+                screen.drawRect((11+i*50), 44, 17, 17, 8);
             }else{
-                Globals.screen.drawRect((12+i*50), 45, 16, 16, 0);
+                screen.drawRect((12+i*50), 45, 16, 16, 0);
             }
             switch(i){
                 case 0:
@@ -74,13 +79,17 @@ public class TitleScene extends State {
                     break;
             }
         }
-        Globals.screen.fillRect(10, 70, 200, 50, 8+select);
-        Globals.screen.setTextPosition(15, 75);
-        Globals.screen.setTextColor(3);
-        Globals.screen.print("About zone " + select);
+        screen.fillRect(10, 70, 200, 50, 8+select);
+        screen.setTextPosition(15, 75);
+        screen.setTextColor(3);
+        screen.print("About zone " + select);
         
         if(count > 20) count = 0;
         
-        Globals.screen.flush();
+        screen.flush();
+    }
+    
+    void shutdown(){
+        screen = null;
     }
 }

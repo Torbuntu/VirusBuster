@@ -17,9 +17,9 @@ class Globals {
     static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
     
     static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
-    static int score = 0, currency = 0, kills = 0;
+    static int score = 0, kills = 0;
     //rate:1, refresh:50
-    static int shield = 100, hurt=0, rate = 10, refresh = 5, hit = 0, shots = 0;
+    static int shield = 100, hurt=0, hit = 0, shots = 0;
     static boolean createItemDrop = false;
     static float itemX = 0, itemY = 0;
         
@@ -58,7 +58,7 @@ class Globals {
      * When a ZONE is cleared, we calculate the accuracy to display on the results view.
      * This will also be used to determine acheivments
      */ 
-    public int getAccuracy() {
+    public static int getAccuracy() {
         if(hit == 0)return 0;
         if(shots == 0) return 0;
         return Math.abs(hit * 100 / shots);
@@ -71,8 +71,8 @@ class Globals {
      */
     static void drawHud(int threatWidth){
         // Fill rects for the top and bottom sections
-        screen.fillRect(0, 0, screen.width(), 16, 3);
-        screen.fillRect(0, screen.height()-14, screen.width(), 16, 3);
+        screen.fillRect(0, 0, 220, 16, 3);
+        screen.fillRect(0, 162, 220, 16, 3);
         
         //Bot Shield
         screen.drawRect(6, 0, 80, 10, 0);
@@ -94,24 +94,24 @@ class Globals {
         screen.print(ZONE + ":" + SECTOR);
         
         //Score and Currency 
-        screen.setTextPosition(3, screen.height()-12);
+        screen.setTextPosition(3, 164);
         screen.print("Score: "+score);
         
-        screen.setTextPosition(140, screen.height()-12);
-        screen.print("$$: " + currency);
+        screen.setTextPosition(140, 164);
+        screen.print("$$: " + saveManager.currency);
     }
 
     static void drawGrid(){
-        screen.drawRect(6, 16, screen.width()-12, screen.height()-32, 12, true);
+        screen.drawRect(6, 16, 208,144, 12, true);
     }
     
     static void drawCleared(boolean boss){
         ROOM_STATUS = 1; // CLEARED!
-        screen.setTextPosition(screen.width()/2-58, screen.height()/2);
+        screen.setTextPosition(52, 88);
         screen.setTextColor(0);
         screen.print(SECTOR_CLEAR);
         
-        screen.setTextPosition(26, screen.height()/2+16);
+        screen.setTextPosition(26, 104);
         screen.print(PRESS_C_TRANSPORT);
         if(Button.C.justPressed()){
             SECTOR++;

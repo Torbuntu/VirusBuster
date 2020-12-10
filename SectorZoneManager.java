@@ -10,7 +10,7 @@ class SectorZoneManager {
     static State getNextState(){
 
         // There are no sectors passed 8, send to title.
-        if(Globals.SECTOR > 8) return new TitleScene();
+        if(Globals.SECTOR > 8) return new SummaryScene();
         
         // Sector 4 is always mini boss stage.
         if(Globals.SECTOR == 4) return new MiniBossStage();
@@ -23,7 +23,7 @@ class SectorZoneManager {
         }
         
         // There are no sectors beyond 4 on ZONE 0
-        if(Globals.ZONE == 0 && Globals.SECTOR > 4) return new TitleScene();
+        if(Globals.ZONE == 0 && Globals.SECTOR > 4) return new SummaryScene();
         
         // Default return NormalSector. VirusManager will be initialized with the Globals.SECTOR variable.
         return new NormalSector();

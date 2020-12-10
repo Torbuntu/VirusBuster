@@ -1,10 +1,11 @@
 import entities.BlastObject;
+import femto.mode.HiRes16Color;
 
 public class BlastManager {
     
     // refresh -30 how quickly blasts refresh
     // rate    -3 how many blasts are active at a time
-    int cooldown = 0;
+    int cooldown = 0, refresh, rate;
     BlastObject[] blasts;
     float swordX = 0, swordY = 0;
     boolean sword = false;
@@ -22,6 +23,8 @@ public class BlastManager {
             new BlastObject(),
             new BlastObject()
         };
+        rate = Globals.saveManager.rate;
+        refresh = Globals.saveManager.refresh;
         
         System.out.println("[I] - Blasts initialized");
     }
@@ -31,7 +34,7 @@ public class BlastManager {
             cooldown--;
         }
         if(attack && cooldown == 0){
-            cooldown = Globals.refresh;
+            cooldown = refresh;
             if(sword){
                 switch(dir){
                     case 0:// Left
@@ -48,7 +51,7 @@ public class BlastManager {
                         break;
                 }
             }else{
-                for(int i = 0; i < Globals.rate; i++){
+                for(int i = 0; i < rate; i++){
                     if(!blasts[i].active()){
                         blasts[i].setX(x);
                         blasts[i].setY(y);
@@ -72,7 +75,7 @@ public class BlastManager {
             }
         }
         
-        for(int i = 0; i < Globals.rate; i++){
+        for(int i = 0; i < rate; i++){
             blasts[i].update();
         }
     }
@@ -88,14 +91,13 @@ public class BlastManager {
         return false;
     }
     
-    void render(){
-        int cooldownWidth = (int)(cooldown * 78 / Globals.refresh);
-        Globals.screen.drawHLine(6, 13, cooldownWidth, 8);
+    void render(HiRes16Color screen){
+        screen.drawHLine(6, 13, (int)(cooldown * 78 / refresh), 8);
         if(sword){
             Globals.screen.drawLine(swordX, swordY+8, swordX-4, swordY-4, 6, true);
         }else{
-            for(int i = 0; i < Globals.rate; i++){
-                blasts[i].render();
+            for(int i = 0; i < rate; i++){
+                blasts[i].render(screen);
             }
         }
     }

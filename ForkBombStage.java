@@ -7,14 +7,16 @@ import managers.BotManager;
 import managers.BlastManager;
 import managers.ForkBombManager;
 
+import femto.mode.HiRes16Color;
 
 class ForkBombStage extends State {
-    
+    HiRes16Color screen;
     BotManager botManager;
     BlastManager blastManager;
     ForkBombManager forkBombManager;
     
     void init(){
+        screen = Globals.screen;
         botManager = new BotManager();
         blastManager = new BlastManager();
         forkBombManager = new ForkBombManager();
@@ -22,7 +24,7 @@ class ForkBombStage extends State {
     }
     
     void update(){
-        Globals.screen.clear(3);
+        screen.clear(3);
         Globals.drawGrid();
         
         if(forkBombManager.cleared()){
@@ -36,15 +38,16 @@ class ForkBombStage extends State {
         blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         // Render
-        botManager.render();
+        botManager.render(screen);
         forkBombManager.render();
         
         Globals.drawHud((int)(forkBombManager.getCurrentHealth() * 78 / forkBombManager.getTotalHealth()));
-        blastManager.render();
-        Globals.screen.flush();
+        blastManager.render(screen);
+        screen.flush();
     }
     
     void shutdown(){
+        screen = null;
         botManager = null;
         blastManager = null;
         forkBombManager = null;

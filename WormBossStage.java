@@ -3,17 +3,20 @@ import femto.State;
 import femto.input.Button;
 import femto.sound.Mixer;
 
+import femto.mode.HiRes16Color;
+
 import managers.BotManager;
 import managers.BlastManager;
 import managers.WormBossManager;
 
 class WormBossStage extends State {
-    
+    HiRes16Color screen;
     BotManager botManager;
     BlastManager blastManager;
     WormBossManager wormManager;
     
     void init(){
+        screen = Globals.screen;
         botManager = new BotManager();
         blastManager = new BlastManager();
         wormManager = new WormBossManager();
@@ -22,8 +25,7 @@ class WormBossStage extends State {
         System.out.println("[I] - Worm Boss initialized");
     }
     void update(){
-        Globals.screen.clear(3);
-        
+        screen.clear(3);
         Globals.drawGrid();
         
         if(wormManager.cleared()){
@@ -36,10 +38,10 @@ class WormBossStage extends State {
         if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
         || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
             // Move bot Y
-            if(botManager.getY() + 32 < Globals.screen.height()-45) botManager.setY(botManager.getY()+32);
+            if(botManager.getY() + 32 < 131) botManager.setY(botManager.getY()+32);
             else botManager.setY(botManager.getY()-32);
             // Move bot X
-            if(botManager.getX() + 32 < Globals.screen.width()-45) botManager.setX(botManager.getX()+32);
+            if(botManager.getX() + 32 < 175) botManager.setX(botManager.getX()+32);
             else botManager.setX(botManager.getX()-32);
             // Subtract shielding
             Globals.shield-=10;
@@ -47,19 +49,20 @@ class WormBossStage extends State {
         
         blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
-        botManager.render();
+        botManager.render(screen);
         wormManager.render();
         
         Globals.drawHud((int)(wormManager.getCurrentHealth() * 78 / wormManager.getTotalHealth()));
         
-        blastManager.render();
+        blastManager.render(screen);
 
-        Globals.screen.flush();
+        screen.flush();
     }
     
     void shutdown(){
         botManager = null;
         blastManager = null;
         wormManager = null;
+        screen = null;
     }
 }

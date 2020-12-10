@@ -3,17 +3,23 @@ import femto.State;
 import femto.input.Button;
 import femto.sound.Mixer;
 
+import femto.mode.HiRes16Color;
+
 import managers.BotManager;
 import managers.BlastManager;
 import managers.MiniBossManager;
 
 class MiniBossStage extends State {
     
+    HiRes16Color screen;
+    
     BotManager botManager;
     BlastManager blastManager;
     MiniBossManager bossManager;
     
     void init(){
+        screen = Globals.screen;
+        
         bossManager = new MiniBossManager();
         botManager = new BotManager();
         blastManager = new BlastManager();
@@ -28,7 +34,7 @@ class MiniBossStage extends State {
         System.out.println("[I] - MiniBoss initialized");
     }
     void update(){
-        Globals.screen.clear(3);
+        screen.clear(3);
         Globals.drawGrid();
         
         // Update
@@ -37,34 +43,25 @@ class MiniBossStage extends State {
         
         if(bossManager.cleared()){
             // CLEARED!
-            Globals.screen.setTextPosition(Globals.screen.width()/2-58, Globals.screen.height()/2);
-            Globals.screen.setTextColor(0);
-            Globals.screen.print(Globals.SECTOR_CLEAR);
-            
-            Globals.screen.setTextPosition(26, Globals.screen.height()/2+16);
-            Globals.screen.print(Globals.PRESS_C_TRANSPORT);
-            if(Button.C.justPressed()){
-                Globals.SECTOR++;
-                Game.changeState(SectorZoneManager.getNextState());
-            }
-            Globals.ROOM_STATUS = 1;
+            Globals.drawCleared(true);
         }
         
         // START update Blast
         blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         // Render
-        botManager.render();
+        botManager.render(screen);
         bossManager.render();
         
         Globals.drawHud((int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth()));
         
-        blastManager.render();
+        blastManager.render(screen);
         
-        Globals.screen.flush();
+        screen.flush();
     }
     
     void shutdown(){
+        screen = null;
         botManager = null;
         blastManager = null;
         bossManager = null;

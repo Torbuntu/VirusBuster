@@ -2,6 +2,8 @@ import sprites.Bot;
 import sprites.BotHead;
 import femto.input.Button;
 
+import femto.mode.HiRes16Color;
+
 import managers.DebrisManager;
 
 public class BotManager {
@@ -18,6 +20,8 @@ public class BotManager {
         head.y = 88;
         
         head.down();
+        
+        System.out.println("[I] - Bot initialized");
     }
     
     public boolean getAttacking(){return attack;}
@@ -151,26 +155,26 @@ public class BotManager {
     }
 
     
-    public void render(){
+    public void render(HiRes16Color screen){
         if(Globals.hurt%2 != 0)return;
         
-        head.draw(Globals.screen);
-        if(speed != 2) bot.draw(Globals.screen, head.x, head.y+9);
+        head.draw(screen);
+        if(speed != 2) bot.draw(screen, head.x, head.y+9);
         else{
             if(ghost > 2){ 
                 switch(dir){
-                    case 0:Globals.screen.drawRect(head.x-sx*8, head.y+2, 6, 6, 15, true);break;//left
-                    case 2:Globals.screen.drawRect(head.x-sx*6, head.y+2, 6, 6, 15, true);break;//right
-                    case 1:Globals.screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//up
-                    case 3:Globals.screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//down
+                    case 0:screen.drawRect(head.x-sx*8, head.y+2, 6, 6, 15, true);break;//left
+                    case 2:screen.drawRect(head.x-sx*6, head.y+2, 6, 6, 15, true);break;//right
+                    case 1:screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//up
+                    case 3:screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//down
                 }
             }
         }
     }
     
-    public void render(float x, float y){
-        head.draw(Globals.screen, x, y);
-        if(speed != 2) bot.draw(Globals.screen, x, y+10);
-    }
+    // public void render(float x, float y){
+    //     head.draw(Globals.screen, x, y);
+    //     if(speed != 2) bot.draw(Globals.screen, x, y+10);
+    // }
     
 }

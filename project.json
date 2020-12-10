@@ -603,6 +603,9 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/SummaryScene.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
