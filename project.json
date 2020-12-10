@@ -579,6 +579,30 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/sprites/BotHead.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/BotHead.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/BotHead.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Dash.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/Dash.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,

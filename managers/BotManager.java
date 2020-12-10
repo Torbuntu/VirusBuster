@@ -1,29 +1,34 @@
 import sprites.Bot;
+import sprites.BotHead;
 import femto.input.Button;
 
 import managers.DebrisManager;
 
 public class BotManager {
     Bot bot;
-    float sx = 0, sy = 0;
-    int speed = 1, dir = 1;
+    BotHead head;
+    int sx = 0, sy = 0;
+    int speed = 1, dir = 1, ghost = 0;
     boolean attack = false;
     
     public BotManager(){
         bot = new Bot();
-        bot.x = Globals.screen.width()/2;
-        bot.y = Globals.screen.height()/2;
+        head = new BotHead();
+        head.x = 110;
+        head.y = 88;
+        
+        head.down();
     }
     
     public boolean getAttacking(){return attack;}
     public int getDir(){return dir;}
-    public float getX(){return bot.x;}
-    public float getY(){return bot.y;}
-    public void setX(float x){bot.x = x;}
-    public void setY(float y){bot.y = y;}
+    public float getX(){return head.x;}
+    public float getY(){return head.y;}
+    public void setX(float x){head.x = x;}
+    public void setY(float y){head.y = y;}
     public void setPos(float x, float y){
-        bot.x = x;
-        bot.y = y;
+        head.x = x;
+        head.y = y;
     }
     
     void updateBotMovement(){
@@ -34,10 +39,14 @@ public class BotManager {
         if(Button.B.isPressed()){
             speed = 2;
         }
-        if(Button.Down.isPressed() && bot.y+1 < Globals.screen.height()-32){
+        if(Button.Down.isPressed() && head.y+1 < 144){
             if(speed==2){
-                bot.dashVert();
+                if(ghost==0)ghost=6;
+                head.dashDown();
             }else{
+                if(!attack){
+                    head.down();
+                }
                 bot.walkVert(); 
             }
                
@@ -46,10 +55,14 @@ public class BotManager {
                 dir = 3;
             }
         }
-        if( Button.Up.isPressed() && bot.y-1 > 16){
+        if( Button.Up.isPressed() && head.y-1 > 16){
             if(speed==2){
-                bot.dashVert();
+                if(ghost==0)ghost=6;
+                head.dashUp();
             }else{
+                if(!attack){
+                    head.up();
+                }
                 bot.walkVert(); 
             }
             sy = -speed;
@@ -58,11 +71,17 @@ public class BotManager {
             }
         }
         if(sy == 0){
-            if(Button.Right.isPressed() && bot.x+1 < Globals.screen.width()-20){
+            if(Button.Right.isPressed() && head.x+1 < 200){
                 bot.setMirrored( true );
                 if(speed==2){
-                    bot.dashHori();
+                    if(ghost==0)ghost=6;
+                    head.setMirrored( true );
+                    head.dashHori();
                 }else{
+                    if(!attack){
+                        head.setMirrored( false );
+                        head.right();
+                    }
                     bot.walkHori();
                 }
                 sx = speed;
@@ -70,11 +89,18 @@ public class BotManager {
                     dir = 2;
                 }
             }
-            if(Button.Left.isPressed() && bot.x-1 > 5){
+            if(Button.Left.isPressed() && head.x-1 > 5){
                 bot.setMirrored( false );
+                
                 if(speed==2){
-                    bot.dashHori();
+                    if(ghost==0)ghost=6;
+                    head.setMirrored( false );
+                    head.dashHori();
                 }else{
+                    if(!attack){
+                        head.setMirrored( false );
+                        head.left();
+                    }
                     bot.walkHori();
                 }
                 sx = -speed;
@@ -86,14 +112,23 @@ public class BotManager {
         
         if(sx == 0 && sy == 0) {
             if(attack) bot.shoot();
-            else if(speed!=2) bot.idle();
+            else if(speed!=2){
+                bot.idle();
+                if(dir == 0)head.left();
+                if(dir == 1)head.up();
+                if(dir == 2)head.right();
+                if(dir == 3)head.down();
+            } 
         }
         if(Button.A.isPressed()) attack = true;
         else attack = false;
         if(Button.B.isPressed()) attack = false;
-
-        bot.x += sx;
-        bot.y += sy;
+        
+        if(speed==2 && ghost > 0)ghost--;
+        if(Globals.hurt > 0)Globals.hurt--;
+        
+        head.x += sx;
+        head.y += sy;
         //END move player
     }
     
@@ -107,62 +142,35 @@ public class BotManager {
         //START move player
 
         updateBotMovement();
-        if(checkDebris && debrisManager.checkCollides(bot.x+sx, bot.y+sy, bot.width(), bot.height() )){
-            bot.x -= sx;
-            bot.y -= sy;
+        if(checkDebris && debrisManager.checkCollides(head.x+sx, head.y+sy, 12, 16 )){
+            head.x -= sx;
+            head.y -= sy;
         }
 
         //END move player
     }
-    
-    /**
-     * Draws the robot's red eyes and the dashing sparks behind the jets
-     * 
-     */
-    void drawBotVisor(){
-        // dashing and actually moving
-        if(speed==2){
-            if(dir == 0){//l
-                Globals.screen.drawHLine((int)bot.x+14, (int)bot.y+9, Math.random(2, 5), 10);
-            }
-            if(dir == 1){//u
-                Globals.screen.drawVLine((int)bot.x+4, (int)bot.y+16, Math.random(2, 5), 10);
-                Globals.screen.drawVLine((int)bot.x+9, (int)bot.y+16, Math.random(2, 5), 10);
-            }
-            if(dir == 2){//r
-                Globals.screen.drawHLine((int)bot.x, (int)bot.y+9, -Math.random(2, 5), 10);
-            }
-            if(dir == 3){//d
-                Globals.screen.drawVLine((int)bot.x+4, (int)bot.y, -Math.random(2, 5), 10);
-                Globals.screen.drawVLine((int)bot.x+9, (int)bot.y, -Math.random(2, 5), 10);
-                
-                //eyes
-                Globals.screen.fillRect((int)bot.x+3, (int)bot.y+5, 2, 2, 8);
-                Globals.screen.fillRect((int)bot.x+9, (int)bot.y+5, 2, 2, 8);
-            }
-        }
-        if (speed != 2){
-            if(dir == 0){
-                Globals.screen.drawHLine((int)bot.x+2, (int)bot.y+4, 2, 8);
-            }
-            if(dir == 2){
-                Globals.screen.drawHLine((int)bot.x+10, (int)bot.y+4, 2, 8);
-            }
-            if(dir == 3){
-                Globals.screen.drawHLine((int)bot.x+3, (int)bot.y+4, 2, 8);
-                Globals.screen.drawHLine((int)bot.x+9, (int)bot.y+4, 2, 8);
-            }
-        }
-    }
+
     
     public void render(){
-        bot.draw(Globals.screen);
-        drawBotVisor();
+        if(Globals.hurt%2 != 0)return;
+        
+        head.draw(Globals.screen);
+        if(speed != 2) bot.draw(Globals.screen, head.x, head.y+9);
+        else{
+            if(ghost > 2){ 
+                switch(dir){
+                    case 0:Globals.screen.drawRect(head.x-sx*8, head.y+2, 6, 6, 15, true);break;//left
+                    case 2:Globals.screen.drawRect(head.x-sx*6, head.y+2, 6, 6, 15, true);break;//right
+                    case 1:Globals.screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//up
+                    case 3:Globals.screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//down
+                }
+            }
+        }
     }
     
     public void render(float x, float y){
-        bot.draw(Globals.screen, x, y);
-        drawBotVisor();
+        head.draw(Globals.screen, x, y);
+        if(speed != 2) bot.draw(Globals.screen, x, y+10);
     }
     
 }

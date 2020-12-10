@@ -1,91 +1,71 @@
 { "frames": [
    {
     "filename": "Bot 0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 12, "h": 15 },
+    "frame": { "x": 0, "y": 0, "w": 12, "h": 6 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 1, "w": 12, "h": 15 },
-    "sourceSize": { "w": 14, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
     "duration": 100
    },
    {
     "filename": "Bot 1.aseprite",
-    "frame": { "x": 12, "y": 0, "w": 12, "h": 15 },
+    "frame": { "x": 12, "y": 0, "w": 12, "h": 6 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 1, "w": 12, "h": 15 },
-    "sourceSize": { "w": 14, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
     "duration": 100
    },
    {
     "filename": "Bot 2.aseprite",
-    "frame": { "x": 24, "y": 0, "w": 12, "h": 15 },
+    "frame": { "x": 24, "y": 0, "w": 12, "h": 6 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 1, "w": 12, "h": 15 },
-    "sourceSize": { "w": 14, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
     "duration": 100
    },
    {
     "filename": "Bot 3.aseprite",
-    "frame": { "x": 36, "y": 0, "w": 13, "h": 14 },
+    "frame": { "x": 36, "y": 0, "w": 11, "h": 6 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 2, "w": 13, "h": 14 },
-    "sourceSize": { "w": 14, "h": 16 },
+    "spriteSourceSize": { "x": 1, "y": 0, "w": 11, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
     "duration": 100
    },
    {
     "filename": "Bot 4.aseprite",
-    "frame": { "x": 49, "y": 0, "w": 12, "h": 15 },
+    "frame": { "x": 47, "y": 0, "w": 8, "h": 6 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 1, "w": 12, "h": 15 },
-    "sourceSize": { "w": 14, "h": 16 },
+    "spriteSourceSize": { "x": 3, "y": 0, "w": 8, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
     "duration": 100
    },
    {
     "filename": "Bot 5.aseprite",
-    "frame": { "x": 61, "y": 0, "w": 13, "h": 15 },
+    "frame": { "x": 55, "y": 0, "w": 12, "h": 6 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 0, "y": 1, "w": 13, "h": 15 },
-    "sourceSize": { "w": 14, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "Bot 6.aseprite",
-    "frame": { "x": 74, "y": 0, "w": 12, "h": 10 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 3, "w": 12, "h": 10 },
-    "sourceSize": { "w": 14, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "Bot 7.aseprite",
-    "frame": { "x": 86, "y": 0, "w": 12, "h": 10 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 1, "y": 3, "w": 12, "h": 10 },
-    "sourceSize": { "w": 14, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
     "duration": 100
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.2.25-x64",
-  "image": "Bot-sheet.png",
+  "image": "Bot.png",
   "format": "RGBA8888",
-  "size": { "w": 98, "h": 15 },
+  "size": { "w": 67, "h": 6 },
   "scale": "1",
   "frameTags": [
    { "name": "walkVert", "from": 0, "to": 1, "direction": "forward" },
    { "name": "idle", "from": 2, "to": 2, "direction": "forward" },
    { "name": "walkHori", "from": 3, "to": 4, "direction": "forward" },
-   { "name": "shoot", "from": 5, "to": 5, "direction": "forward" },
-   { "name": "dashHori", "from": 6, "to": 6, "direction": "forward" },
-   { "name": "dashVert", "from": 7, "to": 7, "direction": "forward" }
+   { "name": "shoot", "from": 5, "to": 5, "direction": "forward" }
   ],
   "layers": [
    { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
