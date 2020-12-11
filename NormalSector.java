@@ -21,6 +21,8 @@ class NormalSector extends State {
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     
+    int transitionTime = 0;
+    
     void init(){
         screen = Globals.screen;
         
@@ -57,6 +59,8 @@ class NormalSector extends State {
         botManager.updateBotMovement(debrisManager, true);
         botManager.render(screen);
         
+        if(transition())return;
+        
         debrisManager.render();
         virusManager.update(botManager.getX(), botManager.getY(), debrisManager, blastManager);
 
@@ -84,5 +88,16 @@ class NormalSector extends State {
         botManager = null;
         blastManager = null;
         itemDropManager = null;
+    }
+    
+    
+    boolean transition(){
+        if(transitionTime < virusManager.getThreats()){
+            Globals.drawHud((int)(transitionTime * 78 / virusManager.getTotalThreats()));
+            transitionTime++;
+            screen.flush();
+            return true;
+        }
+        return false;
     }
 }

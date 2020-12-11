@@ -33,6 +33,7 @@ public class TitleStage extends State {
             Globals.shots = 0;
             // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
+            // Game.changeState(new ForkBombStage());
             Game.changeState(new NormalSector());
         }
         
@@ -63,22 +64,22 @@ public class TitleStage extends State {
             switch(i){
                 case 0:
                     if(Globals.saveManager.firstZoneClear){
-                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
+                        screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 1:
                     if(Globals.saveManager.secondZoneClear){
-                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
+                        screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 2:
                     if(Globals.saveManager.thirdZoneClear){
-                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
+                        screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
                 case 3:
                     if(Globals.saveManager.fourthZoneClear){
-                        Globals.screen.fillCircle(20+i*50, 52, 6, 11);
+                        screen.fillCircle(20+i*50, 52, 6, 11);
                     }
                     break;
             }

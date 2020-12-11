@@ -29,7 +29,6 @@ class SummaryStage extends State {
         screen.flush();
     }
     void shutdown(){
-        //TODO: SaveManager
         Globals.saveManager.saveCookie();
         screen = null;
     }

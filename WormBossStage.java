@@ -47,7 +47,7 @@ class WormBossStage extends State {
             Globals.shield-=10;
         }
         
-        blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         botManager.render(screen);
         wormManager.render();

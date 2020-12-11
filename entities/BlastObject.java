@@ -28,8 +28,9 @@ class BlastObject {
     
     void render(HiRes16Color screen){
         if(draw){
-            if(charged) blast.rotoscale(screen, 0, 1.4f);
-            else blast.draw(screen);
+            //if(charged) blast.rotoscale(screen, 0, 1.4f);
+            //else 
+            blast.draw(screen);
         }
     }
 
@@ -37,9 +38,15 @@ class BlastObject {
         draw = false;
     }
     
-    void setDir(float dx, float dy, float cx, float cy){
-        // Default is non charged. This changed after this method in blast manager
-        charged = false;
+    void init(float dx, float dy, float cx, float cy, boolean charge){
+        // Default charged to false
+        charged = charge;
+        if(charge){
+            blast.charge();
+        }else{
+            blast.fire();
+        }
+        draw = true;
         shoot.play();
         blast.x = cx;
         blast.y = cy;

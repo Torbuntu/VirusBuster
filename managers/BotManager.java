@@ -146,7 +146,7 @@ public class BotManager {
         //START move player
 
         updateBotMovement();
-        if(checkDebris && debrisManager.checkCollides(head.x+sx, head.y+sy, 12, 16 )){
+        if(checkDebris && debrisManager.checkCollides(head.x+2+sx, head.y+2+sy, 8, 12 )){
             head.x -= sx;
             head.y -= sy;
         }

@@ -47,7 +47,7 @@ class MiniBossStage extends State {
         }
         
         // START update Blast
-        blastManager.update(botManager.getAttacking(), botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         // Render
         botManager.render(screen);

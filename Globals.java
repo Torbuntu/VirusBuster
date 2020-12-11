@@ -87,18 +87,18 @@ class Globals {
         screen.fillRect(0, 162, 220, 16, 3);
         
         //Bot Shield
-        screen.drawRect(6, 0, 80, 10, 0);
-        screen.fillRect(8, 2, 78, 8, 2);//background grey
+        screen.drawRect(6, 0, 80, 6, 0);
+        screen.fillRect(8, 2, 78, 4, 2);//background grey
         
         // bot shield
-        screen.fillRect(8, 2, (int)(shield * 78 / 100), 8, 15);
+        screen.fillRect(8, 2, (int)(shield * 78 / 100), 4, 15);
         
         //Threats or Boss Shield
-        screen.drawRect(134, 0, 80, 10, 0);
-        screen.fillRect(136, 2, 78, 8, 2);
+        screen.drawRect(134, 0, 80, 6, 0);
+        screen.fillRect(136, 2, 78, 4, 2);
         
         // threats health
-        screen.fillRect(214-threatWidth, 2, threatWidth, 8, 8);
+        screen.fillRect(214-threatWidth, 2, threatWidth, 4, 8);
         
         //Zone : SECTOR
         screen.setTextPosition(98, 3);

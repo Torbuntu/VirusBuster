@@ -45,13 +45,11 @@ public class BlastManager {
             for(int i = 0; i < rate; i++){
                 if(!blasts[i].draw){
                     switch(dir){
-                        case 0: blasts[i].setDir(-2.0f, 0.0f, x, y);break;//left
-                        case 1: blasts[i].setDir(0.0f, -2.0f, x, y);break;//up
-                        case 2: blasts[i].setDir(2.0f, 0.0f, x, y);break;//right
-                        case 3: blasts[i].setDir(0.0f, 2.0f, x, y);break;//down
+                        case 0: blasts[i].init(-2.0f, 0.0f, x, y, charge == 50);break;//left
+                        case 1: blasts[i].init(0.0f, -2.0f, x, y, charge == 50);break;//up
+                        case 2: blasts[i].init(2.0f, 0.0f, x, y, charge == 50);break;//right
+                        case 3: blasts[i].init(0.0f, 2.0f, x, y, charge == 50);break;//down
                     }
-                    if(charge == 50) blasts[i].charged = true;
-                    blasts[i].draw = true;
                     Globals.shots++;
                     break;
                 }

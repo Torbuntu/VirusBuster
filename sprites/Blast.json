@@ -15,7 +15,25 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 3, "w": 8, "h": 3 },
     "sourceSize": { "w": 8, "h": 8 },
-    "duration": 100
+    "duration": 150
+   },
+   {
+    "filename": "Blast 2.aseprite",
+    "frame": { "x": 14, "y": 0, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 180
+   },
+   {
+    "filename": "Blast 3.aseprite",
+    "frame": { "x": 22, "y": 0, "w": 8, "h": 7 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 8, "h": 7 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 180
    }
  ],
  "meta": {
@@ -23,10 +41,11 @@
   "version": "1.2.25-x64",
   "image": "Blast.png",
   "format": "RGBA8888",
-  "size": { "w": 14, "h": 6 },
+  "size": { "w": 30, "h": 8 },
   "scale": "1",
   "frameTags": [
-   { "name": "fire", "from": 0, "to": 1, "direction": "forward" }
+   { "name": "fire", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "charge", "from": 2, "to": 3, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer", "opacity": 255, "blendMode": "normal" }
