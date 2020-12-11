@@ -31,8 +31,8 @@ public class TitleStage extends State {
             Globals.shield = 100;
             Globals.hit = 0;
             Globals.shots = 0;
-            // Game.changeState(new WormBossStage());
-            Game.changeState(new GrabbyMcStage());
+            Game.changeState(new WormBossStage());
+            // Game.changeState(new GrabbyMcStage());
             // Game.changeState(new ForkBombStage());
             // Game.changeState(new NormalSector());
         }

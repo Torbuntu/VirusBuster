@@ -3,8 +3,11 @@ import entities.VirusObject;
 import femto.input.Button;
 import femto.mode.HiRes16Color;
 
+import sprites.Blast;
+
 public class BlastManager {
     
+    Blast blast;
     // refresh: 50 how quickly blasts refresh
     // rate:    1  how many blasts are active at a time
     int cooldown = 0, refresh, rate, charge;
@@ -12,6 +15,8 @@ public class BlastManager {
     float swordX = 0, swordY = 0;
     
     public BlastManager(){
+        blast = new Blast();
+        blast.charge();
         blasts = new BlastObject[]{
             new BlastObject(),
             new BlastObject(),
@@ -84,8 +89,11 @@ public class BlastManager {
     }
     
     void render(HiRes16Color screen){
-        screen.drawHLine(6, 13, (int)(cooldown * 78 / refresh), 8);
-        screen.drawHLine(6, 15, (int)(charge * 78 / 50), 11);
+        if(charge == 50)blast.draw(screen, 78, 8);
+        // screen.drawVLine(4, 160, -(int)(charge * 140 / 50), 11);
+        // screen.drawVLine(2, 160, -(int)(cooldown * 140 / refresh), 8);
+        screen.drawHLine(6, 12, (int)(cooldown * 70 / refresh), 8);
+        screen.drawHLine(6, 13, (int)(charge * 70 / 50), 11);
         for(int i = 0; i < rate; i++){
             blasts[i].render(screen);
         }

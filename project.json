@@ -651,6 +651,42 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/virus-buster-poster-5.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/WormBossVert.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/WormBossVert.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/WormBossVert.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/WormBossHori.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/WormBossHori.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/WormBossHori.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,
