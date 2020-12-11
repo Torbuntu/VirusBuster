@@ -633,6 +633,24 @@
 		},
 		"/managers/SectorZoneManager.java": {
 			"sdcard": false
+		},
+		"/sprites/Grabby.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/UltimaViSharpX68000.pal": {
+			"sdcard": false
+		},
+		"/sprites/Grabby.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Grabby.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,

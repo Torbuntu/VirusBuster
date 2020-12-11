@@ -1,0 +1,37 @@
+{ "frames": [
+   {
+    "filename": "Grabby 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 20 },
+    "sourceSize": { "w": 32, "h": 20 },
+    "duration": 200
+   },
+   {
+    "filename": "Grabby 1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 18 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 2, "w": 32, "h": 18 },
+    "sourceSize": { "w": 32, "h": 20 },
+    "duration": 200
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.25-x64",
+  "image": "Grabby.png",
+  "format": "RGBA8888",
+  "size": { "w": 64, "h": 20 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "move", "from": 0, "to": 1, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

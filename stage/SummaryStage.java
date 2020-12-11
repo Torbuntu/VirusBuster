@@ -20,15 +20,21 @@ class SummaryStage extends State {
             Game.changeState(new TitleStage());
         }
         
-        screen.setTextPosition(52, 88);
+        screen.setTextPosition(0, 88);
         screen.setTextColor(0);
-        screen.println("Summary");
+        screen.println("Summary:");
         
         screen.println("Accuracy: " + Globals.getAccuracy());
         
         screen.flush();
     }
     void shutdown(){
+        switch(Globals.ZONE){
+            case 0: Globals.saveManager.firstZoneClear = true; break;
+            case 1: Globals.saveManager.secondZoneClear = true; break;
+            case 2: Globals.saveManager.thirdZoneClear = true; break;
+            case 3: Globals.saveManager.fourthZoneClear = true; break;
+        }
         Globals.saveManager.saveCookie();
         screen = null;
     }

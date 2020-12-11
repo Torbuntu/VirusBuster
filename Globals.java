@@ -4,6 +4,8 @@ import femto.mode.HiRes16Color;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
 
+import sprites.Loot;
+
 import managers.SaveManager;
 import managers.SectorZoneManager;
 
@@ -19,6 +21,8 @@ class Globals {
     static final SaveManager saveManager = new SaveManager();
     
     static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
+    
+    static final Loot loot = new Loot();
     
     static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
     static int score = 0, kills = 0;
@@ -95,7 +99,7 @@ class Globals {
         
         //Threats or Boss Shield
         screen.drawRect(134, 0, 80, 6, 0);
-        screen.fillRect(136, 2, 78, 4, 2);
+        screen.fillRect(136, 2, 78, 4, 2);//background grey
         
         // threats health
         screen.fillRect(214-threatWidth, 2, threatWidth, 4, 8);
@@ -104,13 +108,11 @@ class Globals {
         screen.setTextPosition(98, 3);
         screen.setTextColor(0);
         screen.print(ZONE + ":" + SECTOR);
-        
-        //Score and Currency 
-        screen.setTextPosition(3, 164);
-        screen.print("Score: "+score);
-        
-        screen.setTextPosition(140, 164);
-        screen.print("$$: " + saveManager.currency);
+
+        loot.play();
+        loot.draw(screen, 6, 164);
+        screen.setTextPosition(16, 164);
+        screen.print("x"+saveManager.currency);
     }
 
     static void drawGrid(){

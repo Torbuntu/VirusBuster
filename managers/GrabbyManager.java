@@ -1,13 +1,13 @@
 import managers.BlastManager;
 import managers.BotManager;
-//import sprites.Grabby;
+import sprites.Grabby;
 import sprites.GrabbyHand;
 import femto.mode.HiRes16Color;
 
 class GrabbyManager {
     
-    //Grabby grabby;
-    GrabbyHand hand;
+    Grabby grabby;
+    GrabbyHand leftHand, rightHand;
     
     boolean ready = false;
     
@@ -23,9 +23,13 @@ class GrabbyManager {
         rightX = 204; // 220-16;
         rightY = 136; // 176-40;
         
-        hand = new GrabbyHand();
-        hand.move();
-        //grabby = new Grabby();
+        leftHand = new GrabbyHand();
+        leftHand.move();
+        
+        rightHand = new GrabbyHand();
+        rightHand.move();
+        grabby = new Grabby();
+        grabby.move();
     }
 
     void update(BlastManager blastManager, BotManager bot){
@@ -133,20 +137,30 @@ class GrabbyManager {
             screen.drawHLine(13, (int)(leftY+16), 204, 8);
         }
         //grabby.draw(Globals.screen);
-        hand.setMirrored(false);
-        hand.setFlipped(false);
-        hand.draw(screen, leftX, leftY);
-        hand.setFlipped(true);
-        hand.draw(screen, leftX, leftY+16);
+        if(leftHealth > 0){
+            if(shooting > 0 && ready) leftHand.fire();
+            else leftHand.move();
+        }else leftHand.hurt();
         
-        hand.setMirrored(true);
-        hand.setFlipped(false);
-        hand.draw(screen, rightX, rightY);
-        hand.setFlipped(true);
-        hand.draw(screen, rightX, rightY+16);
+        if(rightHealth > 0){
+            if(shooting > 0 && ready) rightHand.fire();
+            else rightHand.move();
+        }else rightHand.hurt();
+        
+        leftHand.setFlipped(false);
+        leftHand.draw(screen, leftX, leftY);
+        leftHand.setFlipped(true);
+        leftHand.draw(screen, leftX, leftY+16);
+        
+        rightHand.setMirrored(true);
+        rightHand.setFlipped(false);
+        rightHand.draw(screen, rightX, rightY);
+        rightHand.setFlipped(true);
+        rightHand.draw(screen, rightX, rightY+16);
         
         // draw head
-        screen.drawRect(headX, 8, 32, 20, 8);
+        // screen.drawRect(headX, 8, 32, 20, 8);
+        grabby.draw(screen, headX, 8.0f);
     }
     
     int getCurrentHealth(){
