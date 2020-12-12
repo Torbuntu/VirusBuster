@@ -3,19 +3,18 @@ A wave shooter game for Pokitto
 
 # Preview
 
-![](demo.gif)
-
-Built with FemtoIDE
+![](virus-buster-poster-5.png)
+#### Banner created by [Pixelbath](https://github.com/pixelbath)
+Built with [FemtoIDE](https://github.com/felipemanga/femtoide/)
 
 
 
 ## TODO:
+- GameOver stage
+- Better Title stage
+- Story text for Micro and Mega Fragments (micro fragments are the currency, used for upgrades, Mega Fragments are for correcting the virus damage and "beating" the game. Collected from mega bosses)
+- Update assets where needed. 
 
-- Start screen.
-- Room based, have to clear the room to advance to the next room (exiting to either of the four directions).
-    - Each room is a "sector" on a Pokitto board, your program's task is to clear the viruses from each sector, restoring funcitonality to the Pokitto.
-- Health (shield) meter. 
-    - How much power is left connected to your program. As Viruses attack your program, you lose connection. 
+## Future Ideas Post Release:
 - Different weapon types.
-    - Viruses may drop upgrades, such as fragments of programs they destroyed. These will give your program extra powerful attacks for a limited time.
-- SFX/Music
+  - Viruses may drop upgrades, such as fragments of programs they destroyed. These will give your program extra powerful attacks for a limited time.
