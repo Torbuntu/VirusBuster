@@ -18,45 +18,43 @@ public class VirusManager{
     int max;
     Explode explode;
     
-    int spawnX, spawnY, spawnClear = 60;
+    int spawnClear = 60;
     
     int incoming = 150;
     boolean toggle = false;
     
-    public VirusManager(int x, int y){
-        this.spawnX = x;
-        this.spawnY = y;
+    public VirusManager(){
         explode = new Explode(1);
         viruses = new VirusObject[]{
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0),
-            new VirusObject(spawnX, spawnY, 1),
-            new VirusObject(spawnX, spawnY, 0)
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0),
+            new VirusObject(1),
+            new VirusObject(0)
         };
         System.out.println("[I] - Viruses initialized");
     }
     
     public void update(float bx, float by, DebrisManager debris, BlastManager blastManager){
-        checkAvailable();
+        checkAvailable(debris);
         if(incoming > 0){
             incoming--;
             return;
@@ -83,7 +81,7 @@ public class VirusManager{
                 checkVirusesCollide(i);
                 
                 for(Debris d : debris.getDebris()){
-                    if(d.getType() == 0){
+                    if(d.type == 0){
                         if(d.collide(viruses[i].getX(), viruses[i].getY(), 16, 16)){
                             if(viruses[i].getX()+6 > d.getX() && viruses[i].getX()+10 < d.getX()+16){
                                 viruses[i].setSpeedY(0);
@@ -152,7 +150,7 @@ public class VirusManager{
         }
     }
     
-    public void checkAvailable(){
+    public void checkAvailable(DebrisManager debrisManager){
         for(int i = 0; i < spawned; i++){
             if(viruses[i].alive){
                 return;
@@ -165,7 +163,8 @@ public class VirusManager{
             currentWave++;
             for(int i = 0; i < waves[currentWave]; i++){
                 int r = Math.random(0, 2);
-                viruses[i].reset(r, spawnX, spawnY);
+                int p = Math.random(1,3);
+                viruses[i].reset(r, debrisManager.getSpawnX(p), debrisManager.getSpawnY(p));
             }
             spawned = 1;
             spawnClear = 45;
@@ -179,18 +178,10 @@ public class VirusManager{
     public int getTotalThreats(){
         return max;
     }
-    
-    public void resetAll(){
-        for(VirusObject v : viruses){
-            v.reset(spawnX, spawnY);
-        }
-    }
-    
+
     //TODO: add Sector info
-    public void initWave(int sector, int x, int y){
+    public void initWave(int sector, DebrisManager debrisManager){
         currentWave = 0;
-        this.spawnX = x;
-        this.spawnY = y;
         switch(Globals.ZONE){
             case 0:
                 zoneZero(sector);
@@ -234,6 +225,11 @@ public class VirusManager{
         }
         spawned = 1;
         max = total;
+        for(int i = 0; i < waves[currentWave]; i++){
+            int r = Math.random(0, 2);
+            int p = Math.random(1,3);
+            viruses[i].reset(r, debrisManager.getSpawnX(p), debrisManager.getSpawnY(p));
+        }
     }
     
     void zoneZero(int sector){

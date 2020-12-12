@@ -702,6 +702,12 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/stage/GameOverStage": {
+			"sdcard": false
+		},
+		"/stage/GameOverStage.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

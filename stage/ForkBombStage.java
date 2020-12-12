@@ -20,6 +20,8 @@ class ForkBombStage extends State {
         botManager = new BotManager();
         blastManager = new BlastManager();
         forkBombManager = new ForkBombManager();
+        
+        Mixer.init(8000);
     }
     
     void update(){

@@ -36,10 +36,6 @@ class Debris {
         return y;
     }
     
-    int getType(){
-        return type;
-    }
-    
     void reset(){
         x = getCoordX();
         y = getCoordY();

@@ -21,6 +21,8 @@ class GrabbyMcStage extends State {
         blastManager = new BlastManager();
         grabbyManager = new GrabbyManager();
         grabbyManager.init();
+        
+        Mixer.init(8000);
     }
     
     void update(){

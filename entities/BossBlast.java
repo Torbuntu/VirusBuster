@@ -13,7 +13,7 @@ class BossBlast {
     void update(float ex, float ey){
         if(!active)return;
 
-        if(Globals.checkHitBot(x, y, 16, ex, ey, 8)){
+        if(Globals.checkHitBot(x, y, 16, ex, ey, 12)){
             //player hit!
             active = false;
             Globals.shield -= 15;

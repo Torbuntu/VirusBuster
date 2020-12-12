@@ -13,11 +13,10 @@ class VirusObject{
     int baseHealth = 2;
     int health = 2;
     
-    VirusObject(int x, int y, int t){
+    VirusObject(int t){
         type = t;
         virus = new Virus();
         virus.walk();
-        reset(x, y);
     }
 
     void update(float bx, float by){

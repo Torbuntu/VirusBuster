@@ -29,12 +29,11 @@ class NormalSector extends State {
         botManager = new BotManager();
         blastManager = new BlastManager();
         debrisManager = new DebrisManager();
-        virusManager = new VirusManager(debrisManager.getSpawnX(), debrisManager.getSpawnY());
+        virusManager = new VirusManager();
         itemDropManager = new ItemDropManager();
     
         debrisManager.resetDebris();
-        virusManager.initWave(Globals.SECTOR, debrisManager.getSpawnX(), debrisManager.getSpawnY());
-        virusManager.resetAll();
+        virusManager.initWave(Globals.SECTOR, debrisManager);
         
         Mixer.init(8000);
     }

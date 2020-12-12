@@ -9,9 +9,15 @@ import managers.BotManager;
 import managers.BlastManager;
 import managers.MiniBossManager;
 
+import sprites.MegaFragment;
+
 class MiniBossStage extends State {
     
     HiRes16Color screen;
+    
+    //only used in ZONE 0 where miniboss is actually the megaboss
+    MegaFragment frag;
+    boolean collected = false;
     
     BotManager botManager;
     BlastManager blastManager;
@@ -25,11 +31,16 @@ class MiniBossStage extends State {
         blastManager = new BlastManager();
         
         switch(Globals.ZONE){
-            case 0: bossManager.init(1); break;
+            case 0: 
+                bossManager.init(1); 
+                frag = new MegaFragment();
+                frag.complete();
+                break;
             case 1: bossManager.init(2); break;
             case 2: bossManager.init(3); break;
             case 3: bossManager.init(4); break;
         }
+        
         Mixer.init(8000);
         System.out.println("[I] - MiniBoss initialized");
     }
@@ -39,11 +50,20 @@ class MiniBossStage extends State {
         
         // Update
         botManager.updateBotMovement();
-        bossManager.update(blastManager, (botManager.getX()+8), (botManager.getY()+8));
+        bossManager.update(blastManager, botManager.getX(), botManager.getY());
         
         if(bossManager.cleared()){
             // CLEARED!
-            Globals.drawCleared(true);
+            //TODO: Wait until MegaFragment is collected if ZONE == 0
+            if(Globals.ZONE == 0){
+                if(collected){
+                    Globals.drawCleared(true);
+                } else {
+                    if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
+                    frag.draw(screen, 98, 76);
+                    
+                }
+            } else Globals.drawCleared(true);
         }
         
         // START update Blast

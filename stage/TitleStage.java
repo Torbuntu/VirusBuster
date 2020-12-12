@@ -7,7 +7,8 @@ import femto.mode.HiRes16Color;
 
 // import stage.GrabbyMcStage;
 // import stage.WormBossStage;
-import stage.ForkBombStage;
+// import stage.ForkBombStage;
+// import stage.MiniBossStage;
 
 import sprites.MegaFragment;
 
@@ -42,8 +43,8 @@ public class TitleStage extends State {
             // Game.changeState(new MiniBossStage());
             // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
-            Game.changeState(new ForkBombStage());
-            // Game.changeState(new NormalSector());
+            // Game.changeState(new ForkBombStage());
+            Game.changeState(new NormalSector());
         }
         
         screen.clear(3);

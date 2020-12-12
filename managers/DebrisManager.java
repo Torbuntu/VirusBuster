@@ -1,5 +1,6 @@
 import entities.Debris;
 
+// TODO: The debris spawn needs to be more clever in avoiding placing spawns on the same tile
 class DebrisManager {
     private Debris[] debris;
     
@@ -29,7 +30,7 @@ class DebrisManager {
     }
     boolean checkVirusCollides(float fx, float fy, float fw, float fh){
         for(Debris d : debris){
-            if(d.getType() == 1)return false;
+            if(d.type != 0)return false;
             if(d.collide(fx, fy, fw, fh)) return true;
         }
         return false;
@@ -43,7 +44,7 @@ class DebrisManager {
     
     int getSpawnX(int p){
         for(Debris d : debris){
-            if(d.getType() == p){
+            if(d.type == p){
                 return d.getX();
             }
         }
@@ -52,7 +53,7 @@ class DebrisManager {
     
     int getSpawnY(int p){
         for(Debris d : debris){
-            if(d.getType() == p){
+            if(d.type == p){
                 return d.getY();
             }
         }
@@ -61,7 +62,7 @@ class DebrisManager {
     
     int getSpawnX(){
         for(Debris d : debris){
-            if(d.getType() == 1){
+            if(d.type == 1){
                 return d.getX();
             }
         }
@@ -70,7 +71,7 @@ class DebrisManager {
     
     int getSpawnY(){
         for(Debris d : debris){
-            if(d.getType() == 1){
+            if(d.type == 1){
                 return d.getY();
             }
         }
