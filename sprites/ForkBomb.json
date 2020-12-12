@@ -19,16 +19,16 @@
    },
    {
     "filename": "ForkBomb 2.aseprite",
-    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 64, "y": 0, "w": 14, "h": 13 },
     "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "trimmed": true,
+    "spriteSourceSize": { "x": 9, "y": 9, "w": 14, "h": 13 },
     "sourceSize": { "w": 32, "h": 32 },
-    "duration": 250
+    "duration": 80
    },
    {
     "filename": "ForkBomb 3.aseprite",
-    "frame": { "x": 96, "y": 0, "w": 24, "h": 26 },
+    "frame": { "x": 78, "y": 0, "w": 24, "h": 26 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 4, "y": 3, "w": 24, "h": 26 },
@@ -37,30 +37,30 @@
    },
    {
     "filename": "ForkBomb 4.aseprite",
-    "frame": { "x": 120, "y": 0, "w": 14, "h": 13 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 9, "y": 9, "w": 14, "h": 13 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 80
-   },
-   {
-    "filename": "ForkBomb 5.aseprite",
-    "frame": { "x": 134, "y": 0, "w": 24, "h": 26 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 4, "y": 3, "w": 24, "h": 26 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 80
-   },
-   {
-    "filename": "ForkBomb 6.aseprite",
-    "frame": { "x": 158, "y": 0, "w": 32, "h": 32 },
+    "frame": { "x": 102, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 150
+   },
+   {
+    "filename": "ForkBomb 5.aseprite",
+    "frame": { "x": 134, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 250
+   },
+   {
+    "filename": "ForkBomb 6.aseprite",
+    "frame": { "x": 166, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 250
    }
  ],
  "meta": {
@@ -68,12 +68,12 @@
   "version": "1.2.25-x64",
   "image": "ForkBomb.png",
   "format": "RGBA8888",
-  "size": { "w": 190, "h": 32 },
+  "size": { "w": 198, "h": 32 },
   "scale": "1",
   "frameTags": [
    { "name": "bite", "from": 0, "to": 1, "direction": "forward" },
-   { "name": "die", "from": 2, "to": 6, "direction": "forward" },
-   { "name": "dead", "from": 6, "to": 6, "direction": "forward" }
+   { "name": "die", "from": 2, "to": 4, "direction": "forward" },
+   { "name": "hurt", "from": 5, "to": 6, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

@@ -687,6 +687,21 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/sprites/MegaFragment.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/MegaFragment.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/MegaFragment.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,

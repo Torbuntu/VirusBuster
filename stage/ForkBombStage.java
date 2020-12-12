@@ -20,7 +20,6 @@ class ForkBombStage extends State {
         botManager = new BotManager();
         blastManager = new BlastManager();
         forkBombManager = new ForkBombManager();
-        forkBombManager.init();
     }
     
     void update(){
@@ -39,7 +38,7 @@ class ForkBombStage extends State {
         
         // Render
         botManager.render(screen);
-        forkBombManager.render();
+        forkBombManager.render(screen);
         
         Globals.drawHud((int)(forkBombManager.getCurrentHealth() * 78 / forkBombManager.getTotalHealth()));
         blastManager.render(screen);

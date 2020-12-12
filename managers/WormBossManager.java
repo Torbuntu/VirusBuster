@@ -1,4 +1,5 @@
 import managers.BlastManager;
+import managers.BotManager;
 
 import audio.Explode;
 
@@ -11,7 +12,7 @@ public class WormBossManager {
     Explode explode;
     int health = 25;
     int sx = 1, sy = 0, shoot = 150, dying = 150;
-    boolean clear = false, angry = false, alive = true;
+    boolean angry = false, alive = true;
     float speed = 1;
     float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
     
@@ -33,21 +34,6 @@ public class WormBossManager {
             new Body(7, false),
             new Body(8, true),
         };
-    }
-    
-    public void reset(){
-        dying = 150;
-        alive = true;
-        angry = false;
-        clear = false;
-        sprite.x = -32;
-        sprite.y = 120;
-        sprite.hori();
-        int id = 1;
-        for(Body b : body){
-            b.reset(id, id == 8);
-            id++;
-        }
     }
     
     private void setDir(){
@@ -103,19 +89,20 @@ public class WormBossManager {
         }
         return false;
     }
-    boolean bodyCollidesWithBot(float bx, float by){
-        if(bodyDestroyed()){
-            return false;
-        }
-        for(Body b : body){
-            if(b.alive && Globals.boundingBox(b.body.x+2, b.body.y+2, 14, bx, by, 16)){
-                return true;
-            }
-        }
-        return false;
-    }
     
-    void update(BlastManager blastManager, float bx, float by){
+    void moveHurtBot(BotManager botManager){
+         // Move bot Y
+        if(botManager.getY() + 20 < 131) botManager.setY(botManager.getY()+20);
+        else botManager.setY(botManager.getY()-20);
+        // Move bot X
+        if(botManager.getX() + 20 < 175) botManager.setX(botManager.getX()+20);
+        else botManager.setX(botManager.getX()-20);
+        
+        Globals.shield -= 10;
+        Globals.hurt = 50;
+    }
+
+    void update(BlastManager blastManager, BotManager botManager){
         if(!alive)return;
         if(bodyDestroyed()){
             speed = 1.4;
@@ -133,12 +120,12 @@ public class WormBossManager {
                 shoot = 100;
                 blastX = sprite.x + 18;
                 blastY = sprite.y + 18;
-                if(bx > blastX){
+                if(botManager.getX() > blastX){
                     bvx = 2;
                 }else{
                     bvx = -2;
                 }
-                if(by > blastY){
+                if(botManager.getY() > blastY){
                     bvy = 2;
                 }else{
                     bvy = -2;
@@ -146,13 +133,16 @@ public class WormBossManager {
             }
             blastX += bvx;
             blastY += bvy;
-            if(Globals.boundingBox(blastX, blastY, 8, bx, by, 16)){
+            if(Globals.boundingBox(blastX, blastY, 8, botManager.getX(), botManager.getY(), 16)){
                 blastX = -10;
                 blastY = -10;
-                Globals.shield -= 10;
+                moveHurtBot(botManager);
             }
         }else{
            for(Body b : body){
+                if(b.alive && Globals.hurt == 0 && Globals.boundingBox(b.body.x+2, b.body.y+2, 14, botManager.getX(), botManager.getY(), 16)){
+                    moveHurtBot(botManager);
+                }
                 int damage = blastManager.hitEnemy(b.body.x, b.body.y, 18.0f);
                 if(damage > 0){
                     if(b.last && b.alive){
@@ -168,6 +158,9 @@ public class WormBossManager {
                     }
                 }
             } 
+        }
+        if(Globals.hurt == 0 && Globals.boundingBox(sprite.x, sprite.y, 28, botManager.getX(), botManager.getY(), 16)){
+            moveHurtBot(botManager);
         }
         if(health > 0){
             if(sprite.x > 360){
@@ -202,6 +195,8 @@ public class WormBossManager {
             b.render();
         }
         if(!alive && dying > 0){
+            sprite.setFlipped(false);
+            sprite.setMirrored(false);
             switch(dying){
                 case 150:
                     explode.play();
@@ -254,16 +249,6 @@ class Body {
         body.x = id * -18;
     }
     
-    void reset(int id, boolean last){
-        this.id = id;
-        this.last = last;
-        health = 15;
-        alive = true;
-        body.run();
-        body.x = 122;
-        body.y = id * -18;
-    }
-
     void update(float x, float y, int dirX, int dirY){
         if(!alive) return;
         if(dying > 0){
@@ -271,6 +256,9 @@ class Body {
             body.die();
             if(dying == 0){
                 alive = false;
+                // remove the body from the field.
+                body.x = -16;
+                body.y = -16;
             }
             return;
         }

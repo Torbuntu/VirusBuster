@@ -2,15 +2,18 @@ import managers.BlastManager;
 import audio.Explode;
 import sprites.ForkBomb;
 
+import femto.mode.HiRes16Color;
+
+// TODO: Need to work on a part 2 after health is halved
 class ForkBombManager {
     ForkBomb forkBomb;
     Explode explode;
     
-    int health, total, dying, hurt, charge = 500, retreat = 0, sliding = 400, index = 0, shoot = 15;
-    float sx, sy, height;
+    int health, total, dying, hurt, charge = 350, retreat = 0, sliding = 400, index = 0, shoot = 15, height;
+    float sx, sy;
     Spike[] spikes;
     
-    void init() {
+    ForkBombManager() {
         explode = new Explode(1);
         forkBomb = new ForkBomb();
         forkBomb.bite();
@@ -34,12 +37,11 @@ class ForkBombManager {
         health = total;
         hurt = 0;
         
-        height = 100;
+        height = 70;
         
         sx = 1;
         
         System.out.println("[I] - Fork Bomb initialized");
-        
     }
     
     /**
@@ -52,24 +54,29 @@ class ForkBombManager {
      */ 
     void update(BlastManager blastManager, float bx, float by, boolean dash) {
         if(health == 0)return;
-        int damage = blastManager.hitEnemy(forkBomb.x+8, forkBomb.y+17, 14);
+        int damage = blastManager.hitEnemy(forkBomb.x+9, forkBomb.y+18, 14);
         if(hurt == 0 && damage > 0 ){
             health-=damage;
             if(health <= 0){
                 explode.play();
                 forkBomb.die();
             }
-            if(hurt == 0)hurt = 35;
+            hurt = 35;
+        }else{
+            // We check if it hits the boss, but it won't hurt if it isn't in the face. pew pew
+            blastManager.hitEnemy(forkBomb.x, forkBomb.y, 32);
+        }
+        if(hurt > 0)return;
+         // update spikes
+        for(Spike s : spikes){
+            if(s.active) s.update(bx, by, dash);
         }
         
         sy = 0;
+        if(forkBomb.x < 16 || forkBomb.x > 172) sx = -sx;
         // move side side, randomly adjusting the height variable
         if(sliding > 0){
             sliding--;
-            if(forkBomb.x < 16 || forkBomb.x > 172) sx = -sx;
-            height += Math.random(-1, 2);
-            if(height < 32) height = 32;
-            if(height > 110) height = 110;
         }
         
         // Stops sliding, drops down to the height variable.
@@ -83,11 +90,9 @@ class ForkBombManager {
         if(sliding == 0 && retreat == 0 && forkBomb.y >= height){
             if(charge > 0){
                 charge--;
-                // slide while charging
-                if(forkBomb.x < 16 || forkBomb.x > 172) sx = -sx;
             }else{
                 //don't move while shooting
-                sx = 0;
+                //sx = 0;
                 if(shoot > 0) shoot--;
                 else {
                     System.out.println("[I] - Fork Bomb pew pew");
@@ -96,11 +101,12 @@ class ForkBombManager {
                 }
                 if(index >= spikes.length) {
                     index = 0;
-                    charge = 500;
+                    charge = 250;
                     retreat = 150;
                 }
             }
         }
+        
         
         // retreat
         if(retreat > 0){
@@ -108,38 +114,34 @@ class ForkBombManager {
             sy = -1;
             if(retreat == 0){
                 sx = 1;
-                sliding = 400;
+                sliding = Math.random(300, 600);
+                height = Math.random(40, 70);
             }
-        }
-        
-        // update spikes
-        for(Spike s : spikes){
-            if(s.active) s.update(bx, by, dash);
         }
         
         forkBomb.y += sy;
     }
     
-    void render() {
+    void render(HiRes16Color screen) {
         // Don't render if dead.
         if(dying == 0)return;
-        if(hurt > 0){
-            hurt--;
-            forkBomb.die();
-        }else if(health == 0 && dying > 0){
+        if(health == 0 && dying > 0){
             dying--;
             if(dying == 50) explode.play();
-            if(forkBomb.getCurrentFrame()==forkBomb.getEndFrame()) forkBomb.dead();
+        }else if(hurt > 0){
+            hurt--;
+            forkBomb.hurt();
         }else{
             forkBomb.bite();
         }
+        
         for(Spike s : spikes){
-            if(s.active)s.render();
+            if(s.active)s.render(screen);
         }
         
-        forkBomb.draw(Globals.screen);
+        forkBomb.draw(screen);
         //shadow
-        if(forkBomb.y < height) Globals.screen.drawCircle(forkBomb.x+16, height+16, 16, 8, true);
+        if(forkBomb.y < height) screen.drawCircle(forkBomb.x+16, height+16, 16, 8, true);
     }
     
     boolean allActive(){
@@ -152,15 +154,14 @@ class ForkBombManager {
     void fire(){
         System.out.println("[I] - Index: " + index);
         spikes[index].x = forkBomb.x+16;
-        spikes[index].y = forkBomb.y+16;
+        spikes[index].y = forkBomb.y+28;
         int sx = Math.random(-1, 2);
-        int sy = Math.random(-1, 2);
+        int sy = Math.random(0, 2);//only move down
         if(sx == 0) sx = 1;
-        if(sy == 0) sy = 0;
         spikes[index].sx = sx;
         spikes[index].sy = sy;
         spikes[index].active = true;
-        spikes[index].move = 20;
+        spikes[index].move = Math.random(20, 32);
         if(index < spikes.length)index++;
     }
     
@@ -192,9 +193,14 @@ class Spike{
             move--;
             x+=sx;
             y+=sy;
+            if(x < 16){
+                x = 16;
+                y+=1;
+            }
+            if(y > 150)y = 150;
         }
     }
-    void render(){
-        Globals.screen.drawCircle(x, y, 6, 8, true);
+    void render(HiRes16Color screen){
+        screen.drawCircle(x, y, 6, 8, true);
     }
 }

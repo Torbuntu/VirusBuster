@@ -6,6 +6,10 @@ import femto.mode.HiRes16Color;
 
 import managers.DebrisManager;
 
+
+
+//TODO: Sometimes the bot will just be facing to the left. That is a bug.
+
 public class BotManager {
     Bot bot;
     BotHead head;
@@ -118,10 +122,12 @@ public class BotManager {
             if(attack) bot.shoot();
             else if(speed!=2){
                 bot.idle();
-                if(dir == 0)head.left();
-                if(dir == 1)head.up();
-                if(dir == 2)head.right();
-                if(dir == 3)head.down();
+                switch(dir){
+                    case 0: head.left();break;
+                    case 1: head.up();break;
+                    case 2: head.right();break;
+                    case 3: head.down();break;
+                }
             } 
         }
         if(Button.A.isPressed()) attack = true;

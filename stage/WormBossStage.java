@@ -29,23 +29,13 @@ class WormBossStage extends State {
         Globals.drawGrid();
         
         if(wormManager.cleared()){
+            //TODO: Collect Mega Fragment logic
             Globals.drawCleared(true);
         }  
         
         // Update
         botManager.updateBotMovement();
-        wormManager.update(blastManager, botManager.getX(), botManager.getY());
-        if(wormManager.bodyCollidesWithBot(botManager.getX(), botManager.getY())
-        || wormManager.headCollidesWithBot(botManager.getX(), botManager.getY())){
-            // Move bot Y
-            if(botManager.getY() + 32 < 131) botManager.setY(botManager.getY()+32);
-            else botManager.setY(botManager.getY()-32);
-            // Move bot X
-            if(botManager.getX() + 32 < 175) botManager.setX(botManager.getX()+32);
-            else botManager.setX(botManager.getX()-32);
-            // Subtract shielding
-            Globals.shield-=10;
-        }
+        wormManager.update(blastManager, botManager);
         
         blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
