@@ -65,35 +65,25 @@ public class BlastManager {
         if(charge < 50) charge++;
     }
     
-    public boolean hitEnemy(float ex, float ey, float er){
+    public int hitEnemy(float ex, float ey, float er){
         for(BlastObject b : blasts){
             if(b.draw && Globals.boundingBox(b.getX()+1, b.getY()+1,6, ex, ey, er)){
                 b.hit();
                 Globals.hit++;
-                return true;
+                return (b.charged ? 2 : 1);
             }
         }
-        return false;
-    }
-    
-    public boolean hitVirus(VirusObject virus){
-        for(BlastObject b : blasts){
-            if(b.draw && Globals.boundingBox(b.getX()+1, b.getY()+1,6, virus.getX(), virus.getY(), 16.0f)){
-                virus.hit(b.charged ? 2 : 1);
-                b.hit();
-                Globals.hit++;
-                return true;
-            }
-        }
-        return false;
+        return 0;
     }
     
     void render(HiRes16Color screen){
         if(charge == 50)blast.draw(screen, 78, 8);
         // screen.drawVLine(4, 160, -(int)(charge * 140 / 50), 11);
         // screen.drawVLine(2, 160, -(int)(cooldown * 140 / refresh), 8);
-        screen.drawHLine(6, 12, (int)(cooldown * 70 / refresh), 8);
-        screen.drawHLine(6, 13, (int)(charge * 70 / 50), 11);
+        // screen.drawHLine(6, 12, (int)(cooldown * 70 / refresh), 8);
+        // screen.drawHLine(6, 13, (int)(charge * 70 / 50), 11);
+        screen.fillRect(8, 12, (int)(charge * 68 / 50), 2, 11);//background grey
+        
         for(int i = 0; i < rate; i++){
             blasts[i].render(screen);
         }

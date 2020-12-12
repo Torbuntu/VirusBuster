@@ -13,7 +13,7 @@ class BossBlast {
     void update(float ex, float ey){
         if(!active)return;
 
-        if(active && Globals.boundingBox(x, y, 16, ex, ey, 8)){
+        if(Globals.checkHitBot(x, y, 16, ex, ey, 8)){
             //player hit!
             active = false;
             Globals.shield -= 15;
@@ -21,7 +21,7 @@ class BossBlast {
         
         x += dx;
         y += dy;
-        if(x > 220 || x < 0 || y < 0 || y > 170)active = false;
+        if(x > 220 || x < 0 || y < 16 || y > 170)active = false;
     }
     
     //TODO: Make a blast sprite?

@@ -39,18 +39,27 @@ class GrabbyManager {
         }
         
         // hit left hand
-        if(leftHealth > 0 && hitLeft == 0 && blastManager.hitEnemy(leftX, leftY+12, 10)){
-            leftHealth--;
-            hitLeft = 35;
+        if(leftHealth > 0 && hitLeft == 0){
+            int damage = blastManager.hitEnemy(leftX, leftY+12, 10);
+            if(damage > 0){
+                leftHealth-=damage;
+                hitLeft = 35;
+            }
         }
-        if(rightHealth > 0 && hitRight == 0 && blastManager.hitEnemy(rightX+8, rightY+12, 10)){
-            rightHealth--;
-            hitRight = 35;
+        if(rightHealth > 0 && hitRight == 0){
+            int damage = blastManager.hitEnemy(rightX+8, rightY+12, 10);
+            if(damage > 0){
+                rightHealth-=damage;
+                hitRight = 35;
+            }
         }
         
-        if(rightHealth == 0 && leftHealth == 0 && hitHead == 0 && blastManager.hitEnemy(headX+6, 8, 20 )){
-            health--;
-            hitHead = 20;
+        if(rightHealth == 0 && leftHealth == 0 && hitHead == 0 ){
+            int damage = blastManager.hitEnemy(headX+6, 8, 20 );
+            if(damage > 0){
+                health-=damage;
+                hitHead = 20;
+            }
         }
 
         if(shooting == 0){

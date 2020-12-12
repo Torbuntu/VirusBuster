@@ -119,8 +119,9 @@ public class WormBossManager {
         if(!alive)return;
         if(bodyDestroyed()){
             speed = 1.4;
-            if(blastManager.hitEnemy(sprite.x, sprite.y, 32)){
-                health--;
+            int damage = blastManager.hitEnemy(sprite.x, sprite.y, 32);
+            if(damage > 0){
+                health-=damage;
                 if(health <= 0){
                     explode.play();
                     alive = false;
@@ -152,14 +153,17 @@ public class WormBossManager {
             }
         }else{
            for(Body b : body){
-                if(b.last && b.alive && blastManager.hitEnemy(b.body.x, b.body.y, 18.0f)){
-                    b.hit();
-                    if(b.health == 0){
-                        b.last = false;
-                        explode.play();
-                        if(b.id > 1){
-                            //id's are 1 indexed, so we need to subtract 2 in order to get the correct index based on the id offset
-                            body[b.id-2].last = true;
+                int damage = blastManager.hitEnemy(b.body.x, b.body.y, 18.0f);
+                if(damage > 0){
+                    if(b.last && b.alive){
+                        b.hit(damage);
+                        if(b.health == 0){
+                            b.last = false;
+                            explode.play();
+                            if(b.id > 1){
+                                //id's are 1 indexed, so we need to subtract 2 in order to get the correct index based on the id offset
+                                body[b.id-2].last = true;
+                            }
                         }
                     }
                 }
@@ -325,13 +329,13 @@ class Body {
         if(alive || dying > 0)body.draw(Globals.screen);
     }
     
-    void hit(){
+    void hit(int damage){
         hurt = 10;
         if(health == 6){
             sx = -2;
             sy = 2;
         }
-        health--;
+        health-=damage;
         if(health <= 0){
             dying = 20;
         }

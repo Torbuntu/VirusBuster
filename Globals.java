@@ -24,7 +24,7 @@ class Globals {
     
     static final Loot loot = new Loot();
     
-    static int ZONE = 0, SECTOR = 0, ROOM_STATUS = 0;
+    static int ZONE = 0, SECTOR = 0;
     static int score = 0, kills = 0;
     static int shield = 100, hurt = 0, hit = 0, shots = 0, charge = 0;
     static boolean createItemDrop = false;
@@ -41,13 +41,14 @@ class Globals {
         return (x1 < x2 + s2 && x1 + s1 > x2 && y1 < y2 + s2 && y1 + s1 > y2);
     }
     
-    public static void checkHitBot(float vx, float vy, int vSize, float bx, float by, int bSize){
+    public static boolean checkHitBot(float vx, float vy, int vSize, float bx, float by, int bSize){
         if(boundingBox(vx, vy, vSize, bx, by, bSize)){
             if(hurt == 0){
                 hurt = 50;
-                shield-=2;
+                return true;
             }
         }
+        return false;
     }
     
     /**
@@ -65,7 +66,6 @@ class Globals {
         kills = 0;
         score = 0;
         shield = 100;
-        ROOM_STATUS = 0;
         SECTOR = 0;
         ZONE = 0;
     }
@@ -97,6 +97,12 @@ class Globals {
         // bot shield
         screen.fillRect(8, 2, (int)(shield * 78 / 100), 4, 15);
         
+        // Blast charge box
+        screen.drawRect(6, 10, 70, 4, 0);
+        screen.fillRect(8, 12, 68, 2, 2);//background grey
+        
+        // The blast charge fill is rendered in BlastManager
+        
         //Threats or Boss Shield
         screen.drawRect(134, 0, 80, 6, 0);
         screen.fillRect(136, 2, 78, 4, 2);//background grey
@@ -116,11 +122,10 @@ class Globals {
     }
 
     static void drawGrid(){
-        screen.drawRect(6, 16, 208,144, 12, true);
+        screen.drawRect(6, 17, 208, 144, 12, true);
     }
     
     static void drawCleared(boolean boss){
-        ROOM_STATUS = 1; // CLEARED!
         screen.setTextPosition(52, 88);
         screen.setTextColor(0);
         screen.print(SECTOR_CLEAR);

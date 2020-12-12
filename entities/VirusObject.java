@@ -62,7 +62,7 @@ class VirusObject{
             if(bx <= (virus.x + 32) && bx >= virus.x){
                 virus.setMirrored(false);
             }
-            Globals.checkHitBot(virus.x+2, virus.y+2, 12, bx+2, by+2, 8);
+            if(Globals.checkHitBot(virus.x+2, virus.y+2, 12, bx+2, by+2, 8))Globals.shield-=2;
             
             virus.bite();
         }else{

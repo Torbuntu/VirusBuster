@@ -5,7 +5,7 @@ import femto.sound.Mixer;
 
 import femto.mode.HiRes16Color;
 
-import stage.GrabbyMcStage;
+// import stage.GrabbyMcStage;
 
 public class TitleStage extends State {
     
@@ -31,10 +31,11 @@ public class TitleStage extends State {
             Globals.shield = 100;
             Globals.hit = 0;
             Globals.shots = 0;
-            Game.changeState(new WormBossStage());
+            // Game.changeState(new MiniBossStage());
+            // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
             // Game.changeState(new ForkBombStage());
-            // Game.changeState(new NormalSector());
+            Game.changeState(new NormalSector());
         }
         
         screen.clear(3);

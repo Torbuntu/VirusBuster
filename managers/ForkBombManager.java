@@ -52,8 +52,9 @@ class ForkBombManager {
      */ 
     void update(BlastManager blastManager, float bx, float by, boolean dash) {
         if(health == 0)return;
-        if(hurt == 0 && blastManager.hitEnemy(forkBomb.x+8, forkBomb.y+17, 14)){
-            health--;
+        int damage = blastManager.hitEnemy(forkBomb.x+8, forkBomb.y+17, 14);
+        if(hurt == 0 && damage > 0 ){
+            health-=damage;
             if(health <= 0){
                 explode.play();
                 forkBomb.die();

@@ -68,7 +68,9 @@ public class VirusManager{
             if(toggle && viruses[i].type == 1) continue;
             
             if(viruses[i].alive){
-                if(blastManager.hitVirus(viruses[i])){
+                int damage = blastManager.hitEnemy(viruses[i].virus.x, viruses[i].virus.y, 16.0f);
+                if(damage > 0){
+                    viruses[i].hit(damage);
                     if(!viruses[i].alive){
                         explode.play();
                         total--;

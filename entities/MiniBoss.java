@@ -71,6 +71,7 @@ public class MiniBoss{
             }
             virus.x += sx;
             virus.y += sy;
+            if(Globals.checkHitBot(virus.x+4, virus.y+4, 24, bx+1, by+1, 14))Globals.shield-=20;
             return;
         }
         if(alive){
@@ -88,7 +89,7 @@ public class MiniBoss{
                 return;
             }
             
-            moveBoss(bx, by);
+            moveBoss(bx+8, by+8);
             
             checkBlastHits(blastManager);
             
@@ -99,10 +100,7 @@ public class MiniBoss{
                 }else{
                     virus.setMirrored(false);
                 }
-            } else {
-                virus.x += sx;
-                virus.y += sy;
-            }
+            } 
             if(health < maxHealth/2){
                 if(!damaged){
                     damaged = true;
@@ -110,9 +108,10 @@ public class MiniBoss{
                     sx = 2.5f;
                     sy = 2.5f;
                 }
-                virus.x += sx;
-                virus.y += sy;
             }
+            virus.x += sx;
+            virus.y += sy;
+            if(Globals.checkHitBot(virus.x+4, virus.y+4, 24, bx+1, by+1, 14))Globals.shield-=10;
         }
     }
     
@@ -157,8 +156,9 @@ public class MiniBoss{
     
     public void checkBlastHits(BlastManager blastManager){
         //Globals.screen.drawRect(virus.x+2, virus.y+2, 28, 28, 8, true);
-        if(alive && blastManager.hitEnemy(virus.x+2, virus.y+2, 28.0f)){
-            hit(1);
+        if(alive){
+            int damage = blastManager.hitEnemy(virus.x+2, virus.y+2, 28.0f);
+            if(damage > 0) hit(damage);
         }
     }
     

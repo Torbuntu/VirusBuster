@@ -53,7 +53,7 @@ class NormalSector extends State {
             Globals.saveManager.currency++;
         }
         if(Globals.shield <= 0){
-            Globals.ROOM_STATUS = 5;//GAME OVER
+            //TODO: GameOver Stage
         }
         
         botManager.updateBotMovement(debrisManager, true);
