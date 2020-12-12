@@ -1,9 +1,8 @@
+
+![](virus-buster-poster-5.png)
 # VirusBuster
 A wave shooter game for Pokitto
 
-# Preview
-
-![](virus-buster-poster-5.png)
 #### Banner created by [Pixelbath](https://github.com/pixelbath)
 Built with [FemtoIDE](https://github.com/felipemanga/femtoide/)
 
