@@ -7,11 +7,14 @@ import managers.SectorZoneManager;
 
 class Shop extends State {
     HiRes16Color screen;
-    int currency = 0, rate = 1, refresh = 50;
+    int currency = 0, rate = 1, refresh = 50, shield = 100;
+    float magnet = 0.0f;
     void init() {
+        if(Globals.shield != shield) shield = Globals.shield;
         if(Globals.saveManager.currency != currency) currency = Globals.saveManager.currency;
         if(Globals.saveManager.rate != rate) rate = Globals.saveManager.rate;
         if(Globals.saveManager.refresh != refresh) refresh = Globals.saveManager.refresh;
+        if(Globals.saveManager.magnet != magnet) magnet = Globals.saveManager.magnet;
         screen = Globals.screen;
     }
     
@@ -32,15 +35,25 @@ class Shop extends State {
                 if(refresh < 5) refresh = 5;
             }
         }
-        if(Button.Up.justPressed() && Globals.shield < 100){
+        if(Button.Up.justPressed() && shield < 100){
             if(currency >= 10){
                 currency -= 10;
-                if(Globals.shield + 10 > 100)Globals.shield = 100;
+                if(shield + 10 > 100) shield = 100;
                 else{
-                    Globals.shield+=10;
+                    shield+=10;
                 }
             }
         }
+        if(Button.Down.justPressed() && magnet < 2.0f){
+            if(currency >= 25){
+                currency -= 25;
+                if((magnet + 0.02f) > 2.0f) magnet += 0.02f;
+                else{
+                    magnet+=0.02f;
+                }
+            }
+        }
+        
         //Debug
         if(Button.Right.justPressed())Globals.SECTOR++;
 
@@ -49,7 +62,8 @@ class Shop extends State {
         screen.print(
           "$2  - [A]  Rate: " + rate
         + "\n$2  - [B]  Refresh: " + refresh
-        + "\n$10 - [Up] Shield: " + Globals.shield
+        + "\n$10 - [Up] Shield: " + shield
+        + "\n$25 - [Down] Magnet: " + magnet
         + "\n\n$$" + currency);
 
         if(Button.C.justPressed()){
@@ -60,9 +74,11 @@ class Shop extends State {
     }
     
     void shutdown() {
+        Globals.shield = shield;
         Globals.saveManager.currency = currency;
         Globals.saveManager.rate = rate;
         Globals.saveManager.refresh = refresh;
+        Globals.saveManager.magnet = magnet;
         screen = null;
     }
 }

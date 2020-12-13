@@ -54,7 +54,7 @@ class Debris {
         while(id == 4 || id == 5){
             id = Math.random(0, 9);
         }
-        int coord = 16+(id*16);
+        int coord = 17+(id*16);
         return coord;
     }
     

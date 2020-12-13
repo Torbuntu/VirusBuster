@@ -18,7 +18,7 @@ class GameOverStage extends State {
         
         screen.setTextPosition(0, 88);
         screen.setTextColor(0);
-        screen.println("Summary:");
+        screen.println("Zone Failed");
         
         screen.println("Accuracy: " + Globals.getAccuracy());
         

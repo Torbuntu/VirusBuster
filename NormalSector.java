@@ -5,6 +5,8 @@ import femto.sound.Mixer;
 
 import femto.mode.HiRes16Color;
 
+import stage.GameOverStage;
+
 import managers.VirusManager;
 import managers.DebrisManager;
 import managers.BotManager;
@@ -48,11 +50,12 @@ class NormalSector extends State {
 
         Globals.drawGrid();
         itemDropManager.updateAndRender(screen);
-        if(itemDropManager.checkCollect(botManager.getX(), botManager.getY())){
+        if(itemDropManager.checkCollect(botManager.getX(), botManager.getY(), Globals.saveManager.magnet)){
             Globals.saveManager.currency++;
         }
         if(Globals.shield <= 0){
             //TODO: GameOver Stage
+            Game.changeState(new GameOverStage());
         }
         
         botManager.updateBotMovement(debrisManager, true);

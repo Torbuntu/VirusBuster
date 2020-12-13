@@ -34,13 +34,20 @@ public class ItemDropManager {
     }   
     
     
-    public boolean checkCollect(float x, float y){
+    public boolean checkCollect(float x, float y, float mag){
         for(Item i : items){
             if(i.available){
                 if(Globals.boundingBox(i.loot.x, i.loot.y, 8, x, y, 16)){
                     i.reset();
                     coin.play();
                     return true;
+                }else{
+                    if(mag > 0.0f){
+                        if(x > i.loot.x)i.loot.x += mag;
+                        else i.loot.x -= mag;
+                        if(y > i.loot.y) i.loot.y += mag;
+                        else i.loot.y -= mag;
+                    }
                 }
             }
         }

@@ -15,7 +15,6 @@ import managers.SectorZoneManager;
  * 
  */
 class Globals {
-    //TODO: Add a "magnet" variable for having a magnet upgrade to collect items.
     //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
     
     static final SaveManager saveManager = new SaveManager();
