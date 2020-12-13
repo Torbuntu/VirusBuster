@@ -4,10 +4,13 @@ import managers.BlastManager;
 import audio.Explode;
 import entities.BossBlastObject;
 
+import sprites.BlastCharge;
+
 public class MiniBoss{
     Explode explode;
     BossBlastObject[] blasts;
     SmallBoss virus;
+    BlastCharge charge;
         
     int hurt = 0;
     float dx, dy, sx = 0, sy = 0, speed = 0.5f;//speed variables
@@ -52,6 +55,8 @@ public class MiniBoss{
             new BossBlastObject(),
             new BossBlastObject()
         };
+        charge = new BlastCharge();
+        charge.charge();
 
     }
     
@@ -202,6 +207,11 @@ public class MiniBoss{
             dying--;
             virus.die();
             virus.draw(screen);
+        }
+        // TODO: add BlastCharge icon and correct meter fill
+        if(shooting > 0){
+            //screen.fillRect(214, 12, (int)(shootReady * 68 / 50)-250, 2, 8);
+            charge.draw(screen, 134, 8);
         }
     }
     

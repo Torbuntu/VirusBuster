@@ -2,12 +2,13 @@ import femto.Game;
 import femto.State;
 import femto.input.Button;
 import femto.sound.Mixer;
+import femto.mode.HiRes16Color;
 
 import managers.BotManager;
 import managers.BlastManager;
 import managers.ForkBombManager;
+import stage.GameOverStage;
 
-import femto.mode.HiRes16Color;
 
 class ForkBombStage extends State {
     HiRes16Color screen;
@@ -30,6 +31,9 @@ class ForkBombStage extends State {
         
         if(forkBombManager.cleared()){
             Globals.drawCleared(true);
+        }
+        if(Globals.shield <= 0){
+            Game.changeState(new GameOverStage());
         }
         
         // Update

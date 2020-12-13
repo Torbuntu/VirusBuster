@@ -729,6 +729,54 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/VirusBuster": {
+			"sdcard": false
+		},
+		"/sprites/Loot.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/Magnet.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/Magnet.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/Magnet.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/BlastCharge.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/BlastCharge.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/BlastCharge.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/Linux": {
+			"sdcard": false
+		},
+		"/Linux/VirusBuster": {
+			"sdcard": false
+		},
+		"/Linux/VirusBuster.bin": {
+			"sdcard": false
+		},
+		"/VirusBuster-linux.tar.xz": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

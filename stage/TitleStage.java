@@ -32,14 +32,8 @@ public class TitleStage extends State {
         
         if(Button.B.justPressed()){
             Globals.ZONE = select;
+            Globals.reset();
             
-            // Begin at the first sector (0)
-            Globals.SECTOR = 0;
-            
-            // going in full health, reset hit/shot ratio
-            Globals.shield = 100;
-            Globals.hit = 0;
-            Globals.shots = 0;
             // Game.changeState(new MiniBossStage());
             // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());

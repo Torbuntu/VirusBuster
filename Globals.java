@@ -5,6 +5,7 @@ import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
 
 import sprites.Loot;
+import sprites.Magnet;
 
 import managers.SaveManager;
 import managers.SectorZoneManager;
@@ -22,6 +23,7 @@ class Globals {
     static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
     
     static final Loot loot = new Loot();
+    static final Magnet mag = new Magnet();
     
     static int ZONE = 0, SECTOR = 0;
     static int score = 0, kills = 0;
@@ -62,11 +64,15 @@ class Globals {
     }
     
     public static void reset(){
+        //tmp
+        saveManager.currency += 500;
+        saveManager.magnet = 0.35f;
         kills = 0;
+        hit = 0;
+        shots = 0;
         score = 0;
         shield = 100;
         SECTOR = 0;
-        ZONE = 0;
     }
     
     /**
@@ -74,7 +80,7 @@ class Globals {
      * This will also be used to determine acheivments
      */ 
     public static int getAccuracy() {
-        if(hit == 0)return 0;
+        if(hit == 0) return 0;
         if(shots == 0) return 0;
         return Math.abs(hit * 100 / shots);
     }
@@ -89,35 +95,50 @@ class Globals {
         screen.fillRect(0, 0, 220, 16, 3);
         screen.fillRect(0, 162, 220, 16, 3);
         
-        //Bot Shield
+        // Bot Shield
         screen.drawRect(6, 0, 80, 6, 0);
-        screen.fillRect(8, 2, 78, 4, 2);//background grey
+        screen.fillRect(8, 2, 78, 4, 2);
         
         // bot shield
         screen.fillRect(8, 2, (int)(shield * 78 / 100), 4, 15);
         
         // Blast charge box
         screen.drawRect(6, 10, 70, 4, 0);
-        screen.fillRect(8, 12, 68, 2, 2);//background grey
+        screen.fillRect(8, 12, 68, 2, 2);
         
-        // The blast charge fill is rendered in BlastManager
+        // The blast charge fill is rendered in BlastManager:L85
         
+        // Boss Blast charge box
+        if(SECTOR == 4){
+            screen.drawRect(144, 10, 70, 4, 0);
+            screen.fillRect(146, 12, 68, 2, 2);
+        }
         //Threats or Boss Shield
         screen.drawRect(134, 0, 80, 6, 0);
-        screen.fillRect(136, 2, 78, 4, 2);//background grey
+        screen.fillRect(136, 2, 78, 4, 2);
         
         // threats health
         screen.fillRect(214-threatWidth, 2, threatWidth, 4, 8);
         
-        //Zone : SECTOR
+        // Zone : SECTOR
         screen.setTextPosition(98, 3);
         screen.setTextColor(0);
         screen.print(ZONE + ":" + SECTOR);
 
+        // Mini Fragments (currency)
         loot.play();
         loot.draw(screen, 6, 164);
         screen.setTextPosition(16, 164);
         screen.print("x"+saveManager.currency);
+        
+        // Magnet
+        if(saveManager.magnet > 0.0f){
+            mag.idle();
+            mag.draw(screen, 120, 164);
+            screen.setTextPosition(130, 164);
+            screen.print((int)(saveManager.magnet*100) + "%");
+        }
+
     }
 
     static void drawGrid(){

@@ -82,7 +82,8 @@ public class BlastManager {
         // screen.drawVLine(2, 160, -(int)(cooldown * 140 / refresh), 8);
         // screen.drawHLine(6, 12, (int)(cooldown * 70 / refresh), 8);
         // screen.drawHLine(6, 13, (int)(charge * 70 / 50), 11);
-        screen.fillRect(8, 12, (int)(charge * 68 / 50), 2, 11);//background grey
+        screen.fillRect(8, 12, (int)(charge * 68 / 50), 2, 11);
+        screen.drawHLine(8, 8, (int)(cooldown * 70 / refresh), 8);
         
         for(int i = 0; i < rate; i++){
             blasts[i].render(screen);

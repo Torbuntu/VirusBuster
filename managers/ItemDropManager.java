@@ -42,10 +42,10 @@ public class ItemDropManager {
                     coin.play();
                     return true;
                 }else{
-                    if(mag > 0.0f){
-                        if(x > i.loot.x)i.loot.x += mag;
+                    if(mag > 0.00f){
+                        if(x+4 > i.loot.x)i.loot.x += mag;
                         else i.loot.x -= mag;
-                        if(y > i.loot.y) i.loot.y += mag;
+                        if(y+4 > i.loot.y) i.loot.y += mag;
                         else i.loot.y -= mag;
                     }
                 }

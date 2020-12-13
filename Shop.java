@@ -47,7 +47,7 @@ class Shop extends State {
         if(Button.Down.justPressed() && magnet < 2.0f){
             if(currency >= 25){
                 currency -= 25;
-                if((magnet + 0.02f) > 2.0f) magnet += 0.02f;
+                if((magnet + 0.02f) > 1.0f) magnet += 0.02f;
                 else{
                     magnet+=0.02f;
                 }

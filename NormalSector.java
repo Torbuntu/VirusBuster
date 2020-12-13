@@ -54,7 +54,6 @@ class NormalSector extends State {
             Globals.saveManager.currency++;
         }
         if(Globals.shield <= 0){
-            //TODO: GameOver Stage
             Game.changeState(new GameOverStage());
         }
         

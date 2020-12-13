@@ -8,7 +8,7 @@ import femto.mode.HiRes16Color;
 import managers.BotManager;
 import managers.BlastManager;
 import managers.WormBossManager;
-
+import stage.GameOverStage;
 import sprites.MegaFragment;
 
 class WormBossStage extends State {
@@ -33,6 +33,10 @@ class WormBossStage extends State {
     void update(){
         screen.clear(3);
         Globals.drawGrid();
+        
+        if(Globals.shield <= 0){
+            Game.changeState(new GameOverStage());
+        }
         
         if(wormManager.cleared()){
             //TODO: Collect Mega Fragment logic

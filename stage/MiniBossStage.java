@@ -5,6 +5,7 @@ import femto.sound.Mixer;
 
 import femto.mode.HiRes16Color;
 
+import stage.GameOverStage;
 import managers.BotManager;
 import managers.BlastManager;
 import managers.MiniBossManager;
@@ -44,6 +45,7 @@ class MiniBossStage extends State {
         Mixer.init(8000);
         System.out.println("[I] - MiniBoss initialized");
     }
+    
     void update(){
         screen.clear(3);
         Globals.drawGrid();
@@ -51,6 +53,10 @@ class MiniBossStage extends State {
         // Update
         botManager.updateBotMovement();
         bossManager.update(blastManager, botManager.getX(), botManager.getY());
+        
+        if(Globals.shield <= 0){
+            Game.changeState(new GameOverStage());
+        }
         
         if(bossManager.cleared()){
             // CLEARED!
@@ -70,10 +76,10 @@ class MiniBossStage extends State {
         
         // Render
         botManager.render(screen);
-        bossManager.render(screen);
+        
         
         Globals.drawHud((int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth()));
-        
+        bossManager.render(screen);
         blastManager.render(screen);
         
         screen.flush();
