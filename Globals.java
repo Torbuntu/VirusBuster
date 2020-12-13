@@ -65,8 +65,8 @@ class Globals {
     
     public static void reset(){
         //tmp
-        saveManager.currency += 500;
-        saveManager.magnet = 0.35f;
+        // saveManager.currency += 500;
+        // saveManager.magnet = 0.35f;
         kills = 0;
         hit = 0;
         shots = 0;
