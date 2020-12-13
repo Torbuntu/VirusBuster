@@ -132,9 +132,8 @@ class GrabbyManager {
         }
     }
     
-    void render(){
+    void render(HiRes16Color screen){
         if(dying == 0)return;
-        HiRes16Color screen = Globals.screen;
         if(health == 0 && dying > 0){
             //TODO: dying animation
             if(dying % 2 == 0){
@@ -145,7 +144,8 @@ class GrabbyManager {
         if(shooting > 0 && ready){
             screen.drawHLine(13, (int)(leftY+16), 204, 8);
         }
-        //grabby.draw(Globals.screen);
+        
+        
         if(leftHealth > 0){
             if(shooting > 0 && ready) leftHand.fire();
             else leftHand.move();
@@ -168,7 +168,6 @@ class GrabbyManager {
         rightHand.draw(screen, rightX, rightY+16);
         
         // draw head
-        // screen.drawRect(headX, 8, 32, 20, 8);
         grabby.draw(screen, headX, 8.0f);
     }
     

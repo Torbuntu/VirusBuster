@@ -1,4 +1,5 @@
 import sprites.Loot;
+import femto.mode.HiRes16Color;
 class Item {
     int type;
     boolean available = false;
@@ -13,13 +14,13 @@ class Item {
         loot.y = y;
     }
     
-    void render(){
+    void render(HiRes16Color screen){
         if(life < 25){
             if(life%2==0){
-                loot.draw(Globals.screen);
+                loot.draw(screen);
             }
         }else{
-            loot.draw(Globals.screen);
+            loot.draw(screen);
         }
     }
     

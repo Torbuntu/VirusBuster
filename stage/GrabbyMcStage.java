@@ -41,7 +41,7 @@ class GrabbyMcStage extends State {
         
         // Render
         botManager.render(screen);
-        grabbyManager.render();
+        grabbyManager.render(screen);
         
         Globals.drawHud((int)(grabbyManager.getCurrentHealth() * 78 / grabbyManager.getTotalHealth()));
         blastManager.render(screen);

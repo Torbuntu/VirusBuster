@@ -1,5 +1,6 @@
 import audio.Coin;
 import entities.Item;
+import femto.mode.HiRes16Color;
 
 public class ItemDropManager {
     
@@ -23,11 +24,11 @@ public class ItemDropManager {
         }
     }
        
-    void updateAndRender(){
+    void updateAndRender(HiRes16Color screen){
         for(Item i : items){
             if(i.available){
                i.update();
-               i.render();
+               i.render(screen);
             }
         }
     }   

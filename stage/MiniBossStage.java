@@ -71,7 +71,7 @@ class MiniBossStage extends State {
         
         // Render
         botManager.render(screen);
-        bossManager.render();
+        bossManager.render(screen);
         
         Globals.drawHud((int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth()));
         

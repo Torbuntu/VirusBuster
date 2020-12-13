@@ -1,5 +1,6 @@
 import managers.BlastManager;
 import entities.MiniBoss;
+import femto.mode.HiRes16Color;
 
 public class MiniBossManager {
     int activeBosses = 1;
@@ -44,9 +45,9 @@ public class MiniBossManager {
         }
     }
     
-    public void render(){
+    public void render(HiRes16Color screen){
         for(int i = 0; i < activeBosses; i++){
-            bosses[i].render();
+            bosses[i].render(screen);
         }
     }
     

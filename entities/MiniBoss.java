@@ -1,11 +1,12 @@
+import femto.mode.HiRes16Color;
 import sprites.SmallBoss;
 import managers.BlastManager;
 import audio.Explode;
-import entities.BossBlast;
+import entities.BossBlastObject;
 
 public class MiniBoss{
     Explode explode;
-    BossBlast[] blasts;
+    BossBlastObject[] blasts;
     SmallBoss virus;
         
     int hurt = 0;
@@ -41,15 +42,15 @@ public class MiniBoss{
         health = 50;
         maxHealth = health;
         shootReady = 250;
-        blasts = new BossBlast[]{
-            new BossBlast(),
-            new BossBlast(),
-            new BossBlast(),
-            new BossBlast(),
-            new BossBlast(),
-            new BossBlast(),
-            new BossBlast(),
-            new BossBlast()
+        blasts = new BossBlastObject[]{
+            new BossBlastObject(),
+            new BossBlastObject(),
+            new BossBlastObject(),
+            new BossBlastObject(),
+            new BossBlastObject(),
+            new BossBlastObject(),
+            new BossBlastObject(),
+            new BossBlastObject()
         };
 
     }
@@ -75,7 +76,7 @@ public class MiniBoss{
             return;
         }
         if(alive){
-            for(BossBlast b : blasts){
+            for(BossBlastObject b : blasts){
                 if(b.active) b.update(bx, by);
             }
             
@@ -165,24 +166,23 @@ public class MiniBoss{
     }
     
     public void checkBlastHits(BlastManager blastManager){
-        //Globals.screen.drawRect(virus.x+2, virus.y+2, 28, 28, 8, true);
         if(alive){
             int damage = blastManager.hitEnemy(virus.x+2, virus.y+2, 28.0f);
             if(damage > 0) hit(damage);
         }
     }
     
-    void render(){
+    void render(HiRes16Color screen){
         if(berserk > 0){
             virus.bite();
-            virus.draw(Globals.screen);
+            virus.draw(screen);
             return;
         }
         if(alive){
-            virus.draw(Globals.screen);
+            virus.draw(screen);
             
-            for(BossBlast b : blasts){
-                if(b.active) b.render();
+            for(BossBlastObject b : blasts){
+                if(b.active) b.render(screen);
             }
         }else if(dying > 0){
             switch(dying){
@@ -201,7 +201,7 @@ public class MiniBoss{
             }
             dying--;
             virus.die();
-            virus.draw(Globals.screen);
+            virus.draw(screen);
         }
     }
     
@@ -233,7 +233,7 @@ public class MiniBoss{
     }
     
     void checkActiveBlasts(){
-        for(BossBlast b : blasts){
+        for(BossBlastObject b : blasts){
             if(b.active)return;
         }
         shooting = 25;

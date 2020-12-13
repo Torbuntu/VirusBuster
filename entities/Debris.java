@@ -1,6 +1,6 @@
 import sprites.Chip;
 import sprites.Spawn;
-
+import femto.mode.HiRes16Color;
 class Debris {
     
     int x, y, w, h;
@@ -64,11 +64,11 @@ class Debris {
         return (x < fx + fw && x + w > fx && y < fy + fh && y + h > fy);
     }
     
-    void draw(){
+    void render(HiRes16Color screen){
         if(type != 0){
-            spawn.draw(Globals.screen, x, y);
+            spawn.draw(screen, x, y);
         }else{
-            chip.draw(Globals.screen, x, y);
+            chip.draw(screen, x, y);
         }
     }
 }

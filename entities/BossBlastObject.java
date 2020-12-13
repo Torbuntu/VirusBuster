@@ -1,4 +1,7 @@
-class BossBlast {
+import femto.mode.HiRes16Color;
+import sprites.BossBlast;
+class BossBlastObject {
+    BossBlast blast = new BossBlast();
     float x, y, dx, dy;
     boolean active = false;
     
@@ -7,6 +10,7 @@ class BossBlast {
         this.dy = dy;
         this.x = x;
         this.y = y;
+        blast.fire();
         active = true;
     }
     
@@ -25,9 +29,8 @@ class BossBlast {
     }
     
     //TODO: Make a blast sprite?
-    void render(){
-        if(active)
-            Globals.screen.drawCircle(x, y, 8, 8, false);
+    void render(HiRes16Color screen){
+        if(active) blast.draw(screen, x, y);
     }
 
 }

@@ -1,3 +1,5 @@
+import femto.mode.HiRes16Color;
+
 import managers.BlastManager;
 import managers.BotManager;
 
@@ -5,8 +7,10 @@ import audio.Explode;
 
 import sprites.WormBoss;
 import sprites.WormBody;
+import sprites.BossBlast;
 
 public class WormBossManager {
+    BossBlast blast;
     WormBoss sprite;
     Body[] body;
     Explode explode;
@@ -22,6 +26,9 @@ public class WormBossManager {
         sprite.x = -32;
         sprite.y = 120;
         sprite.hori();
+        
+        blast = new BossBlast();
+        blast.fire();
         
         // We initialize at id 1 so as to begin just after the head.
         body = new Body[]{
@@ -43,7 +50,7 @@ public class WormBossManager {
         switch(Math.random(0, 4)){
             case 0://going left
                 sprite.hori();
-                sprite.x = 220;//Globals.screen.width();
+                sprite.x = 220;
                 sx = -1;
                 sprite.setMirrored(true);
                 sprite.y = Math.random(16, 136);
@@ -184,15 +191,15 @@ public class WormBossManager {
         }
     }
     
-    void render(){
+    void render(HiRes16Color screen){
         // Don't render if dead.
         if(dying == 0)return;
         if(bodyDestroyed()){
-            Globals.screen.drawCircle(blastX, blastY, 8, 8, false);
+            blast.draw(screen, blastX, blastY);
         }
 
         for(Body b : body){
-            b.render();
+            b.render(screen);
         }
         if(!alive && dying > 0){
             sprite.setFlipped(false);
@@ -214,7 +221,7 @@ public class WormBossManager {
             dying--;
             sprite.die();
         }
-        sprite.draw(Globals.screen);
+        sprite.draw(screen);
     }
     
     int getCurrentHealth(){
@@ -313,8 +320,8 @@ class Body {
         // body.x += sx;
     }
     
-    void render(){
-        if(alive || dying > 0)body.draw(Globals.screen);
+    void render(HiRes16Color screen){
+        if(alive || dying > 0)body.draw(screen);
     }
     
     void hit(int damage){

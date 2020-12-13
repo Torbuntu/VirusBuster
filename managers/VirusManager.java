@@ -146,7 +146,7 @@ public class VirusManager{
             return;
         }
         for(int i = 0; i < spawned; i++){
-            viruses[i].render();
+            viruses[i].render(screen);
         }
     }
     

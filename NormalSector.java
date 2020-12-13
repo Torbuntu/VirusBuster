@@ -47,7 +47,7 @@ class NormalSector extends State {
         }
 
         Globals.drawGrid();
-        itemDropManager.updateAndRender();
+        itemDropManager.updateAndRender(screen);
         if(itemDropManager.checkCollect(botManager.getX(), botManager.getY())){
             Globals.saveManager.currency++;
         }
@@ -60,7 +60,7 @@ class NormalSector extends State {
         
         if(transition())return;
         
-        debrisManager.render();
+        debrisManager.render(screen);
         virusManager.update(botManager.getX(), botManager.getY(), debrisManager, blastManager);
 
         if(virusManager.getThreats() == 0){

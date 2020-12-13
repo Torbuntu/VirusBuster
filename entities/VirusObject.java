@@ -1,4 +1,5 @@
 import sprites.Virus;
+import femto.mode.HiRes16Color;
 
 class VirusObject{
     Virus virus;
@@ -92,13 +93,13 @@ class VirusObject{
         }
     }
     
-    void render(){
+    void render(HiRes16Color screen){
         if(alive){
-            virus.draw(Globals.screen);
+            virus.draw(screen);
         }else{
             if(animationTime != 0){
                 virus.die();
-                virus.draw(Globals.screen);
+                virus.draw(screen);
                 animationTime--;
             }
             // else we don't render anything

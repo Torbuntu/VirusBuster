@@ -40,7 +40,7 @@ class WormBossStage extends State {
         blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         botManager.render(screen);
-        wormManager.render();
+        wormManager.render(screen);
         
         Globals.drawHud((int)(wormManager.getCurrentHealth() * 78 / wormManager.getTotalHealth()));
         

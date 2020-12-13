@@ -708,6 +708,21 @@
 		},
 		"/stage/GameOverStage.java": {
 			"sdcard": false
+		},
+		"/sprites/BossBlast.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/BossBlast.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/BossBlast.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,
