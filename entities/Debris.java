@@ -22,6 +22,7 @@ class Debris {
             spawn.idle();
         }else{
             chip = new Chip();
+            chip.idle();
         }
         x = getCoordX();
         y = getCoordY();

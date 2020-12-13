@@ -723,6 +723,12 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/sprites/Chip.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,
