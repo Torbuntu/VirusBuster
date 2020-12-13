@@ -3,7 +3,10 @@ import sprites.Spawn;
 import femto.mode.HiRes16Color;
 class Debris {
     
-    int x, y, w, h;
+    Chip chip;
+    Spawn spawn;
+    
+    int x, y, w, h, id;
     
     /*
     * Type is used to determine if the debris is a corruption tile (spawn point for viruses) 
@@ -11,10 +14,8 @@ class Debris {
     */
     int type;
     
-    Chip chip;
-    Spawn spawn;
-    
-    Debris(int t){
+    Debris(int t, int id){
+        this.id = id;
         type = t;
         if(type != 0){
             spawn = new Spawn();
@@ -28,17 +29,14 @@ class Debris {
         h = 16;
     }
     
-    int getX(){
-        return x;
-    }
-    
-    int getY(){
-        return y;
-    }
-    
     void reset(){
         x = getCoordX();
         y = getCoordY();
+    }
+    
+    void reset(int x, int y){
+        this.x = x;
+        this.y = y;
     }
     
     private int getCoordX(){
@@ -57,6 +55,10 @@ class Debris {
         }
         int coord = 16+(id*16);
         return coord;
+    }
+    
+    boolean collide(int x, int y){
+        return this.x == x && this.y == y;
     }
     
     boolean collide(float fx, float fy, float fw, float fh){

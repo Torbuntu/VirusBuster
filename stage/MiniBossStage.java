@@ -54,7 +54,6 @@ class MiniBossStage extends State {
         
         if(bossManager.cleared()){
             // CLEARED!
-            //TODO: Wait until MegaFragment is collected if ZONE == 0
             if(Globals.ZONE == 0){
                 if(collected){
                     Globals.drawCleared(true);

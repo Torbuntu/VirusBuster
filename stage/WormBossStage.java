@@ -9,28 +9,40 @@ import managers.BotManager;
 import managers.BlastManager;
 import managers.WormBossManager;
 
+import sprites.MegaFragment;
+
 class WormBossStage extends State {
     HiRes16Color screen;
     BotManager botManager;
     BlastManager blastManager;
     WormBossManager wormManager;
+    MegaFragment frag;
+    boolean collected = false;
     
     void init(){
         screen = Globals.screen;
         botManager = new BotManager();
         blastManager = new BlastManager();
         wormManager = new WormBossManager();
-        
+        frag = new MegaFragment();
+        frag.complete();
         Mixer.init(8000);
         System.out.println("[I] - Worm Boss initialized");
     }
+    
     void update(){
         screen.clear(3);
         Globals.drawGrid();
         
         if(wormManager.cleared()){
             //TODO: Collect Mega Fragment logic
-            Globals.drawCleared(true);
+            if(collected){
+                Globals.drawCleared(true);
+            } else {
+                if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
+                frag.setMirrored(true);
+                frag.draw(screen, 98, 76);
+            }
         }  
         
         // Update

@@ -7,12 +7,14 @@ class DebrisManager {
     
     public DebrisManager() {
         debris = new Debris[]{
-            new Debris(0),
-            new Debris(0),
-            // new Debris(0),
-            new Debris(2),
-            new Debris(0),
-            new Debris(1)
+            new Debris(0, 0),
+            new Debris(0, 1),
+            new Debris(0, 2),
+            new Debris(2, 3),
+            new Debris(0, 4),
+            new Debris(1, 5),
+            new Debris(0, 6),
+            new Debris(0, 7)
         };
         System.out.println("[I] - Debris initialized");
     }
@@ -21,6 +23,20 @@ class DebrisManager {
         for(Debris d : debris){
             d.reset();
         }
+        //Go through debris and spread if they overlap
+        for(int i = 0; i < 8; i++){
+            while(checkOverlap(debris[i].x, debris[i].y, debris[i].id)){
+                debris[i].reset();
+            }
+        }
+    }
+    
+    boolean checkOverlap(int x, int y, int id){
+        for(Debris d : debris){
+            if(d.id == id) return false;
+            if(d.collide(x, y))return true;
+        }
+        return false;
     }
     
     boolean checkCollides(float fx, float fy, float fw, float fh){
@@ -46,7 +62,7 @@ class DebrisManager {
     int getSpawnX(int p){
         for(Debris d : debris){
             if(d.type == p){
-                return d.getX();
+                return d.x;
             }
         }
         return 0;
@@ -55,7 +71,7 @@ class DebrisManager {
     int getSpawnY(int p){
         for(Debris d : debris){
             if(d.type == p){
-                return d.getY();
+                return d.y;
             }
         }
         return 0;
@@ -64,7 +80,7 @@ class DebrisManager {
     int getSpawnX(){
         for(Debris d : debris){
             if(d.type == 1){
-                return d.getX();
+                return d.x;
             }
         }
         return 0;
@@ -73,7 +89,7 @@ class DebrisManager {
     int getSpawnY(){
         for(Debris d : debris){
             if(d.type == 1){
-                return d.getY();
+                return d.y;
             }
         }
         return 0;

@@ -83,7 +83,7 @@ public class VirusManager{
                 for(Debris d : debris.getDebris()){
                     if(d.type == 0){
                         if(d.collide(viruses[i].getX(), viruses[i].getY(), 16, 16)){
-                            if(viruses[i].getX()+6 > d.getX() && viruses[i].getX()+10 < d.getX()+16){
+                            if(viruses[i].getX()+6 > d.x && viruses[i].getX()+10 < d.x+16){
                                 viruses[i].setSpeedY(0);
                                 if(viruses[i].getX() < bx){
                                     viruses[i].aroundX = 16;
