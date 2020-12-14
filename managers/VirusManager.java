@@ -76,20 +76,27 @@ public class VirusManager{
                 for(Debris d : debris.getDebris()){
                     if(d.type == 0){
                         if(d.collide(viruses[i].getX(), viruses[i].getY(), 16, 16)){
-                            if(viruses[i].getX()+6 > d.x && viruses[i].getX()+10 < d.x+16){
-                                viruses[i].setSpeedY(0);
-                                if(viruses[i].getX() < bx){
-                                    viruses[i].aroundX = 16;
+                            float x = viruses[i].getX()+8;//middle x
+                            float y = viruses[i].getY()+8;//middle y
+                            if(y > d.y && y < d.y+16){
+                                if(x > d.x+8){
+                                   viruses[i].virus.x = d.x+16;
                                 }else{
-                                    viruses[i].aroundX = -16;
+                                    viruses[i].virus.x = d.x-16;
                                 }
+                                if(y > d.y+8) {
+                                   viruses[i].virus.y+=1;
+                                }else viruses[i].virus.y -= 1;
                             }else{
-                                viruses[i].setSpeedX(0);
-                                if(viruses[i].getY() < by){
-                                    viruses[i].aroundY = 16;
+                                //right side
+                                if(y > d.y+8){
+                                    viruses[i].virus.y = d.y+16;
                                 }else{
-                                    viruses[i].aroundY = -16;
+                                    viruses[i].virus.y = d.y-16;
                                 }
+                                if(x > d.x+8) {
+                                   viruses[i].virus.x+=1;
+                                }else viruses[i].virus.x -= 1;
                             }
                         }
                     }

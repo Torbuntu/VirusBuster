@@ -8,8 +8,6 @@ class VirusObject{
     int animationTime = 50;
     int hitTime = 0, updateTime = 0;
     
-    public int aroundX = 0, aroundY = 0;
-
     int type;
     int baseHealth = 2;
     int health = 2;
@@ -72,33 +70,13 @@ class VirusObject{
     
     void updateMovement(){
         if(hitTime == 0 && alive){
-            if(aroundX > 0){
-                aroundX--;
-                if(virus.x+2 > 204)aroundX = 0;
-                virus.x += 1;
-            }else if(aroundX < 0){
-                aroundX++;
-                if(virus.x-2 > 4) aroundX = 0;
-                virus.x += -1;
-            }else{
-                if(virus.x+2 > 204 || virus.x-2 < 4) sx = -sx;
-                virus.x += sx;
-            }
+            if(virus.x > 204)sx = -2;
+            if(virus.x < 4) sx = 2;
+            virus.x += sx;
             
-
-            
-            if(aroundY > 0){
-                aroundY--;
-                if(virus.y+2 > 160)aroundY = 0;
-                virus.y += 1;
-            }else if(aroundY < 0){
-                aroundY++;
-                if(virus.y-2 < 16)aroundY = 0;
-                virus.y += -1;
-            }else{
-                if(virus.y+2 > 160 || virus.y-2 < 16) sy = -sy;
-                virus.y += sy;
-            }
+            if(virus.y > 140) sy = -2;
+            if(virus.y < 17) sy = 2;
+            virus.y += sy;
         }
     }
     
