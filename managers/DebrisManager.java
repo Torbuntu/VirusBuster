@@ -26,7 +26,8 @@ class DebrisManager {
         //Go through debris and spread if they overlap
         for(int i = 0; i < 8; i++){
             while(checkOverlap(debris[i].x, debris[i].y, debris[i].id)){
-                debris[i].reset();
+                if(debris[i].x+16 < 190)debris[i].x+=16;
+                else if (debris[i].y+16 < 150)debris[i].y+=16;
             }
         }
     }
