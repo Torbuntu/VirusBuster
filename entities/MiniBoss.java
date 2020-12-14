@@ -219,6 +219,7 @@ public class MiniBoss{
     void hit(int damage){
         // If boss is damaged, take any and all damage from blast
         if(!damaged && hurt > 0)return;
+        shootReady+=2;
         health -= damage;
         if(hurt==0){
             switch(Math.random(0, 4)){
