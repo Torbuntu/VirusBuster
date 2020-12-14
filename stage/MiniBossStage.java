@@ -31,15 +31,9 @@ class MiniBossStage extends State {
         botManager = new BotManager();
         blastManager = new BlastManager();
         
-        switch(Globals.ZONE){
-            case 0: 
-                bossManager.init(1); 
-                frag = new MegaFragment();
-                frag.complete();
-                break;
-            case 1: bossManager.init(2); break;
-            case 2: bossManager.init(3); break;
-            case 3: bossManager.init(4); break;
+        if(Globals.ZONE == 0){
+            frag = new MegaFragment();
+            frag.complete();
         }
         
         Mixer.init(8000);

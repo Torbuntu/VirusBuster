@@ -41,14 +41,7 @@ public class VirusManager{
             new VirusObject(0),
             new VirusObject(1),
             new VirusObject(0),
-            new VirusObject(1),
-            new VirusObject(0),
-            new VirusObject(1),
-            new VirusObject(0),
-            new VirusObject(1),
-            new VirusObject(0),
-            new VirusObject(1),
-            new VirusObject(0)
+            new VirusObject(1)
         };
         System.out.println("[I] - Viruses initialized");
     }
@@ -213,8 +206,8 @@ public class VirusManager{
                         total = 30;
                         break;
                     case 7:
-                        waves = new int[]{5, 8, 12, 16};
-                        total = 41;
+                        waves = new int[]{5, 8, 12, 15};
+                        total = 40;
                         break;
                     default:
                         waves = new int[]{3, 5, 5, 7};

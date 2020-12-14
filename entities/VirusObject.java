@@ -162,7 +162,7 @@ class VirusObject{
         virus.y = y;
         alive = true;
         hitTime = 0;
-        health = baseHealth;
+        health = baseHealth+Globals.ZONE;
     }
 }
 

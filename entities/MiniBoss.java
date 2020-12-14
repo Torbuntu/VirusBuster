@@ -21,7 +21,7 @@ public class MiniBoss{
     
     boolean alive = true;
     
-    public void init(){
+    public MiniBoss(){
         explode = new Explode(1);
         virus = new SmallBoss();
         int dir = Math.random(0, 4);
@@ -42,7 +42,7 @@ public class MiniBoss{
             virus.y = 160;
         }
  
-        health = 50;
+        health = 50 + Globals.ZONE*10;
         maxHealth = health;
         shootReady = 250;
         blasts = new BossBlastObject[]{
@@ -64,16 +64,16 @@ public class MiniBoss{
         if(berserk > 0){
             berserk--;
             if(virus.x+32 > 200){
-                sx = -2.5f;
+                sx = -1.5f;
             }
             if(virus.x < 0){
-                sx = 2.5f;
+                sx = 1.5f;
             }
             if(virus.y+32 > 160){
-                sy = -2.5f;
+                sy = -1.5f;
             }
             if(virus.y < 0){
-                sy = 2.5f;
+                sy = 1.5f;
             }
             virus.x += sx;
             virus.y += sy;
@@ -122,7 +122,7 @@ public class MiniBoss{
                     berserk = 500;
                     sx = 2.5f;
                     sy = 2.5f;
-                    speed = 1.0f;
+                    speed = 0.75f;
                 }
             }
             virus.x += sx;

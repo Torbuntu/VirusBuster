@@ -22,22 +22,22 @@ class Shop extends State {
     void update() {
         screen.clear(3);
         if(Button.A.justPressed() && rate < 10){
-            if(currency >= 2){
-                currency -= 2;
+            if(currency >= 5){
+                currency -= 5;
                 if(rate > 10) rate = 10;
                 else rate++;
             }
         }
         if(Button.B.justPressed() && refresh > 5){
-            if(currency >= 2){
-                currency -= 2;
+            if(currency >= 10){
+                currency -= 10;
                 refresh-=5;
                 if(refresh < 5) refresh = 5;
             }
         }
         if(Button.Up.justPressed() && shield < 100){
-            if(currency >= 10){
-                currency -= 10;
+            if(currency >= 15){
+                currency -= 15;
                 if(shield + 10 > 100) shield = 100;
                 else{
                     shield+=10;
@@ -47,9 +47,9 @@ class Shop extends State {
         if(Button.Down.justPressed() && magnet < 2.0f){
             if(currency >= 25){
                 currency -= 25;
-                if((magnet + 0.02f) > 1.0f) magnet += 0.02f;
+                if((magnet + 0.1f) > 1.0f) magnet = 1.02f;
                 else{
-                    magnet+=0.02f;
+                    magnet+=0.10f;
                 }
             }
         }
@@ -60,12 +60,13 @@ class Shop extends State {
         screen.setTextPosition(0, 16);
         screen.setTextColor(0);
         screen.print(
-          "$2  - [A]  Rate: " + rate
-        + "\n$2  - [B]  Refresh: " + refresh
-        + "\n$10 - [Up] Shield: " + shield
-        + "\n$25 - [Down] Magnet: " + magnet
-        + "\n\n$$" + currency);
-
+          "$5  - [A] Rate: " + rate
+        + "\n$10 - [B] Refresh: " + refresh
+        + "\n$15 - [U] Shield: " + shield
+        + "\n$25 - [D] Magnet: " + (int)(magnet*100)
+        + "%\n\n$$" + currency
+        + "\n[C] - Continue");
+        
         if(Button.C.justPressed()){
             Game.changeState(SectorZoneManager.getNextState());
         }
