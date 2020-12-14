@@ -14,4 +14,6 @@ public class SaveManager extends femto.Cookie {
     int refresh;
     int currency;
     float magnet;
+    int charge;
+    int damage;
 }
