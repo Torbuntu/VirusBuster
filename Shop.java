@@ -7,7 +7,7 @@ import managers.SectorZoneManager;
 
 class Shop extends State {
     HiRes16Color screen;
-    int currency = 0, rate = 1, refresh = 50, shield = 100;
+    int currency = 0, rate = 1, refresh = 50, shield = 100, charge = 100, damage = 2;
     float magnet = 0.0f;
     void init() {
         if(Globals.shield != shield) shield = Globals.shield;
@@ -15,6 +15,8 @@ class Shop extends State {
         if(Globals.saveManager.rate != rate) rate = Globals.saveManager.rate;
         if(Globals.saveManager.refresh != refresh) refresh = Globals.saveManager.refresh;
         if(Globals.saveManager.magnet != magnet) magnet = Globals.saveManager.magnet;
+        if(Globals.saveManager.charge != charge) charge = Globals.saveManager.charge;
+        if(Globals.saveManager.damage != damage) damage = Globals.saveManager.damage;
         screen = Globals.screen;
     }
     
@@ -44,6 +46,13 @@ class Shop extends State {
                 }
             }
         }
+        if(Button.Left.justPressed() && charge > 10){
+            if(currency >= 20){
+                currency -= 20;
+                if(charge - 5 < 10) charge = 10;
+                else charge-=5;
+            }
+        }
         if(Button.Down.justPressed() && magnet < 2.0f){
             if(currency >= 25){
                 currency -= 25;
@@ -54,17 +63,23 @@ class Shop extends State {
             }
         }
         
-        //Debug
-        if(Button.Right.justPressed())Globals.SECTOR++;
+        if(Button.Right.justPressed() && damage < 20){
+            if(currency >= 30){
+                currency -= 30;
+                damage++;
+            }
+        }
 
         screen.setTextPosition(0, 16);
         screen.setTextColor(0);
         screen.print(
-          "$5  - [A] Rate: " + rate
+            "$5  - [A] Rate: " + rate
         + "\n$10 - [B] Refresh: " + refresh
         + "\n$15 - [U] Shield: " + shield
+        + "\n$20 - [L] Charge: " + charge 
         + "\n$25 - [D] Magnet: " + (int)(magnet*100)
-        + "%\n\n$$" + currency
+        + "%\n$30 - [R] Damage: " + damage
+        + "\n\n$$" + currency
         + "\n[C] - Continue");
         
         if(Button.C.justPressed()){
@@ -80,6 +95,8 @@ class Shop extends State {
         Globals.saveManager.rate = rate;
         Globals.saveManager.refresh = refresh;
         Globals.saveManager.magnet = magnet;
+        Globals.saveManager.charge = charge;
+        Globals.saveManager.damage = damage;
         screen = null;
     }
 }
