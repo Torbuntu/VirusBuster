@@ -62,7 +62,7 @@ class VirusObject{
             if(bx <= (virus.x + 32) && bx >= virus.x){
                 virus.setMirrored(false);
             }
-            if(Globals.checkHitBot(virus.x+2, virus.y+2, 12, bx+2, by+2, 8))Globals.shield-=2;
+            if(Globals.checkHitBot(virus.x+2, virus.y+2, 12, bx+2, by+2, 8))Globals.shield-=5;
             
             virus.bite();
         }else{
@@ -74,20 +74,29 @@ class VirusObject{
         if(hitTime == 0 && alive){
             if(aroundX > 0){
                 aroundX--;
+                if(virus.x+2 > 204)aroundX = 0;
                 virus.x += 1;
             }else if(aroundX < 0){
                 aroundX++;
+                if(virus.x-2 > 4) aroundX = 0;
                 virus.x += -1;
             }else{
+                if(virus.x+2 > 204 || virus.x-2 < 4) sx = -sx;
                 virus.x += sx;
             }
+            
+
+            
             if(aroundY > 0){
                 aroundY--;
+                if(virus.y+2 > 160)aroundY = 0;
                 virus.y += 1;
             }else if(aroundY < 0){
                 aroundY++;
+                if(virus.y-2 < 16)aroundY = 0;
                 virus.y += -1;
             }else{
+                if(virus.y+2 > 160 || virus.y-2 < 16) sy = -sy;
                 virus.y += sy;
             }
         }
