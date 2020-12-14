@@ -44,10 +44,15 @@ public class BotManager {
         sx = 0;
         sy = 0;
         speed = 1;
+        
+        if(Button.A.isPressed()) attack = true;
+        else attack = false;
+        
         if(Button.B.isPressed()){
             speed = 2;
+            attack = false;
         }
-        if(Button.Down.isPressed() && head.y+1 < 144){
+        if(Button.Down.isPressed() && head.y+1 < 148){
             if(speed==2){
                 if(ghost==0)ghost=6;
                 head.dashDown();
@@ -118,6 +123,7 @@ public class BotManager {
             }
         }
         
+        // If not moving
         if(sx == 0 && sy == 0) {
             if(attack) bot.shoot();
             else if(speed!=2){
@@ -130,9 +136,7 @@ public class BotManager {
                 }
             } 
         }
-        if(Button.A.isPressed()) attack = true;
-        else attack = false;
-        if(Button.B.isPressed()) attack = false;
+        
         
         if(speed==2 && ghost > 0)ghost--;
         if(Globals.hurt > 0)Globals.hurt--;
@@ -165,8 +169,7 @@ public class BotManager {
         if(Globals.hurt%2 != 0)return;
         
         head.draw(screen);
-        if(speed != 2) bot.draw(screen, head.x, head.y+9);
-        else{
+        if(speed == 2) {
             if(ghost > 2){ 
                 switch(dir){
                     case 0:screen.drawRect(head.x-sx*8, head.y+2, 6, 6, 15, true);break;//left
@@ -175,7 +178,7 @@ public class BotManager {
                     case 3:screen.drawRect(head.x+2, head.y-sy*6, 6, 6, 15, true);break;//down
                 }
             }
-        }
+        }else bot.draw(screen, head.x, head.y+9);
     }
 
 }
