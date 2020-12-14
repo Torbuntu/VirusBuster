@@ -63,16 +63,16 @@ public class MiniBoss{
     void update(BlastManager blastManager, float bx, float by){
         if(berserk > 0){
             berserk--;
-            if(virus.x+32 > 200){
+            if(virus.x+32 > 214){
                 sx = -1.5f;
             }
-            if(virus.x < 0){
+            if(virus.x < 4){
                 sx = 1.5f;
             }
             if(virus.y+32 > 160){
                 sy = -1.5f;
             }
-            if(virus.y < 0){
+            if(virus.y < 16){
                 sy = 1.5f;
             }
             virus.x += sx;
