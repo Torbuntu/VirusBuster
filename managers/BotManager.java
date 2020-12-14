@@ -79,7 +79,7 @@ public class BotManager {
             }
         }
         if(sy == 0){
-            if(Button.Right.isPressed() && head.x+1 < 200){
+            if(Button.Right.isPressed() && head.x+1 < 204){
                 bot.setMirrored( true );
                 if(speed==2){
                     if(ghost==0)ghost=6;
@@ -87,8 +87,8 @@ public class BotManager {
                     head.dashHori();
                 }else{
                     if(!attack){
-                        head.setMirrored( false );
-                        head.right();
+                        head.setMirrored( true );
+                        head.walkHori();
                     }
                     bot.walkHori();
                 }
@@ -107,7 +107,7 @@ public class BotManager {
                 }else{
                     if(!attack){
                         head.setMirrored( false );
-                        head.left();
+                        head.walkHori();
                     }
                     bot.walkHori();
                 }
@@ -123,9 +123,9 @@ public class BotManager {
             else if(speed!=2){
                 bot.idle();
                 switch(dir){
-                    case 0: head.left();break;
+                    case 0: head.walkHori();break;
                     case 1: head.up();break;
-                    case 2: head.right();break;
+                    case 2: head.walkHori();break;
                     case 3: head.down();break;
                 }
             } 

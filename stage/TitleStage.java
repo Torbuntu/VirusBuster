@@ -79,7 +79,7 @@ public class TitleStage extends State {
         if(Globals.saveManager.secondZoneClear){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 86+24, 32);
+        megaFrag.draw(screen, 110, 32);
         
         //third
         megaFrag.setMirrored(false);
@@ -87,7 +87,7 @@ public class TitleStage extends State {
         if(Globals.saveManager.thirdZoneClear){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 86, 32+24);
+        megaFrag.draw(screen, 86, 56);
         
         //last
         megaFrag.setFlipped(true);
@@ -95,7 +95,7 @@ public class TitleStage extends State {
         if(Globals.saveManager.fourthZoneClear){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 86+24, 32+24);
+        megaFrag.draw(screen, 110, 56);
                 
 
         switch(select){
@@ -103,13 +103,13 @@ public class TitleStage extends State {
                 screen.drawRect(86, 32, 24, 24, 11);
                 break;
             case 1:
-                screen.drawRect(86+24, 32, 24, 24, 11);
+                screen.drawRect(110, 32, 24, 24, 11);
                 break;
             case 2:
-                screen.drawRect(86, 32+24, 24, 24, 11);
+                screen.drawRect(86, 56, 24, 24, 11);
                 break;
             case 3:
-                screen.drawRect(86+24, 32+24, 24, 24, 11);
+                screen.drawRect(110, 56, 24, 24, 11);
                 break;
         }
         screen.fillRect(10, 100, 200, 50, 8+select);
