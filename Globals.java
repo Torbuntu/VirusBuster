@@ -154,8 +154,9 @@ class Globals {
         screen.print(PRESS_C_TRANSPORT);
         if(Button.C.justPressed()){
             SECTOR++;
-            if(boss) Game.changeState(SectorZoneManager.getNextState());
-            else Game.changeState(new Shop());
+            // if(boss) Game.changeState(SectorZoneManager.getNextState());
+            // else
+            Game.changeState(new Shop());
         }
     }
     
