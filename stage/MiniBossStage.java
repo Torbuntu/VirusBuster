@@ -8,7 +8,7 @@ import femto.mode.HiRes16Color;
 import stage.GameOverStage;
 import managers.BotManager;
 import managers.BlastManager;
-import managers.MiniBossManager;
+import entities.MiniBoss;
 
 import sprites.MegaFragment;
 
@@ -22,12 +22,12 @@ class MiniBossStage extends State {
     
     BotManager botManager;
     BlastManager blastManager;
-    MiniBossManager bossManager;
+    MiniBoss bossManager;
     
     void init(){
         screen = Globals.screen;
         
-        bossManager = new MiniBossManager();
+        bossManager = new MiniBoss();
         botManager = new BotManager();
         blastManager = new BlastManager();
         
@@ -72,7 +72,7 @@ class MiniBossStage extends State {
         botManager.render(screen);
         
         
-        Globals.drawHud((int)(bossManager.getCurrentHealth() * 78 / bossManager.getTotalHealth()));
+        Globals.drawHud((int)(bossManager.health * 78 / bossManager.maxHealth));
         bossManager.render(screen);
         blastManager.render(screen);
         

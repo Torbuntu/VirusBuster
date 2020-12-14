@@ -260,4 +260,8 @@ public class MiniBoss{
     public boolean getAlive(){
         return dying > 0; 
     }
+    
+    public boolean cleared(){
+        return dying == 0;
+    }
 }
