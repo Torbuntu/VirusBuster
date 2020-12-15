@@ -36,6 +36,11 @@ public class BlastManager {
         System.out.println("[I] - Blasts initialized");
     }
     
+    void tutorial(int ra, int re){
+        rate = ra;
+        refresh = re;
+    }
+    
     void update(float x, float y, int dir){
         
         if(cooldown > 0){

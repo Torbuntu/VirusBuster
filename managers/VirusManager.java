@@ -243,12 +243,12 @@ public class VirusManager{
                 total = 20;
                 break;
             case 2:
-                waves = new int[]{5, 5, 8, 10};
-                total = 28;
+                waves = new int[]{3, 5, 7, 8};
+                total = 23;
                 break;
             case 3:
-                waves = new int[]{5, 5, 10, 15};
-                total = 35;
+                waves = new int[]{3, 5, 8, 10};
+                total = 26;
                 break;
         }
     }

@@ -3,7 +3,7 @@ import femto.mode.HiRes16Color;
 class Item {
     int type;
     boolean available = false;
-    int life = 200;
+    int life = 350;
     Loot loot = new Loot();
     
     void init(int type, float x, float y){
@@ -15,7 +15,7 @@ class Item {
     }
     
     void render(HiRes16Color screen){
-        if(life < 25){
+        if(life < 75){
             if(life%2==0){
                 loot.draw(screen);
             }
@@ -28,14 +28,14 @@ class Item {
         loot.x = 0;
         loot.y = 0;
         available = false;
-        life = 200;
+        life = 350;
     }
     
     void update(){
         life--;
         if(life <= 0){
             available = false;
-            life = 200;
+            life = 350;
         }
     }
     

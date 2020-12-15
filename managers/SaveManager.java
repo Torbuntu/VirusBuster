@@ -7,8 +7,9 @@ public class SaveManager extends femto.Cookie {
     boolean secondZoneClear;
     boolean thirdZoneClear;
     boolean fourthZoneClear;
-    
+    boolean started;
     // highScore only used in Endless mode
+    
     int highScore;
     int rate;
     int refresh;

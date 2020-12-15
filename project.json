@@ -777,6 +777,9 @@
 		},
 		"/VirusBuster-linux.tar.xz": {
 			"sdcard": false
+		},
+		"/stage/TutorialStage.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,
