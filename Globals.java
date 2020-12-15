@@ -67,11 +67,11 @@ class Globals {
         //tmp
         // saveManager.currency += 500;
         // saveManager.magnet = 0.35f;
+        // shield = 100;
         kills = 0;
         hit = 0;
         shots = 0;
         score = 0;
-        shield = 100;
         SECTOR = 0;
     }
     

@@ -14,32 +14,12 @@ class DebrisManager {
             new Debris(0, 4),
             new Debris(1, 5),
             new Debris(0, 6),
-            new Debris(0, 7)
+            new Debris(0, 7),
+            new Debris(0, 8)
         };
         System.out.println("[I] - Debris initialized");
     }
-    
-    public void resetDebris(){
-        for(Debris d : debris){
-            d.reset();
-        }
-        //Go through debris and spread if they overlap
-        for(int i = 0; i < 8; i++){
-            while(checkOverlap(debris[i].x, debris[i].y, debris[i].id)){
-                if(debris[i].x+16 < 190)debris[i].x+=16;
-                else if (debris[i].y+16 < 150)debris[i].y+=16;
-            }
-        }
-    }
-    
-    boolean checkOverlap(int x, int y, int id){
-        for(Debris d : debris){
-            if(d.id == id) return false;
-            if(d.collide(x, y))return true;
-        }
-        return false;
-    }
-    
+
     boolean checkCollides(float fx, float fy, float fw, float fh){
         for(Debris d : debris){
             if(d.collide(fx, fy, fw, fh)) return true;

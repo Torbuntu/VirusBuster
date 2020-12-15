@@ -23,10 +23,11 @@ class NormalSector extends State {
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     
-    int transitionTime = 0;
+    int transitionTime = 0, currency;
     
     void init(){
         screen = Globals.screen;
+        currency = Globals.saveManager.currency;
         
         botManager = new BotManager();
         blastManager = new BlastManager();
@@ -34,7 +35,6 @@ class NormalSector extends State {
         virusManager = new VirusManager();
         itemDropManager = new ItemDropManager();
     
-        debrisManager.resetDebris();
         virusManager.initWave(Globals.SECTOR, debrisManager);
         
         Mixer.init(8000);
@@ -51,7 +51,7 @@ class NormalSector extends State {
         Globals.drawGrid();
         itemDropManager.updateAndRender(screen);
         if(itemDropManager.checkCollect(botManager.getX(), botManager.getY(), Globals.saveManager.magnet)){
-            Globals.saveManager.currency++;
+            currency++;
         }
         if(Globals.shield <= 0){
             Game.changeState(new GameOverStage());
@@ -89,6 +89,7 @@ class NormalSector extends State {
         botManager = null;
         blastManager = null;
         itemDropManager = null;
+        Globals.saveManager.currency = currency;
     }
     
     

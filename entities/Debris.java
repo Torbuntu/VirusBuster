@@ -25,41 +25,21 @@ class Debris {
             chip.idle();
         }
         x = getCoordX();
-        y = getCoordY();
+        y = 17+(id*16);
         w = 16;
         h = 16;
     }
     
-    void reset(){
-        x = getCoordX();
-        y = getCoordY();
-    }
-    
-    void reset(int x, int y){
+    void reset(int x){
         this.x = x;
-        this.y = y;
     }
     
     private int getCoordX(){
-        int id = Math.random(1, 12);
-        while(id == 6 || id == 7){
-            id = Math.random(0, 13);
+        int index = Math.random(0, 13);
+        if(id == 4 || id == 5){
+            if(index == 6 || index == 7)index = 5;
         }
-        int coord = 6+(id*16);
-        return coord;
-    }
-    
-    private int getCoordY(){
-        int id = Math.random(1, 8);
-        while(id == 4 || id == 5){
-            id = Math.random(0, 9);
-        }
-        int coord = 17+(id*16);
-        return coord;
-    }
-    
-    boolean collide(int x, int y){
-        return this.x == x && this.y == y;
+        return 6+(index*16);;
     }
     
     boolean collide(float fx, float fy, float fw, float fh){
