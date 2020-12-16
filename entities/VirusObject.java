@@ -90,7 +90,10 @@ class VirusObject{
                 virus.y-=0.5f;
                 spawnY++;
             }
-            
+            if(virus.x > 204)virus.x = 204;
+            if(virus.x < 4) virus.x = 4;
+            if(virus.y > 140) virus.y=140;
+            if(virus.y < 17) virus.y=17;
             if(spawnX ==0 && spawnY==0) goingToSpawn = false;
         }else if(hitTime == 0 && alive){
             if(virus.x > 204)sx = -2;

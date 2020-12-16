@@ -16,7 +16,7 @@ class GameOverStage extends State {
             Game.changeState(new TitleStage());
         }
         
-        screen.setTextPosition(0, 88);
+        screen.setTextPosition(0, 78);
         screen.setTextColor(0);
         screen.println("Zone Failed");
         
@@ -25,6 +25,7 @@ class GameOverStage extends State {
         screen.flush();
     }
     void shutdown(){
+        Globals.shield = 50; //start at 50 as a penalty for losing a bot
         screen = null;
     }
 }
