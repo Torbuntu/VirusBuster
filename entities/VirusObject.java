@@ -3,8 +3,9 @@ import femto.mode.HiRes16Color;
 
 class VirusObject{
     Virus virus;
-    boolean alive = true;
+    boolean alive = true, goingToSpawn = false;
     float sx = 0, sy = 0;
+    int spawnX, spawnY;
     int animationTime = 50;
     int hitTime = 0, updateTime = 0;
     
@@ -19,6 +20,7 @@ class VirusObject{
     }
 
     void update(float bx, float by){
+        
         if(hitTime > 0){
             hitTime--;
             virus.hit();
@@ -69,7 +71,28 @@ class VirusObject{
     }
     
     void updateMovement(){
-        if(hitTime == 0 && alive){
+        if(goingToSpawn){
+            if(spawnX > 0){
+                virus.x+=0.5f;
+                spawnX--;
+            }
+                
+            if(spawnX < 0){
+                virus.x-=0.5f;
+                spawnX++;
+            }
+            if(spawnY > 0){
+                virus.y+=0.5f;
+                spawnY--;
+            }
+                
+            if(spawnY < 0){
+                virus.y-=0.5f;
+                spawnY++;
+            }
+            
+            if(spawnX ==0 && spawnY==0) goingToSpawn = false;
+        }else if(hitTime == 0 && alive){
             if(virus.x > 204)sx = -2;
             if(virus.x < 4) sx = 2;
             virus.x += sx;
@@ -147,7 +170,11 @@ class VirusObject{
     void reset(int x, int y){
         virus.x = x;
         virus.y = y;
+        spawnX = Math.random(-48, 64);
+        spawnY = Math.random(-48, 64);
+        
         alive = true;
+        goingToSpawn = true;
         hitTime = 0;
         health = baseHealth+Globals.ZONE;
     }

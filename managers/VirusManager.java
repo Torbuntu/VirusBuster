@@ -18,7 +18,7 @@ public class VirusManager{
     int max;
     Explode explode;
     
-    int spawnClear = 60;
+    int spawnClear = 125;
     
     int incoming = 150;
     boolean toggle = false;
@@ -105,7 +105,7 @@ public class VirusManager{
             }
         }
         if(spawnClear == 0){
-            spawnClear = 45;
+            spawnClear = 125;
             if(spawned < waves[currentWave]){
                 spawn(debris);
             } 
@@ -123,14 +123,14 @@ public class VirusManager{
             if(x != i && viruses[x].alive){
                 if(Globals.boundingBox(viruses[i].getX(), viruses[i].getY(), 8, viruses[x].getX(), viruses[x].getY(), 8)){
                     if(viruses[i].getX() < viruses[x].getX()){
-                        viruses[i].setSpeedX(-2.0f);
+                        viruses[i].setSpeedX(-1.0f);
                     }else{
-                        viruses[i].setSpeedX(2.0f);
+                        viruses[i].setSpeedX(1.0f);
                     }
                     if(viruses[i].getY() < viruses[x].getY()){
-                        viruses[i].setSpeedY(-2.0f);
+                        viruses[i].setSpeedY(-1.0f);
                     }else{
-                        viruses[i].setSpeedY(2.0f);
+                        viruses[i].setSpeedY(1.0f);
                     }
                 }
             }
