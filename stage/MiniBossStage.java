@@ -46,7 +46,7 @@ class MiniBossStage extends State {
         Globals.drawGrid();
         
         // Update
-        botManager.updateBotMovement();
+        botManager.updateBotMovement(blastManager.charge);
         bossManager.update(blastManager, botManager.getX(), botManager.getY());
         
         if(Globals.shield <= 0){

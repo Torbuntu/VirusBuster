@@ -57,7 +57,7 @@ class NormalSector extends State {
             Game.changeState(new GameOverStage());
         }
         
-        botManager.updateBotMovement(debrisManager, true);
+        botManager.updateBotMovement(debrisManager, blastManager.charge);
         botManager.render(screen);
         
         if(transition())return;
@@ -74,6 +74,8 @@ class NormalSector extends State {
         blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
         
         Globals.drawHud((int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats()));
+        screen.setTextPosition(16, 164);
+        screen.print("x"+currency);
         
         //Need to draw the blast manager after the hud or else some items don't render 
         blastManager.render(screen);

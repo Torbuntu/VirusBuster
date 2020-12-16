@@ -128,8 +128,9 @@ class Globals {
         // Mini Fragments (currency)
         loot.play();
         loot.draw(screen, 6, 164);
-        screen.setTextPosition(16, 164);
-        screen.print("x"+saveManager.currency);
+        // Currency drawn on NormalSector
+        // screen.setTextPosition(16, 164);
+        // screen.print("x"+saveManager.currency);
         
         // Magnet
         if(saveManager.magnet > 0.0f){

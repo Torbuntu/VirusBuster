@@ -50,7 +50,13 @@ public class BlastManager {
             blasts[i].update();
         }
         
-        if(Button.B.isPressed()) return;//No shooting while
+        if(Button.B.isPressed() && charge > 0){
+            if(Button.Left.isPressed()) charge--;
+            if(Button.Right.isPressed()) charge--;
+            if(Button.Down.isPressed()) charge--;
+            if(Button.Up.isPressed()) charge--;
+            return;//No shooting while
+        } 
         if(Button.A.isPressed() && cooldown == 0){
             cooldown = refresh;
             for(int i = 0; i < rate; i++){

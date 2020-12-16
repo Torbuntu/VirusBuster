@@ -13,6 +13,8 @@ class TutorialStage extends State{
     int stage;
     BotManager botManager;
     BlastManager blastManager;
+    
+    int charge = 100;
     void init(){
         botManager = new BotManager();
         blastManager = new BlastManager();
@@ -99,8 +101,7 @@ class TutorialStage extends State{
     }
     
     void movement(){
-        botManager.updateBotMovement();
-        
+        botManager.updateBotMovement(charge);
         botManager.render(screen);
     }
     void shootingAndCharge(){

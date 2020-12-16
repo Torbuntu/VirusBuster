@@ -37,7 +37,7 @@ class ForkBombStage extends State {
         }
         
         // Update
-        botManager.updateBotMovement();
+        botManager.updateBotMovement(blastManager.charge);
         forkBombManager.update(blastManager, botManager.getX(), botManager.getY(), botManager.speed > 1);
         
         blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());

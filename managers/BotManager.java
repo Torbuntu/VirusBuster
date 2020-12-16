@@ -39,7 +39,7 @@ public class BotManager {
         head.y = y;
     }
     
-    void updateBotMovement(){
+    void updateBotMovement(int charge){
         //START move player
         sx = 0;
         sy = 0;
@@ -48,7 +48,7 @@ public class BotManager {
         if(Button.A.isPressed()) attack = true;
         else attack = false;
         
-        if(Button.B.isPressed()){
+        if(Button.B.isPressed() && charge > 10){
             speed = 2;
             attack = false;
         }
@@ -152,11 +152,11 @@ public class BotManager {
      * Unable to shoot while dashing.
      * 
      */
-    void updateBotMovement(DebrisManager debrisManager, boolean checkDebris){
+    void updateBotMovement(DebrisManager debrisManager, int charge){
         //START move player
 
-        updateBotMovement();
-        if(checkDebris && debrisManager.checkCollides(head.x+2+sx, head.y+2+sy, 8, 12 )){
+        updateBotMovement(charge);
+        if(debrisManager.checkCollides(head.x+2+sx, head.y+2+sy, 8, 12 )){
             head.x -= sx;
             head.y -= sy;
         }
