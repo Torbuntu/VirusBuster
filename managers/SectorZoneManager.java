@@ -20,10 +20,20 @@ class SectorZoneManager {
         // Sector 4 is always mini boss stage.
         if(Globals.SECTOR == 4) return new MiniBossStage();
         if(Globals.SECTOR == 8){
+            System.out.print("[I] Initiate Mega Boss Stage: ");
             switch(Globals.ZONE){
-                case 1: return new WormBossStage(); break;
-                case 2: return new ForkBombStage(); break;
-                case 3: return new GrabbyMcStage(); break;
+                case 1: 
+                    System.out.println("WormBoss");
+                    return new WormBossStage(); 
+                    break;
+                case 2: 
+                    System.out.println("ForkBomb");
+                    return new ForkBombStage(); 
+                    break;
+                case 3: 
+                    System.out.println("GrabbyMc");
+                    return new GrabbyMcStage(); 
+                    break;
             }
         }
         

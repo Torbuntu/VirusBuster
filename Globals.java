@@ -126,20 +126,22 @@ class Globals {
         screen.print(ZONE + ":" + SECTOR);
 
         // Mini Fragments (currency)
-        loot.play();
-        loot.draw(screen, 6, 164);
-        // Currency drawn on NormalSector
-        // screen.setTextPosition(16, 164);
-        // screen.print("x"+saveManager.currency);
-        
-        // Magnet
-        if(saveManager.magnet > 0.0f){
-            mag.idle();
-            mag.draw(screen, 120, 164);
-            screen.setTextPosition(130, 164);
-            screen.print((int)(saveManager.magnet*100) + "%");
+        if(SECTOR != 4 && SECTOR != 8){
+            loot.play();
+            loot.draw(screen, 6, 164);
+            // Currency drawn on NormalSector
+            // screen.setTextPosition(16, 164);
+            // screen.print("x"+saveManager.currency);
+            
+            // Magnet
+            if(saveManager.magnet > 0.0f){
+                mag.idle();
+                mag.draw(screen, 120, 164);
+                screen.setTextPosition(130, 164);
+                screen.print((int)(saveManager.magnet*100) + "%");
+            }
         }
-
+        
     }
 
     static void drawGrid(){

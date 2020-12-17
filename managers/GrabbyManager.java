@@ -33,7 +33,7 @@ class GrabbyManager {
     }
 
     void update(BlastManager blastManager, BotManager bot){
-        if(health == 0 && dying > 0){
+        if(health <= 0 && dying > 0){
             dying--;
             return;
         }
@@ -54,7 +54,7 @@ class GrabbyManager {
             }
         }
         
-        if(rightHealth == 0 && leftHealth == 0 && hitHead == 0 ){
+        if(rightHealth <= 0 && leftHealth <= 0 && hitHead == 0 ){
             int damage = blastManager.hitEnemy(headX+6, 8, 20 );
             if(damage > 0){
                 health-=damage;
@@ -134,7 +134,7 @@ class GrabbyManager {
     
     void render(HiRes16Color screen){
         if(dying == 0)return;
-        if(health == 0 && dying > 0){
+        if(health <= 0 && dying > 0){
             //TODO: dying animation
             if(dying % 2 == 0){
                 screen.fillCircle(headX+8, 16, 32, 8);

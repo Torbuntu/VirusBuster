@@ -18,6 +18,7 @@ class WormBossStage extends State {
     WormBossManager wormManager;
     MegaFragment frag;
     boolean collected = false;
+    int sy = 1, y = 76, t = 120;
     
     void init(){
         screen = Globals.screen;
@@ -39,13 +40,18 @@ class WormBossStage extends State {
         }
         
         if(wormManager.cleared()){
-            //TODO: Collect Mega Fragment logic
             if(collected){
                 Globals.drawCleared(true);
             } else {
                 if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
                 frag.setMirrored(true);
                 frag.draw(screen, 98, 76);
+                y+=sy;
+                t--;
+                if(t==0){
+                    t = 100;
+                    if(y <= 75 || y >= 77)sy=-sy;
+                }
             }
         }  
         

@@ -154,7 +154,8 @@ public class WormBossManager {
                 if(damage > 0){
                     if(b.last && b.alive){
                         b.hit(damage);
-                        if(b.health == 0){
+                        // Health can go lower than 0 with charged blast
+                        if(b.health <= 0){
                             b.last = false;
                             explode.play();
                             if(b.id > 1){
@@ -299,20 +300,20 @@ class Body {
             
         }else{
             if(body.x < 0) {
-                sx = Math.random(1, 4);
-                sy = Math.random(-3, 2);
+                sx = Math.random(0, 2);
+                sy = Math.random(-1, 2);
             }
             if(body.x > 192){
-                sx = Math.random(-4, -1);
-                sy = Math.random(-3, 2);
+                sx = Math.random(-1, 1);
+                sy = Math.random(-1, 2);
             } 
-            if(body.y < 16) {
-                sy = Math.random(1, 4);
-                sx = Math.random(-3, 2);
+            if(body.y < 17) {
+                sy = Math.random(0, 2);
+                sx = Math.random(-1, 2);
             }
             if(body.y > 148) {
-                sy = Math.random(-4, -1);
-                sx = Math.random(-3, 2);
+                sy = Math.random(-1, 1);
+                sx = Math.random(-1, 2);
             }
             body.x += sx;
             body.y += sy;

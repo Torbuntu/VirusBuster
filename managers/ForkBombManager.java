@@ -53,7 +53,7 @@ class ForkBombManager {
      * 
      */ 
     void update(BlastManager blastManager, float bx, float by, boolean dash) {
-        if(health == 0)return;
+        if(health <= 0)return;
         int damage = blastManager.hitEnemy(forkBomb.x+9, forkBomb.y+18, 14);
         if(hurt == 0 && damage > 0 ){
             health-=damage;
@@ -125,7 +125,7 @@ class ForkBombManager {
     void render(HiRes16Color screen) {
         // Don't render if dead.
         if(dying == 0)return;
-        if(health == 0 && dying > 0){
+        if(health <= 0 && dying > 0){
             dying--;
             if(dying == 50) explode.play();
         }else if(hurt > 0){

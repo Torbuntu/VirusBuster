@@ -19,7 +19,7 @@ class MiniBossStage extends State {
     //only used in ZONE 0 where miniboss is actually the megaboss
     MegaFragment frag;
     boolean collected = false;
-    int sy = 1, y = 76, t = 20;
+    int sy = 1, y = 76, t = 120;
     
     BotManager botManager;
     BlastManager blastManager;
@@ -64,11 +64,11 @@ class MiniBossStage extends State {
                     y+=sy;
                     t--;
                     if(t==0){
-                        t = 50;
-                        if(y < 75 || y > 77)sy=-sy;
+                        t = 100;
+                        if(y <= 75 || y >= 77)sy=-sy;
                     }
                 }
-            } else Globals.drawCleared(true);
+            } else Globals.drawCleared(false);
         }
         
         // START update Blast
