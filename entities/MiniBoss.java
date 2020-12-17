@@ -24,22 +24,23 @@ public class MiniBoss{
     public MiniBoss(){
         explode = new Explode(1);
         virus = new SmallBoss();
-        int dir = Math.random(0, 4);
-        if(dir == 0){
-            virus.x = 0;
-            virus.y = 80;
-        }
-        if(dir == 1){
-            virus.x = 100;
-            virus.y = 0;
-        }
-        if(dir == 2){
-            virus.x = 220;
-            virus.y = 80;
-        }
-        if(dir == 3){
-            virus.x = 100;
-            virus.y = 160;
+        switch(Math.random(0, 4)){
+            case 0:
+                virus.x = 0;
+                virus.y = 80;
+            break;
+            case 1:
+                virus.x = 100;
+                virus.y = 0;
+            break;
+            case 2:
+                virus.x = 220;
+                virus.y = 80;
+            break;
+            case 3:
+                virus.x = 100;
+                virus.y = 160;
+            break;
         }
  
         health = 50 + Globals.ZONE*10;
@@ -108,9 +109,9 @@ public class MiniBoss{
                 }
                 if(damaged){
                     if(sx > 0)sx = 0.2f;
-                    else sx = -0.2f;
+                    else if(sx < 0) sx = -0.2f;
                     if(sy > 0) sy = 0.2f;
-                    else sy = -0.2f;
+                    else if(sy < 0) sy = -0.2f;
                 }else{
                     sx = 0;
                     sy = 0;
@@ -124,6 +125,18 @@ public class MiniBoss{
                     sy = 2.5f;
                     speed = 0.75f;
                 }
+            }
+            if(virus.x+32 > 214){
+                sx = -1.5f;
+            }
+            if(virus.x < 4){
+                sx = 1.5f;
+            }
+            if(virus.y+32 > 160){
+                sy = -1.5f;
+            }
+            if(virus.y < 16){
+                sy = 1.5f;
             }
             virus.x += sx;
             virus.y += sy;

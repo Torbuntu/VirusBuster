@@ -46,8 +46,8 @@ class SummaryStage extends State {
         }else if(accuracy >= 90){
             screen.println("Bonus x3.0");
         }
-        screen.println("  x"+c);
-        loot.draw(screen, 0, 25);
+        screen.println(" x"+c);
+        loot.draw(screen, 0, 26);
         screen.flush();
     }
     void shutdown(){
