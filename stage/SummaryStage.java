@@ -5,14 +5,30 @@ import femto.input.Button;
 import femto.mode.HiRes16Color;
 import stage.TitleStage;
 
+import sprites.Loot;
+
 /**
  * Summary scene displays the final after stage summary. 
  * This class also saves the player variables between Zones.
  */ 
 class SummaryStage extends State {
     HiRes16Color screen;
+    Loot loot;
+    int accuracy, c;
     void init(){
         screen = Globals.screen;
+        screen.setTextColor(0);
+        accuracy = Globals.getAccuracy();
+        c = Globals.saveManager.currency;
+        if(accuracy >= 50 && accuracy < 75){
+            c += (int)(c*1.5);
+        }else if(accuracy >= 75 && accuracy < 90){
+            c += c*2;
+        }else if(accuracy >= 90){
+            c += c*3;
+        }
+        loot = new Loot();
+        loot.play();
     }
     void update(){
         screen.clear(3);
@@ -20,12 +36,18 @@ class SummaryStage extends State {
             Game.changeState(new TitleStage());
         }
         
-        screen.setTextPosition(0, 88);
-        screen.setTextColor(0);
+        screen.setTextPosition(0, 0);
         screen.println("Summary:");
-        
-        screen.println("Accuracy: " + Globals.getAccuracy());
-        
+        screen.println("Accuracy: " + accuracy);
+        if(accuracy >= 50 && accuracy < 75){
+            screen.println("Bonus x1.5");
+        }else if(accuracy >= 75 && accuracy < 90){
+            screen.println("Bonus x2.0");
+        }else if(accuracy >= 90){
+            screen.println("Bonus x3.0");
+        }
+        screen.println("  x"+c);
+        loot.draw(screen, 0, 25);
         screen.flush();
     }
     void shutdown(){
@@ -35,6 +57,8 @@ class SummaryStage extends State {
             case 2: Globals.saveManager.thirdZoneClear = true; break;
             case 3: Globals.saveManager.fourthZoneClear = true; break;
         }
+        
+        Globals.saveManager.currency = c;
         Globals.saveManager.saveCookie();
         screen = null;
     }

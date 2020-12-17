@@ -150,7 +150,7 @@ class Globals {
         screen.setTextColor(0);
         if(boss){
             screen.setTextPosition(8, 60);
-            screen.print("You have recovered a\nMega Fragment!");
+            screen.print("You have recovered a\n Mega Fragment!");
         }
         screen.setTextPosition(52, 88);
         screen.print(SECTOR_CLEAR);
