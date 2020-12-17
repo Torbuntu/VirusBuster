@@ -780,6 +780,12 @@
 		},
 		"/stage/TutorialStage.java": {
 			"sdcard": false
+		},
+		"/entities/WormBodyObject.java": {
+			"sdcard": false
+		},
+		"/entities/Spike.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

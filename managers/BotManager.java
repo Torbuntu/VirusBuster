@@ -28,8 +28,6 @@ public class BotManager {
         System.out.println("[I] - Bot initialized");
     }
     
-    public boolean getAttacking(){return attack;}
-    public int getDir(){return dir;}
     public float getX(){return head.x;}
     public float getY(){return head.y;}
     public void setX(float x){head.x = x;}

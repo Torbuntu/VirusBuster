@@ -15,8 +15,8 @@ import sprites.MegaFragment;
 public class TitleStage extends State {
     
     HiRes16Color screen;
-    int select=0, count=0;
     MegaFragment megaFrag;
+    int select=0, count=0;
     
     void init(){
         megaFrag = new MegaFragment();
@@ -33,12 +33,15 @@ public class TitleStage extends State {
         if(Button.B.justPressed()){
             Globals.ZONE = select;
             Globals.reset();
-            
+            // Globals.saveManager.refresh = 10;
+            // Globals.saveManager.charge = 10;
+            // Globals.saveManager.rate = 8;
             // Game.changeState(new MiniBossStage());
             // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
             // Game.changeState(new ForkBombStage());
             Game.changeState(new NormalSector());
+            return;
         }
         
         screen.clear(3);

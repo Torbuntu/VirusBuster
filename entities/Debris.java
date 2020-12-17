@@ -1,6 +1,7 @@
 import sprites.Chip;
 import sprites.Spawn;
 import femto.mode.HiRes16Color;
+
 class Debris {
     
     Chip chip;

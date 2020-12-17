@@ -40,6 +40,7 @@ class SectorZoneManager {
         // There are no sectors beyond 4 on ZONE 0
         if(Globals.ZONE == 0 && Globals.SECTOR > 4) return new SummaryStage();
         
+        System.out.println("[I] Entering Normal Stage");
         // Default return NormalSector. VirusManager will be initialized with the Globals.SECTOR variable.
         return new NormalSector();
     }

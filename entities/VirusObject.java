@@ -5,11 +5,11 @@ class VirusObject{
     Virus virus;
     boolean alive = true, goingToSpawn = false;
     float sx = 0, sy = 0;
-    int spawnX, spawnY;
+    int spawnX = 0, spawnY = 0;
     int animationTime = 50;
     int hitTime = 0, updateTime = 0;
     
-    int type;
+    int type = 1;
     int baseHealth = 2;
     int health = 2;
     

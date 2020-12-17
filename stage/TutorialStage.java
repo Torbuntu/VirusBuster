@@ -105,7 +105,7 @@ class TutorialStage extends State{
         botManager.render(screen);
     }
     void shootingAndCharge(){
-        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
         Globals.drawHud(10);
         blastManager.render(screen);
     }

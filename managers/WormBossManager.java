@@ -9,79 +9,101 @@ import sprites.WormBoss;
 import sprites.WormBody;
 import sprites.BossBlast;
 
+import entities.WormBodyObject;
+
 public class WormBossManager {
     BossBlast blast;
-    WormBoss sprite;
-    Body[] body;
+    WormBoss head;
+    WormBodyObject[] body;
     Explode explode;
     int health = 25;
-    int sx = 1, sy = 0, shoot = 150, dying = 150;
-    boolean angry = false, alive = true;
+    int sx = 1, sy = 0, shoot = 150, dying = 150, turnX, turnY, dir;
+    boolean angry = false, alive = true, met = false;
     float speed = 1;
     float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
     
     WormBossManager(){
         explode = new Explode(1);
-        sprite = new WormBoss();
-        sprite.x = -32;
-        sprite.y = 120;
-        sprite.hori();
+        head = new WormBoss();
+        head.x = -32;
+        head.y = 120;
+        head.hori();
+        
+        dir = 1; // init going right
+        
+        turnX = Math.random(50, 140);
+        turnY = 120;//same as start head.y
         
         blast = new BossBlast();
         blast.fire();
         
         // We initialize at id 1 so as to begin just after the head.
-        body = new Body[]{
-            new Body(1, false),
-            new Body(2, false),
-            new Body(3, false),
-            new Body(4, false),
-            new Body(5, false),
-            new Body(6, false),
-            new Body(7, false),
-            new Body(8, true),
+        body = new WormBodyObject[]{
+            new WormBodyObject(1, false),
+            new WormBodyObject(2, false),
+            new WormBodyObject(3, false),
+            new WormBodyObject(4, false),
+            new WormBodyObject(5, false),
+            new WormBodyObject(6, false),
+            new WormBodyObject(7, false),
+            new WormBodyObject(8, true),
         };
+        for(WormBodyObject b : body){
+            b.initDirection(dir, sx, sy, head.x, head.y, turnX, turnY);
+        }
     }
     
     private void setDir(){
         sx = 0;
         sy = 0;
-
-        switch(Math.random(0, 4)){
+        met = false;//have not met the turn dir
+        dir = Math.random(0, 4);
+        switch(dir){
             case 0://going left
-                sprite.hori();
-                sprite.x = 220;
+                head.hori();
+                head.x = 220;
                 sx = -1;
-                sprite.setMirrored(true);
-                sprite.y = Math.random(16, 136);
+                head.setMirrored(true);
+                head.y = Math.random(16, 136);
+                turnY = (int)head.y;
+                turnX = Math.random(50, 180);
                 break;
             case 1://going right
-                sprite.hori();
-                sprite.x = -32;
+                head.hori();
+                head.x = -32;
                 sx = 1;
-                sprite.setMirrored(false);
-                sprite.y = Math.random(16, 136);
+                head.setMirrored(false);
+                head.y = Math.random(16, 136);
+                turnY = (int)head.y;
+                turnX = Math.random(50, 180);
                 break;
                 
             case 2://going Up
-                sprite.vert();
-                sprite.y = 176;
+                head.vert();
+                head.y = 176;
                 sy = -1;
-                sprite.setFlipped(false);
-                sprite.x = Math.random(8, 180);
+                head.setFlipped(false);
+                head.x = Math.random(8, 180);
+                turnX = (int)head.x;
+                turnY = Math.random(50, 136);
                 break;
             case 3://going down
-                sprite.vert();
-                sprite.y = -32;
+                head.vert();
+                head.y = -32;
                 sy = 1;
-                sprite.setFlipped(true);
-                sprite.x = Math.random(8, 180);
+                head.setFlipped(true);
+                head.x = Math.random(8, 180);
+                turnX = (int)head.x;
+                turnY = Math.random(50, 136);
                 break;
         }
+        for(WormBodyObject b : body){
+            b.initDirection(dir, sx, sy, head.x, head.y, turnX, turnY);
+        }
     }
-
+    
     boolean bodyDestroyed(){
-        for(Body b : body){
+        for(WormBodyObject b : body){
             if(b.alive){
                 return false;
             }
@@ -91,20 +113,11 @@ public class WormBossManager {
     }
     
     boolean headCollidesWithBot(float bx, float by){
-        if(Globals.boundingBox(sprite.x, sprite.y, 28, bx, by, 16)){
-            return true;
-        }
-        return false;
+        return Globals.boundingBox(head.x, head.y, 28, bx, by, 16);
     }
     
     void moveHurtBot(BotManager botManager){
-         // Move bot Y
-        if(botManager.getY() + 20 < 131) botManager.setY(botManager.getY()+20);
-        else botManager.setY(botManager.getY()-20);
-        // Move bot X
-        if(botManager.getX() + 20 < 175) botManager.setX(botManager.getX()+20);
-        else botManager.setX(botManager.getX()-20);
-        
+        //I did not like the knock back, so it is gone.
         Globals.shield -= 10;
         Globals.hurt = 50;
     }
@@ -113,7 +126,7 @@ public class WormBossManager {
         if(!alive)return;
         if(bodyDestroyed()){
             speed = 1.4;
-            int damage = blastManager.hitEnemy(sprite.x, sprite.y, 32);
+            int damage = blastManager.hitEnemy(head.x, head.y, 32);
             if(damage > 0){
                 health-=damage;
                 if(health <= 0){
@@ -124,18 +137,18 @@ public class WormBossManager {
             
             shoot--;
             if(shoot <= 0){
-                shoot = 100;
-                blastX = sprite.x + 18;
-                blastY = sprite.y + 18;
+                shoot = 200;
+                blastX = head.x + 18;
+                blastY = head.y + 18;
                 if(botManager.getX() > blastX){
-                    bvx = 2;
+                    bvx = 1;
                 }else{
-                    bvx = -2;
+                    bvx = -1;
                 }
                 if(botManager.getY() > blastY){
-                    bvy = 2;
+                    bvy = 1;
                 }else{
-                    bvy = -2;
+                    bvy = -1;
                 }
             }
             blastX += bvx;
@@ -146,7 +159,7 @@ public class WormBossManager {
                 moveHurtBot(botManager);
             }
         }else{
-           for(Body b : body){
+           for(WormBodyObject b : body){
                 if(b.alive && Globals.hurt == 0 && Globals.boundingBox(b.body.x+2, b.body.y+2, 14, botManager.getX(), botManager.getY(), 16)){
                     moveHurtBot(botManager);
                 }
@@ -167,28 +180,65 @@ public class WormBossManager {
                 }
             } 
         }
-        if(Globals.hurt == 0 && Globals.boundingBox(sprite.x, sprite.y, 28, botManager.getX(), botManager.getY(), 16)){
+        if(Globals.hurt == 0 && Globals.boundingBox(head.x, head.y, 28, botManager.getX(), botManager.getY(), 16)){
             moveHurtBot(botManager);
         }
         if(health > 0){
-            if(sprite.x > 360){
+            if(head.x > 400 || head.x < -200 || head.y > 400 || head.y < -200){
                 setDir();
+                
             }
-            if(sprite.x < -172){
-                setDir();
-            }
-            if(sprite.y > 316){
-                setDir();
-            }
-            if(sprite.y < -172){
-                setDir();
-            }
-            sprite.y += sy * speed;
-            sprite.x += sx * speed;
+            head.y += sy * speed;
+            head.x += sx * speed;
             
-            for(Body b : body){
-                b.update(sprite.x, sprite.y, sx, sy);
+            if(!met) checkHeadTurn();
+            
+            for(WormBodyObject b : body){
+                b.update(dir);
             }
+        }
+    }
+    
+    void checkHeadTurn(){
+        // time to turn the head
+        if((int)head.x == turnX && (int)head.y == turnY){
+            met = true;
+            setTurnDir();
+        }
+    }
+    
+    /**
+     * Similar to setDir() except it does not reposition the x,y nor adjust the turnX,turnY 
+     * 
+     */
+    private void setTurnDir(){
+        sx = 0;
+        sy = 0;
+        if(dir == 0 || dir == 1) dir = Math.random(0, 2) == 1 ? 2 : 3;
+        else dir = Math.random(0,2) == 1 ? 0 : 1;
+        
+        switch(dir){
+            case 0://going left
+                head.hori();
+                sx = -1;
+                head.setMirrored(true);
+                break;
+            case 1://going right
+                head.hori();
+                sx = 1;
+                head.setMirrored(false);
+                break;
+                
+            case 2://going Up
+                head.vert();
+                sy = -1;
+                head.setFlipped(false);
+                break;
+            case 3://going down
+                head.vert();
+                sy = 1;
+                head.setFlipped(true);
+                break;
         }
     }
     
@@ -199,12 +249,12 @@ public class WormBossManager {
             blast.draw(screen, blastX, blastY);
         }
 
-        for(Body b : body){
+        for(WormBodyObject b : body){
             b.render(screen);
         }
         if(!alive && dying > 0){
-            sprite.setFlipped(false);
-            sprite.setMirrored(false);
+            head.setFlipped(false);
+            head.setMirrored(false);
             switch(dying){
                 case 150:
                     explode.play();
@@ -220,14 +270,14 @@ public class WormBossManager {
                     break;
             }
             dying--;
-            sprite.die();
+            head.die();
         }
-        sprite.draw(screen);
+        head.draw(screen);
     }
     
     int getCurrentHealth(){
         int total = health;
-        for(Body b : body){
+        for(WormBodyObject b : body){
             total += b.getHealth();
         }
         return total;
@@ -241,104 +291,4 @@ public class WormBossManager {
     public boolean cleared(){
         return dying == 0; 
     }
-}
-
-class Body {
-    WormBody body;
-    int sx = 1, sy = 0, id, health = 15, hurt = 0, dying = 0;
-    boolean last, alive = true;
-    
-    Body(int id, boolean last){
-        this.id = id;
-        this.last = last;
-        body = new WormBody();
-        body.run();
-        body.y = 122;
-        body.x = id * -18;
-    }
-    
-    void update(float x, float y, int dirX, int dirY){
-        if(!alive) return;
-        if(dying > 0){
-            dying--;
-            body.die();
-            if(dying == 0){
-                alive = false;
-                // remove the body from the field.
-                body.x = -16;
-                body.y = -16;
-            }
-            return;
-        }
-        if(hurt > 0){
-            hurt--;
-            body.hurt();
-        }else if(last){
-            body.last();
-        }else{
-            body.run();
-        }
-        if(health > 5){
-            if(dirX > 0){
-                body.x = x + id*18*-dirX;
-            }else if(dirX < 0){
-                body.x = x + 16 + id*18*-dirX;
-            }
-            if(dirY == 0){
-                body.y = y+7;
-            }
-            
-            if(dirY > 0){
-                body.y = y + id*18*-dirY;
-            }else if(dirY < 0){
-                body.y = y + 16 + id*18*-dirY;
-            }
-            
-            if(dirX == 0){
-                body.x = x + 7;
-            }
-            
-        }else{
-            if(body.x < 0) {
-                sx = Math.random(0, 2);
-                sy = Math.random(-1, 2);
-            }
-            if(body.x > 192){
-                sx = Math.random(-1, 1);
-                sy = Math.random(-1, 2);
-            } 
-            if(body.y < 17) {
-                sy = Math.random(0, 2);
-                sx = Math.random(-1, 2);
-            }
-            if(body.y > 148) {
-                sy = Math.random(-1, 1);
-                sx = Math.random(-1, 2);
-            }
-            body.x += sx;
-            body.y += sy;
-        }
-        // body.x += sx;
-    }
-    
-    void render(HiRes16Color screen){
-        if(alive || dying > 0)body.draw(screen);
-    }
-    
-    void hit(int damage){
-        hurt = 10;
-        if(health == 6){
-            sx = -2;
-            sy = 2;
-        }
-        health-=damage;
-        if(health <= 0){
-            dying = 20;
-        }
-    }
-    
-    int getHealth(){
-        return health;
-    }
-    
 }

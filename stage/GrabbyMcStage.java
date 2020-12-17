@@ -40,7 +40,7 @@ class GrabbyMcStage extends State {
         botManager.updateBotMovement(blastManager.charge);
         grabbyManager.update(blastManager, botManager);
         
-        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.getDir());
+        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
         
         // Render
         botManager.render(screen);

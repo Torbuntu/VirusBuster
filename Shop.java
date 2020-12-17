@@ -7,7 +7,7 @@ import managers.SectorZoneManager;
 
 class Shop extends State {
     HiRes16Color screen;
-    int currency = 0, rate = 1, refresh = 50, shield = 100, charge = 100, damage = 2;
+    int currency = 0, rate = 1, refresh = 50, shield = 100, charge = 1, damage = 2;
     float magnet = 0.0f;
     void init() {
         if(Globals.shield != shield) shield = Globals.shield;
