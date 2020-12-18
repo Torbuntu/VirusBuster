@@ -21,7 +21,7 @@ class NormalSector extends State {
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     
-    int transitionTime = 0, currency;
+    int transitionTime = 0, currency = 0;
     
     void init(){
         screen = Globals.screen;
