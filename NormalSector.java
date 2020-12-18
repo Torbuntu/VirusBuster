@@ -28,6 +28,7 @@ class NormalSector extends State {
         currency = Globals.saveManager.currency;
         
         botManager = EntityManager.botManager;
+        botManager.setPos(110, 88);
         blastManager = EntityManager.blastManager;
         debrisManager = EntityManager.debrisManager;
         virusManager = EntityManager.virusManager;
@@ -90,6 +91,7 @@ class NormalSector extends State {
         botManager = null;
         blastManager = null;
         itemDropManager = null;*/
+        botManager.setPos(110, 88);
         Globals.saveManager.currency = currency;
     }
     
