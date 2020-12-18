@@ -1,7 +1,6 @@
 import femto.Game;
 import femto.State;
 import femto.input.Button;
-import femto.sound.Mixer;
 import femto.mode.HiRes16Color;
 
 import managers.BotManager;
@@ -21,8 +20,6 @@ class ForkBombStage extends State {
         botManager = new BotManager();
         blastManager = new BlastManager();
         forkBombManager = new ForkBombManager();
-        
-        Mixer.init(8000);
     }
     
     void update(){

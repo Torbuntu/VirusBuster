@@ -27,7 +27,6 @@ class WormBossStage extends State {
         wormManager = new WormBossManager();
         frag = new MegaFragment();
         frag.complete();
-        Mixer.init(8000);
         System.out.println("[I] - Worm Boss initialized");
     }
     

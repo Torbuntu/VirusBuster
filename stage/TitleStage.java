@@ -25,7 +25,6 @@ public class TitleStage extends State {
         screen = Globals.screen;
         select = 0;
         count = 0;
-        Mixer.init(8000);
     }
     
     void update(){

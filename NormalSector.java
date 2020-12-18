@@ -1,8 +1,6 @@
 import femto.Game;
 import femto.State;
 import femto.input.Button;
-import femto.sound.Mixer;
-
 import femto.mode.HiRes16Color;
 
 import stage.GameOverStage;
@@ -36,8 +34,6 @@ class NormalSector extends State {
         itemDropManager = new ItemDropManager();
     
         virusManager.initWave(Globals.SECTOR, debrisManager);
-        
-        Mixer.init(8000);
     }
     
     void update(){

@@ -37,7 +37,6 @@ class MiniBossStage extends State {
             frag.complete();
         }
         
-        Mixer.init(8000);
         System.out.println("[I] - MiniBoss initialized");
     }
     

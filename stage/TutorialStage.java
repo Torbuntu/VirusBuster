@@ -38,7 +38,6 @@ class TutorialStage extends State{
         
         screen = Globals.screen;
         screen.setTextColor(0);
-        Mixer.init(8000);
     }
     
     void update(){

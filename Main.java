@@ -1,6 +1,7 @@
 import femto.Game;
 import femto.State;
 import femto.input.Button;
+import femto.sound.Mixer;
 import femto.mode.HiRes16Color;
 import femto.font.FontC64;
 
@@ -16,7 +17,7 @@ public class Main extends State {
         if(Globals.saveManager.rate == 0) Globals.saveManager.rate = 1;
         if(Globals.saveManager.charge == 0) Globals.saveManager.charge = 100;
         if(Globals.saveManager.damage == 0) Globals.saveManager.damage = 2;
-        
+        Mixer.init(8000);
         Game.run(FontC64.font(), new Main());
     }
     
