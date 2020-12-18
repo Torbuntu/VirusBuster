@@ -39,6 +39,7 @@ public class TitleStage extends State {
             // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
             // Game.changeState(new ForkBombStage());
+            EntityManager.initializeNormalStage();
             Game.changeState(new NormalSector());
             return;
         }

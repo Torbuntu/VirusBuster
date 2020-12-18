@@ -29,8 +29,8 @@ class MiniBossStage extends State {
         screen = Globals.screen;
         
         bossManager = new MiniBoss();
-        botManager = new BotManager();
-        blastManager = new BlastManager();
+        botManager = EntityManager.botManager;
+        blastManager = EntityManager.blastManager;
         
         if(Globals.ZONE == 0){
             frag = new MegaFragment();
@@ -86,8 +86,8 @@ class MiniBossStage extends State {
     
     void shutdown(){
         screen = null;
-        botManager = null;
-        blastManager = null;
+        //botManager = null;
+        //blastManager = null;
         bossManager = null;
     }
 }

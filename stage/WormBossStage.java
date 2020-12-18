@@ -22,8 +22,8 @@ class WormBossStage extends State {
     
     void init(){
         screen = Globals.screen;
-        botManager = new BotManager();
-        blastManager = new BlastManager();
+        botManager = EntityManager.botManager;
+        blastManager = EntityManager.blastManager;
         wormManager = new WormBossManager();
         frag = new MegaFragment();
         frag.complete();
@@ -71,8 +71,8 @@ class WormBossStage extends State {
     }
     
     void shutdown(){
-        botManager = null;
-        blastManager = null;
+        //botManager = null;
+        //blastManager = null;
         wormManager = null;
         screen = null;
     }

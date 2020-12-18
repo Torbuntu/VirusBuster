@@ -20,6 +20,7 @@ class SectorZoneManager {
         // Sector 4 is always mini boss stage.
         if(Globals.SECTOR == 4) return new MiniBossStage();
         if(Globals.SECTOR == 8){
+            EntityManager.clearNormalStage();
             System.out.print("[I] Initiate Mega Boss Stage: ");
             switch(Globals.ZONE){
                 case 1: 
@@ -38,7 +39,9 @@ class SectorZoneManager {
         }
         
         // There are no sectors beyond 4 on ZONE 0
-        if(Globals.ZONE == 0 && Globals.SECTOR > 4) return new SummaryStage();
+        if(Globals.ZONE == 0 && Globals.SECTOR > 4) {
+            return new SummaryStage();
+        }
         
         System.out.println("[I] Entering Normal Stage");
         // Default return NormalSector. VirusManager will be initialized with the Globals.SECTOR variable.

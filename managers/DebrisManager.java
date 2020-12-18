@@ -76,6 +76,13 @@ class DebrisManager {
         return 0;
     }
     
+    /// randomizes the position of the debris
+    void reset(){
+        for(Debris d : debris){
+            d.reset();
+        }
+    }
+    
     Debris[] getDebris(){
         return debris;
     }

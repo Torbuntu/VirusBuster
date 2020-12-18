@@ -31,8 +31,8 @@ class Debris {
         h = 16;
     }
     
-    void reset(int x){
-        this.x = x;
+    void reset(){
+        x = getCoordX();
     }
     
     private int getCoordX(){

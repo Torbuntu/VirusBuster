@@ -786,6 +786,9 @@
 		},
 		"/entities/Spike.java": {
 			"sdcard": false
+		},
+		"/EntityManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

@@ -46,11 +46,10 @@ class Shop extends State {
                 }
             }
         }
-        if(Button.Left.justPressed() && charge > 10){
+        if(Button.Left.justPressed() && charge < 100){
             if(currency >= 20){
                 currency -= 20;
-                if(charge - 5 < 10) charge = 10;
-                else charge-=5;
+                if(charge + 5 < 100) charge+=5;
             }
         }
         if(Button.Down.justPressed() && magnet < 2.0f){
@@ -89,6 +88,7 @@ class Shop extends State {
         screen.flush();
     }
     
+    /// We purposely do *not* save the cookie until after the summary stage. 
     void shutdown() {
         Globals.shield = shield;
         Globals.saveManager.currency = currency;

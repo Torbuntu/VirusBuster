@@ -27,12 +27,14 @@ class NormalSector extends State {
         screen = Globals.screen;
         currency = Globals.saveManager.currency;
         
-        botManager = new BotManager();
-        blastManager = new BlastManager();
-        debrisManager = new DebrisManager();
-        virusManager = new VirusManager();
-        itemDropManager = new ItemDropManager();
+        botManager = EntityManager.botManager;
+        blastManager = EntityManager.blastManager;
+        debrisManager = EntityManager.debrisManager;
+        virusManager = EntityManager.virusManager;
+        itemDropManager = EntityManager.itemDropManager;
     
+        debrisManager.reset();
+        blastManager.reset();
         virusManager.initWave(Globals.SECTOR, debrisManager);
     }
     
@@ -82,11 +84,12 @@ class NormalSector extends State {
     
     public void shutdown(){
         screen = null;
+        /*
         virusManager = null;
         debrisManager = null;
         botManager = null;
         blastManager = null;
-        itemDropManager = null;
+        itemDropManager = null;*/
         Globals.saveManager.currency = currency;
     }
     

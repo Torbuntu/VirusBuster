@@ -18,6 +18,7 @@ public class Main extends State {
         if(Globals.saveManager.charge == 0) Globals.saveManager.charge = 1;
         if(Globals.saveManager.damage == 0) Globals.saveManager.damage = 2;
         Mixer.init(8000);
+        EntityManager.initializeGlobalEntities();
         Game.run(FontC64.font(), new Main());
     }
     

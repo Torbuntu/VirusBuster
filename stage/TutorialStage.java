@@ -16,8 +16,8 @@ class TutorialStage extends State{
     
     int charge = 100;
     void init(){
-        botManager = new BotManager();
-        blastManager = new BlastManager();
+        botManager = EntityManager.botManager;
+        blastManager = EntityManager.blastManager;
         messages = new String[]{
             "Press [C] at any time\nto progress",
             "Initiating tutorial\nprogram",
@@ -42,8 +42,6 @@ class TutorialStage extends State{
     
     void update(){
         screen.clear(3);
-        
-        
         
         switch(stage){
             case 0:
@@ -78,6 +76,7 @@ class TutorialStage extends State{
                 screen.setTextPosition(0,0);
                 break;
             default:
+                blastManager.reset();
                 Game.changeState(new TitleStage());
             break;
         }
@@ -93,8 +92,8 @@ class TutorialStage extends State{
     }
     
     void shutdown(){
-        blastManager = null;
-        botManager = null;
+        //blastManager = null;
+        //botManager = null;
         screen = null;
         messages = null;
     }

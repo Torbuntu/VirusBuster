@@ -17,8 +17,8 @@ class ForkBombStage extends State {
     
     void init(){
         screen = Globals.screen;
-        botManager = new BotManager();
-        blastManager = new BlastManager();
+        botManager = EntityManager.botManager;
+        blastManager = EntityManager.blastManager;
         forkBombManager = new ForkBombManager();
     }
     
@@ -50,8 +50,8 @@ class ForkBombStage extends State {
     
     void shutdown(){
         screen = null;
-        botManager = null;
-        blastManager = null;
+        //botManager = null;
+        //blastManager = null;
         forkBombManager = null;
     }
     

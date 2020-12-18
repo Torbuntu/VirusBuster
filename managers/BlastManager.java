@@ -41,6 +41,11 @@ public class BlastManager {
         refresh = re;
     }
     
+    void reset(){
+        rate = Globals.saveManager.rate;
+        refresh = Globals.saveManager.refresh;
+    }
+    
     void update(float x, float y, int dir){
         
         if(cooldown > 0){
