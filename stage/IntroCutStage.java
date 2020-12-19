@@ -3,6 +3,8 @@ import femto.State;
 import femto.input.Button;
 import femto.mode.HiRes16Color;
 
+import audio.Explode;
+
 import sprites.Virus;
 import sprites.MegaFragment;
 
@@ -13,10 +15,12 @@ class IntroCutStage extends State {
     HiRes16Color screen;
     Virus virus;
     MegaFragment megaFrag;
+    Explode explode;
     
     int x, y, dir = 0;
     
     void init(){
+        explode = new Explode(1);
         screen = Globals.screen;
         virus = new Virus();
         virus.walk();
@@ -32,6 +36,7 @@ class IntroCutStage extends State {
         
         switch(dir){
             case 0:
+                if(x == 90) explode.play();
                 if(x < 220) x+=2;
                 else {
                     dir++;
@@ -40,6 +45,7 @@ class IntroCutStage extends State {
                 }
             break;
             case 1:
+                if(y == 40) explode.play();
                 if(y < 180) y+=2;
                 else {
                     dir++;
@@ -48,6 +54,7 @@ class IntroCutStage extends State {
                 }
             break;
             case 2:
+                if(x == 90) explode.play();
                 if(x > -16) x-=2;
                 else{
                     dir++;
@@ -56,6 +63,7 @@ class IntroCutStage extends State {
                 }
             break;
             case 3:
+                if(y == 40) explode.play();
                 if(y > -16) y-=2;
                 else{
                     dir++;

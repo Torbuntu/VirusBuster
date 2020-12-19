@@ -27,11 +27,11 @@ public class TitleStage extends State {
         count = 0;
         
         aboutText = new String[]{
-            "",
-            "",
-            "",
-            "",
-            ""
+            "Zone 0: The smallest\n  Zone with the lowest\n  corruption",
+            "Zone 1: A Spreading\n  threat detected. It\n  trails corruption",
+            "Zone 2: Be ready to\n  to Boost through the\n  corruption",
+            "Zone 3: Lasers are \n  awesome, but don't\n  touch them!",
+            "Endless: "
         };
     }
     
@@ -128,7 +128,7 @@ public class TitleStage extends State {
         screen.fillRect(10, 100, 200, 50, 8+select);
         screen.setTextPosition(15, 105);
         screen.setTextColor(3);
-        screen.print("About zone " + select);
+        screen.print(aboutText[select]);
         
         if(count > 20) count = 0;
         
