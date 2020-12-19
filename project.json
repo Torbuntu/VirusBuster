@@ -813,6 +813,18 @@
 			"implements": "",
 			"palette": "[default]",
 			"palOffset": 0
+		},
+		"/stage/IntroCutStage.java": {
+			"sdcard": false
+		},
+		"/VirusBuster_Pokitto.elf": {
+			"sdcard": false
+		},
+		"/VirusBuster_Pokitto.bin": {
+			"sdcard": false
+		},
+		"/VirusBuster_Pokitto.eeprom": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

@@ -8,6 +8,7 @@ import femto.font.FontC64;
 import managers.SaveManager;
 import stage.TitleStage;
 import stage.TutorialStage;
+import stage.IntroCutStage;
 
 public class Main extends State {
     HiRes16Color screen;
@@ -41,7 +42,7 @@ public class Main extends State {
                 Game.changeState(new TutorialStage());
             }
             if(Button.B.justPressed()){
-                Game.changeState(new TitleStage());
+                Game.changeState(new IntroCutStage());
             }
         }else{
             screen.println("[A] - New Game");

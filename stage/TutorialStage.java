@@ -5,7 +5,7 @@ import femto.sound.Mixer;
 import femto.mode.HiRes16Color;
 import managers.BotManager;
 import managers.BlastManager;
-import stage.TitleStage;
+import stage.IntroCutStage;
 
 class TutorialStage extends State{
     HiRes16Color screen;
@@ -77,7 +77,7 @@ class TutorialStage extends State{
                 break;
             default:
                 blastManager.reset();
-                Game.changeState(new TitleStage());
+                Game.changeState(new IntroCutStage());
             break;
         }
         

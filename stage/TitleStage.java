@@ -1,7 +1,6 @@
 import femto.Game;
 import femto.State;
 import femto.input.Button;
-import femto.sound.Mixer;
 
 import femto.mode.HiRes16Color;
 
@@ -17,6 +16,7 @@ public class TitleStage extends State {
     HiRes16Color screen;
     MegaFragment megaFrag;
     int select=0, count=0;
+    String[] aboutText;
     
     void init(){
         megaFrag = new MegaFragment();
@@ -25,11 +25,21 @@ public class TitleStage extends State {
         screen = Globals.screen;
         select = 0;
         count = 0;
+        
+        aboutText = new String[]{
+            "",
+            "",
+            "",
+            "",
+            ""
+        };
     }
     
     void update(){
         
         if(Button.B.justPressed()){
+            // TODO: create endless mode
+            //if(select == 4) Game.changeState(new Endless());
             Globals.ZONE = select;
             Globals.reset();
             // Globals.saveManager.refresh = 10;
