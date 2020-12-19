@@ -21,7 +21,7 @@ class NormalSector extends State {
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     
-    int transitionTime = 0, currency = 0;
+    int transitionTime = 0, currency = 0, pos;
     
     void init(){
         screen = Globals.screen;
@@ -73,6 +73,10 @@ class NormalSector extends State {
         blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
         
         Globals.drawHud((int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats()));
+        
+        pos = (int)(virusManager.getWaveCurrent() * 68 / virusManager.getWaveTotal());
+        screen.fillRect(214-pos, 12, pos, 2, 8);
+        
         screen.setTextPosition(16, 164);
         screen.print("x"+currency);
         

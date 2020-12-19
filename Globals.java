@@ -10,6 +10,7 @@ import sprites.Magnet;
 import managers.SaveManager;
 import managers.SectorZoneManager;
 
+
 /**
  * Globals contains all of the globally used variables as well as 
  * a couple of useful helper methods.
@@ -17,6 +18,17 @@ import managers.SectorZoneManager;
  */
 class Globals {
     //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
+    
+    static Title title;
+    static void initTitle(){
+        title = new Title();
+    }
+    static void destroyTitle(){
+        title = null;
+    }
+    static void drawTitle(){
+        title.draw(screen, 0, 0);
+    }
     
     static final SaveManager saveManager = new SaveManager();
     
@@ -107,12 +119,13 @@ class Globals {
         screen.fillRect(8, 12, 68, 2, 2);
         
         // The blast charge fill is rendered in BlastManager:L85
-        
+        // NormalSector draws the sector total.
         // Boss Blast charge box
-        if(SECTOR == 4){
+        if(SECTOR != 8){
             screen.drawRect(144, 10, 70, 4, 0);
             screen.fillRect(146, 12, 68, 2, 2);
         }
+        
         //Threats or Boss Shield
         screen.drawRect(134, 0, 80, 6, 0);
         screen.fillRect(136, 2, 78, 4, 2);

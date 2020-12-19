@@ -789,6 +789,30 @@
 		},
 		"/EntityManager.java": {
 			"sdcard": false
+		},
+		"/sprites/JunkBot.aseprite": {
+			"sdcard": false
+		},
+		"/sprites/JunkBot.json": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/sprites/JunkBot.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/virus-buster-title-pixels.aseprite": {
+			"sdcard": false
+		},
+		"/Title.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
 		}
 	},
 	"ideVersion": 10000,

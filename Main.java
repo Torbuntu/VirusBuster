@@ -26,12 +26,13 @@ public class Main extends State {
         start = Globals.saveManager.started;
         screen = Globals.screen;
         screen.setTextColor(0);
+        Globals.initTitle();
     }
     
     void update(){
         screen.clear(3);
-        screen.setTextPosition(0,0);
-        screen.println("Virus Buster");
+        Globals.drawTitle();
+        screen.setTextPosition(0,140);
         
         if(confirm){
             screen.println("Initiate Training\nProgram?\n");
@@ -62,6 +63,7 @@ public class Main extends State {
             Globals.saveManager.started = true;
             Globals.saveManager.saveCookie();
         }
+        Globals.destroyTitle();
         screen = null;
     }
 }

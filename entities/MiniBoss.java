@@ -221,7 +221,8 @@ public class MiniBoss{
             virus.die();
             virus.draw(screen);
         }
-        // TODO: add BlastCharge icon and correct meter fill
+        
+        
         int pos = Math.abs((int)((shootReady-250) * 68 / 250));
         screen.fillRect(214-pos, 12, pos, 2, 8);
         if(shooting > 0){

@@ -16,6 +16,7 @@ public class VirusManager{
     int spawned;
     int total;
     int max;
+    int waveProgress;
     Explode explode;
     
     int spawnClear = 125;
@@ -65,6 +66,7 @@ public class VirusManager{
                     if(!viruses[i].alive){
                         explode.play();
                         total--;
+                        waveProgress--;
                         Globals.updateKills(viruses[i].virus.x, viruses[i].virus.y);
                         continue;
                     }
@@ -161,6 +163,7 @@ public class VirusManager{
         }
         if(total > 0){
             currentWave++;
+            waveProgress = waves[currentWave];
             for(int i = 0; i < waves[currentWave]; i++){
                 int r = Math.random(0, 2);
                 int p = Math.random(1,3);
@@ -170,6 +173,14 @@ public class VirusManager{
             spawnClear = 45;
             incoming = 150;
         }
+    }
+    
+    public int getWaveTotal(){
+        return waves[currentWave];
+    }
+    
+    public int getWaveCurrent(){
+        return waveProgress;
     }
     
     public int getThreats(){
@@ -225,6 +236,7 @@ public class VirusManager{
         }
         spawned = 1;
         max = total;
+        waveProgress = waves[currentWave];
         for(int i = 0; i < waves[currentWave]; i++){
             int r = Math.random(0, 2);
             int p = Math.random(1,3);
