@@ -44,6 +44,7 @@ public class BlastManager {
     void reset(){
         rate = Globals.saveManager.rate;
         refresh = Globals.saveManager.refresh;
+        chargeSpeed = Globals.saveManager.charge;
     }
     
     void update(float x, float y, int dir){

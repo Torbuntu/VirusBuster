@@ -63,11 +63,12 @@ class Shop extends State {
                 case 3:
                     if(charge < 100 && currency >= 20){
                         currency -= 20;
-                        if(charge + 5 <= 100) charge+=5;
+                        if(charge + 5 > 100) charge=100;
+                        else charge+=5;
                     }
                 break;
                 case 4:
-                    if(magnet < 1.2f && currency >= 25){
+                    if(magnet < 1.0f && currency >= 25){
                         currency -= 25;
                         coin.play();
                         if((magnet + 0.1f) > 1.0f) magnet = 1.02f;
@@ -94,33 +95,47 @@ class Shop extends State {
         screen.setTextPosition(36, 0);
         screen.print("Program Upgrades");
 
-        loot.draw(screen, 22, 42);
-        screen.setTextPosition(32, 42);
+        loot.draw(screen, 15, 42);
+        screen.setTextPosition(25, 42);
         screen.print("x"+currency);
         
-        screen.setTextPosition(32, 60);
-        screen.print("  5 - Rate:    " + rate);
+        // Containers for upgrades
+        for(int i = 0; i < 6; i++){
+            screen.drawRect(144, 61+i*9, 52, 6, 1);
+            screen.fillRect(146, 63+i*9, 50, 4, 2, true);
+        }
         
-        screen.setTextPosition(32, 60+9);
-        screen.print(" 10 - Refresh: " + refresh);
+        screen.setTextPosition(16, 60);
+        screen.print("  5 - Rate:");
+        screen.fillRect(146, 63, ((rate-1)*50/9), 4, (rate == 10 ? 11 : 15), true);
         
-        screen.setTextPosition(32, 60+18);
-        screen.print(" 15 - Shield:  " + shield);
+        screen.setTextPosition(16, 60+9);
+        screen.print(" 10 - Refresh:");
+        screen.fillRect(146, 72, (Math.abs(refresh-50)*50/45), 4, (refresh == 5 ? 11 : 15), true);
         
-        screen.setTextPosition(32, 60+27);
-        screen.print(" 20 - Charge:  " + charge);
+        screen.setTextPosition(16, 60+18);
+        screen.print(" 15 - Shield:");
+        screen.fillRect(146, 63+18, (shield*50/100), 4, (shield == 100 ? 11 : 15), true);
         
-        screen.setTextPosition(32, 60+36);
-        screen.print(" 25 - Magnet:  " + (int)(magnet*100) + "%");
+        screen.setTextPosition(16, 60+27);
+        screen.print(" 20 - Charge:");
+        screen.fillRect(146, 63+27, (charge*50/100), 4, (charge == 100 ? 11 : 15), true);
         
-        screen.setTextPosition(32, 60+45);
-        screen.print(" 30 - Damage:  " + damage);
+        screen.setTextPosition(16, 60+36);
+        screen.print(" 25 - Magnet:");
+        screen.fillRect(146, 63+36, ((int)(magnet*100)*50/100), 4, ((int)(magnet*100) >= 100 ? 11 : 15), true);
         
-        screen.setTextPosition(32, 60+54);
+        screen.setTextPosition(16, 60+45);
+        screen.print(" 30 - Damage:");
+        screen.fillRect(146, 63+45, ((damage-2)*50/18), 4, (damage == 20 ? 11 : 15), true);
+        
+        screen.setTextPosition(16, 60+54);
         screen.print(" Continue");
         
-        screen.setTextPosition(32, 60+select*9);
+        screen.setTextPosition(16, 60+select*9);
         screen.print(">");
+        
+        
         
         if(Button.C.justPressed()){
             Game.changeState(SectorZoneManager.getNextState());
