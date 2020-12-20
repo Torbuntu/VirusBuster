@@ -13,6 +13,30 @@ import stage.ForkBombStage;
  */
 class SectorZoneManager {
     static State getNextState(){
+        
+        if(Globals.endless){
+            // Reset sector to 0 and increase Zone if above Sector 8
+            if(Globals.SECTOR > 8){
+                Globals.SECTOR = 0;
+                Globals.ZONE++;
+            }
+            switch(Globals.SECTOR){
+                case 4:
+                    return new MiniBossStage();
+                    break;
+                case 8:
+                    switch(Math.random(0, 3)){
+                        case 0: return new WormBossStage();break;
+                        case 1: return new ForkBombStage();break;
+                        case 2: return new GrabbyMcStage();break;
+                    }
+                    break;
+                default:
+                    return new NormalSector(); break;
+            }
+            
+            
+        }
 
         // There are no sectors passed 8, send to title.
         if(Globals.SECTOR > 8) return new SummaryStage();

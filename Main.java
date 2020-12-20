@@ -61,8 +61,7 @@ public class Main extends State {
     
     void shutdown(){
         if(!start) {
-            Globals.saveManager.started = true;
-            Globals.saveManager.saveCookie();
+            Globals.newGame();
         }
         Globals.destroyTitle();
         screen = null;

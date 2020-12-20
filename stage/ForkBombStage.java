@@ -7,7 +7,7 @@ import managers.BotManager;
 import managers.BlastManager;
 import managers.ForkBombManager;
 import stage.GameOverStage;
-
+import stage.SummaryStage;
 
 class ForkBombStage extends State {
     HiRes16Color screen;
@@ -19,6 +19,7 @@ class ForkBombStage extends State {
         screen = Globals.screen;
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
+        blastManager.reset();
         forkBombManager = new ForkBombManager();
     }
     
@@ -30,6 +31,7 @@ class ForkBombStage extends State {
             Globals.drawCleared(true);
         }
         if(Globals.shield <= 0){
+            if(Globals.endless) Game.changeState(new SummaryStage());
             Game.changeState(new GameOverStage());
         }
         

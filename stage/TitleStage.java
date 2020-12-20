@@ -17,8 +17,15 @@ public class TitleStage extends State {
     MegaFragment megaFrag;
     int select=0, count=0;
     String[] aboutText;
+    boolean first, second, third, fourth, endless;
     
     void init(){
+        endless = Globals.endless;
+        first = true;
+        second = true;
+        third = true;
+        fourth = true;
+        
         megaFrag = new MegaFragment();
         megaFrag.corrupt();
         
@@ -31,7 +38,7 @@ public class TitleStage extends State {
             "Zone 1: A Spreading\n  threat detected. It\n  trails corruption",
             "Zone 2: Be ready to\n  to Boost through the\n  corruption",
             "Zone 3: Lasers are \n  awesome, but don't\n  touch them!",
-            "Endless: "
+            "Endless: Battle for\n  glory against the \n  endless waves of\n  viruses!"
         };
     }
     
@@ -56,16 +63,20 @@ public class TitleStage extends State {
         
         screen.clear(3);
         
-        screen.setTextPosition(0, 10);
-        screen.setTextColor(0);
+        screen.drawRect(8, 8, 202, 38, 1);
+        screen.fillRect(10, 10, 200, 36, 8);
+        screen.setTextPosition(15, 15);
+        screen.setTextColor(3);
         screen.print(
-            "Press B to begin Demo." +
-            "\nSelect Zone to Begin"
+            "Virus Buster Program" +
+            "\n  Initialized" +
+            "\n  Select Zone to Begin" 
             );
         
         
-        if(Button.Right.justPressed() && select < 3){
-            select++;
+        if(Button.Right.justPressed() ){
+            if((select == 3) && endless) select = 4;
+            else if (select < 3) select++;
         }
         if(Button.Left.justPressed() && select > 0){
             select--;
@@ -82,51 +93,62 @@ public class TitleStage extends State {
         //first frag
         megaFrag.setFlipped(false);
         megaFrag.setMirrored(false);
-        if(Globals.saveManager.firstZoneClear){
+        if(first){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 86, 32);
+        megaFrag.draw(screen, 86, 32+24);
         
         //second
         megaFrag.setMirrored(true);
-        if(Globals.saveManager.secondZoneClear){
+        if(second){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 110, 32);
+        megaFrag.draw(screen, 110, 32+24);
         
         //third
         megaFrag.setMirrored(false);
         megaFrag.setFlipped(true);
-        if(Globals.saveManager.thirdZoneClear){
+        if(third){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 86, 56);
+        megaFrag.draw(screen, 86, 56+24);
         
         //last
         megaFrag.setFlipped(true);
         megaFrag.setMirrored(true);
-        if(Globals.saveManager.fourthZoneClear){
+        if(fourth){
             megaFrag.complete();
         }else megaFrag.corrupt();
-        megaFrag.draw(screen, 110, 56);
-                
+        megaFrag.draw(screen, 110, 56+24);
+        
+        // draw endless zone icon
+        if(endless) {
+            screen.drawHLine(134, 60+24, 30, 10);
+            screen.fillRect(160, 40+24, 24, 24, 15);
+        }
 
         switch(select){
             case 0:
-                screen.drawRect(86, 32, 24, 24, 11);
+                screen.drawRect(86, 32+24, 24, 24, 11);
                 break;
             case 1:
-                screen.drawRect(110, 32, 24, 24, 11);
+                screen.drawRect(110, 32+24, 24, 24, 11);
                 break;
             case 2:
-                screen.drawRect(86, 56, 24, 24, 11);
+                screen.drawRect(86, 56+24, 24, 24, 11);
                 break;
             case 3:
-                screen.drawRect(110, 56, 24, 24, 11);
+                screen.drawRect(110, 56+24, 24, 24, 11);
+                break;
+            case 4:
+                screen.drawRect(160, 40+24, 24, 24, 11);
                 break;
         }
-        screen.fillRect(10, 100, 200, 50, 8+select);
-        screen.setTextPosition(15, 105);
+        
+        
+        screen.drawRect(8, 98+16, 202, 48, 1);
+        screen.fillRect(10, 100+16, 200, 46, 8+select);
+        screen.setTextPosition(15, 105+16);
         screen.setTextColor(3);
         screen.print(aboutText[select]);
         

@@ -9,6 +9,8 @@ import managers.BotManager;
 import managers.BlastManager;
 import managers.WormBossManager;
 import stage.GameOverStage;
+import stage.SummaryStage;
+
 import sprites.MegaFragment;
 
 class WormBossStage extends State {
@@ -24,9 +26,11 @@ class WormBossStage extends State {
         screen = Globals.screen;
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
+        blastManager.reset();
         wormManager = new WormBossManager();
         frag = new MegaFragment();
         frag.complete();
+        if(Globals.endless)collected = true;
         System.out.println("[I] - Worm Boss initialized");
     }
     
@@ -35,6 +39,7 @@ class WormBossStage extends State {
         Globals.drawGrid();
         
         if(Globals.shield <= 0){
+            if(Globals.endless) Game.changeState(new SummaryStage());
             Game.changeState(new GameOverStage());
         }
         

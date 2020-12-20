@@ -6,6 +6,8 @@ import femto.sound.Mixer;
 import femto.mode.HiRes16Color;
 
 import stage.GameOverStage;
+import stage.SummaryStage;
+
 import managers.BotManager;
 import managers.BlastManager;
 import entities.MiniBoss;
@@ -31,8 +33,9 @@ class MiniBossStage extends State {
         bossManager = new MiniBoss();
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
+        blastManager.reset();
         
-        if(Globals.ZONE == 0){
+        if(Globals.ZONE == 0 && !Globals.endless){
             frag = new MegaFragment();
             frag.complete();
         }
@@ -49,12 +52,13 @@ class MiniBossStage extends State {
         bossManager.update(blastManager, botManager.getX(), botManager.getY());
         
         if(Globals.shield <= 0){
+            if(Globals.endless) Game.changeState(new SummaryStage());
             Game.changeState(new GameOverStage());
         }
         
         if(bossManager.cleared()){
             // CLEARED!
-            if(Globals.ZONE == 0){
+            if(Globals.ZONE == 0 && !Globals.endless){
                 if(collected){
                     Globals.drawCleared(true);
                 } else {

@@ -9,6 +9,7 @@ import sprites.Magnet;
 
 import managers.SaveManager;
 import managers.SectorZoneManager;
+import managers.EndlessSaveManager;
 
 
 /**
@@ -20,8 +21,13 @@ class Globals {
     //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
     
     static Title title;
+    
+    static boolean endless;
+    
     static void initTitle(){
         title = new Title();
+        // we can also set the endless variable here based on saveManager:
+        endless = (saveManager.firstZoneClear && saveManager.secondZoneClear && saveManager.thirdZoneClear && saveManager.fourthZoneClear);
     }
     static void destroyTitle(){
         title = null;
@@ -31,6 +37,21 @@ class Globals {
     }
     
     static final SaveManager saveManager = new SaveManager();
+    
+    // Initialize only in endless mode
+    static EndlessSaveManager endlessSaveManager;
+    
+    static void initEndlessMode(){
+        endlessSaveManager = new EndlessSaveManager();
+        endlessSaveManager.highScore = 0;
+        endlessSaveManager.rate = 1;
+        endlessSaveManager.refresh = 50;
+        endlessSaveManager.currency = 0;
+        endlessSaveManager.magnet = 0.0f;
+        endlessSaveManager.charge = 1;
+        endlessSaveManager.damage = 2;
+        endlessSaveManager.saveCookie();
+    }
     
     static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
     
@@ -85,6 +106,21 @@ class Globals {
         shots = 0;
         score = 0;
         SECTOR = 0;
+    }
+    
+    public static void newGame(){
+        saveManager.started = true;
+        saveManager.firstZoneClear = false;
+        saveManager.secondZoneClear = false;
+        saveManager.thirdZoneClear = false;
+        saveManager.fourthZoneClear = false;
+        saveManager.rate = 1;
+        saveManager.refresh = 50;
+        saveManager.currency = 0;
+        saveManager.magnet = 0.0f;
+        saveManager.charge = 1;
+        saveManager.damage = 2;
+        saveManager.saveCookie();
     }
     
     /**

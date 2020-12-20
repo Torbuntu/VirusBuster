@@ -10,7 +10,6 @@ public class SaveManager extends femto.Cookie {
     boolean started;
     // highScore only used in Endless mode
     
-    int highScore;
     int rate;
     int refresh;
     int currency;

@@ -825,6 +825,15 @@
 		},
 		"/VirusBuster_Pokitto.eeprom": {
 			"sdcard": false
+		},
+		"/buster.png": {
+			"sdcard": false,
+			"implements": "",
+			"palette": "[default]",
+			"palOffset": 0
+		},
+		"/managers/EndlessSaveManager.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

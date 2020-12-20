@@ -4,6 +4,7 @@ import femto.input.Button;
 import femto.mode.HiRes16Color;
 
 import stage.GameOverStage;
+import stage.SummaryStage;
 
 import managers.VirusManager;
 import managers.DebrisManager;
@@ -53,6 +54,7 @@ class NormalSector extends State {
             currency++;
         }
         if(Globals.shield <= 0){
+            if(Globals.endless) Game.changeState(new SummaryStage());
             Game.changeState(new GameOverStage());
         }
         

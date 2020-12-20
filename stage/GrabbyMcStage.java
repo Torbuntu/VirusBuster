@@ -8,6 +8,7 @@ import managers.BotManager;
 import managers.BlastManager;
 import managers.GrabbyManager;
 import stage.GameOverStage;
+import stage.SummaryStage;
 
 class GrabbyMcStage extends State {
     HiRes16Color screen;
@@ -19,6 +20,7 @@ class GrabbyMcStage extends State {
         screen = Globals.screen;
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
+        blastManager.reset();
         grabbyManager = new GrabbyManager();
         grabbyManager.init();
     }
@@ -31,6 +33,7 @@ class GrabbyMcStage extends State {
             Globals.drawCleared(true);
         }
         if(Globals.shield <= 0){
+            if(Globals.endless) Game.changeState(new SummaryStage());
             Game.changeState(new GameOverStage());
         }
         

@@ -14,12 +14,15 @@ import sprites.Loot;
 class SummaryStage extends State {
     HiRes16Color screen;
     Loot loot;
-    int accuracy, c;
+    int accuracy, c, highScore;
     void init(){
         screen = Globals.screen;
         screen.setTextColor(0);
         accuracy = Globals.getAccuracy();
-        c = Globals.saveManager.currency;
+        
+        if(Globals.endless) c = Globals.saveManager.currency;
+        else c = Globals.endlessSaveManager.currency;
+        
         if(accuracy >= 50 && accuracy < 75){
             c += (int)(c*1.5);
         }else if(accuracy >= 75 && accuracy < 90){
@@ -51,15 +54,21 @@ class SummaryStage extends State {
         screen.flush();
     }
     void shutdown(){
-        switch(Globals.ZONE){
-            case 0: Globals.saveManager.firstZoneClear = true; break;
-            case 1: Globals.saveManager.secondZoneClear = true; break;
-            case 2: Globals.saveManager.thirdZoneClear = true; break;
-            case 3: Globals.saveManager.fourthZoneClear = true; break;
+        if(!Globals.endless){
+            switch(Globals.ZONE){
+                case 0: Globals.saveManager.firstZoneClear = true; break;
+                case 1: Globals.saveManager.secondZoneClear = true; break;
+                case 2: Globals.saveManager.thirdZoneClear = true; break;
+                case 3: Globals.saveManager.fourthZoneClear = true; break;
+            }
+            
+            Globals.saveManager.currency = c;
+            Globals.saveManager.saveCookie();
+        }else{
+            //TODO: Save high score and display score
+            Globals.endlessSaveManager.saveCookie();
         }
         
-        Globals.saveManager.currency = c;
-        Globals.saveManager.saveCookie();
         screen = null;
     }
 }
