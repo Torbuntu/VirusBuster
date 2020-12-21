@@ -16,11 +16,18 @@ class GameOverStage extends State {
             Game.changeState(new TitleStage());
         }
         
-        screen.setTextPosition(0, 78);
+        screen.setTextPosition(110-40, 0);
         screen.setTextColor(0);
         screen.println("Zone Failed");
         
-        screen.println("Accuracy: " + Globals.getAccuracy());
+        screen.fillRect(10, 30, 200, 50, 1);
+        screen.setTextPosition(15, 35);
+        screen.setTextColor(3);
+        screen.print(
+            "Virus Buster Program\n  "+
+            "Reinitializing...\n  "+
+            "Program Recovered\n  "+
+            "Power at 50%");
         
         screen.flush();
     }

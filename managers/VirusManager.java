@@ -262,6 +262,20 @@ public class VirusManager{
                 waves = new int[]{3, 5, 8, 10};
                 total = 26;
                 break;
+                
+            // For endless mode only
+            case 5:
+                waves = new int[]{3, 5, 8, 10, 12};
+                total = 38;
+                break;
+            case 6:
+                waves = new int[]{3, 5, 10, 7, 13};
+                total = 38;
+                break;
+            case 7:
+                waves = new int[]{5, 8, 12, 15};
+                total = 40;
+                break;
         }
     }
 }

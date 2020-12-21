@@ -10,11 +10,13 @@ import femto.mode.HiRes16Color;
 // import stage.MiniBossStage;
 
 import sprites.MegaFragment;
+import sprites.Chip;
 
 public class TitleStage extends State {
     
     HiRes16Color screen;
     MegaFragment megaFrag;
+    Chip chip;
     int select=0, count=0;
     String[] aboutText;
     boolean first, second, third, fourth, endless;
@@ -28,6 +30,9 @@ public class TitleStage extends State {
         
         megaFrag = new MegaFragment();
         megaFrag.corrupt();
+        
+        chip = new Chip();
+        chip.idle();
         
         screen = Globals.screen;
         select = 0;
@@ -47,9 +52,10 @@ public class TitleStage extends State {
         if(Button.B.justPressed()){
             // TODO: create endless mode
             if(select == 4) {
+                Globals.ZONE = 0;
                 Globals.initEndlessMode();   
-            }
-            Globals.ZONE = select;
+            } else Globals.ZONE = select;
+            
             Globals.reset();
             // Globals.saveManager.refresh = 10;
             // Globals.saveManager.charge = 10;
@@ -66,11 +72,11 @@ public class TitleStage extends State {
         }
         
         screen.clear(3);
-        
+        screen.setTextColor(endless ? 0:3);
         screen.drawRect(8, 8, 202, 38, 1);
         screen.fillRect(10, 10, 200, 36, endless ? 13 : 8);
         screen.setTextPosition(15, 15);
-        screen.setTextColor(3);
+        
         screen.print(
             "Virus Buster Program" +
             "\n  Initialized" +
@@ -128,7 +134,8 @@ public class TitleStage extends State {
         // draw endless zone icon
         if(endless) {
             screen.drawHLine(134, 60+24, 30, 10);
-            screen.fillRect(160, 40+24, 24, 24, 15);
+            // screen.fillRect(160, 40+24, 24, 24, 15);
+            chip.draw(screen, 164, 71);
         }
 
         switch(select){
@@ -145,7 +152,7 @@ public class TitleStage extends State {
                 screen.drawRect(110, 56+24, 24, 24, 11);
                 break;
             case 4:
-                screen.drawRect(160, 40+24, 24, 24, 11);
+                screen.drawRect(160, 71-4, 24, 24, 11);
                 break;
         }
         
@@ -153,7 +160,6 @@ public class TitleStage extends State {
         screen.drawRect(8, 98+16, 202, 48, 1);
         screen.fillRect(10, 100+16, 200, 46, endless ? 13 : 8);
         screen.setTextPosition(15, 105+16);
-        screen.setTextColor(3);
         screen.print(aboutText[select]);
         
         if(count > 20) count = 0;

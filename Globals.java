@@ -21,6 +21,22 @@ class Globals {
     //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
     
     static Title title;
+    static final SaveManager saveManager = new SaveManager();
+    // Initialize only in endless mode
+    static EndlessSaveManager endlessSaveManager;
+    static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
+    
+    static final Loot loot = new Loot();
+    static final Magnet mag = new Magnet();
+    
+    static int ZONE = 0, SECTOR = 0;
+    static int score = 0, kills = 0;
+    static int shield = 100, hurt = 0, hit = 0, shots = 0;
+    static boolean createItemDrop = false;
+    static float itemX = 0, itemY = 0;
+        
+    static final String PRESS_C_TRANSPORT = "Press C to transport";
+    static final String SECTOR_CLEAR = "Sector Cleared";
     
     static boolean endlessUnlocked, endless;
     
@@ -36,37 +52,24 @@ class Globals {
         title.draw(screen, 0, 0);
     }
     
-    static final SaveManager saveManager = new SaveManager();
-    
-    // Initialize only in endless mode
-    static EndlessSaveManager endlessSaveManager;
     
     static void initEndlessMode(){
+        ZONE = 0;
         endlessSaveManager = new EndlessSaveManager();
         endless = true;
+        shield = 100;
+        score = 0;
         endlessSaveManager.highScore = 0;
         endlessSaveManager.rate = 1;
         endlessSaveManager.refresh = 50;
         endlessSaveManager.currency = 0;
-        endlessSaveManager.magnet = 0.0f;
+        endlessSaveManager.magnet = 0;
         endlessSaveManager.charge = 1;
         endlessSaveManager.damage = 2;
         endlessSaveManager.saveCookie();
     }
     
-    static final HiRes16Color screen = new HiRes16Color(UltimaViSharpX68000.palette(), FontC64.font());
     
-    static final Loot loot = new Loot();
-    static final Magnet mag = new Magnet();
-    
-    static int ZONE = 0, SECTOR = 0;
-    static int score = 0, kills = 0;
-    static int shield = 100, hurt = 0, hit = 0, shots = 0, charge = 0;
-    static boolean createItemDrop = false;
-    static float itemX = 0, itemY = 0;
-        
-    static final String PRESS_C_TRANSPORT = "Press C to transport";
-    static final String SECTOR_CLEAR = "Sector Cleared";
 
     /**
     * Takes two square objects and checks if they intersect, given x,y and size
@@ -184,11 +187,20 @@ class Globals {
             // screen.print("x"+saveManager.currency);
             
             // Magnet
-            if(saveManager.magnet > 0.0f){
-                mag.idle();
-                mag.draw(screen, 120, 164);
-                screen.setTextPosition(130, 164);
-                screen.print((int)(saveManager.magnet*100) + "%");
+            if(endless){
+                if(endlessSaveManager.magnet > 0.0f){
+                    mag.idle();
+                    mag.draw(screen, 120, 164);
+                    screen.setTextPosition(130, 164);
+                    screen.print((int)(endlessSaveManager.magnet*100) + "%");
+                }
+            }else{
+                if(saveManager.magnet > 0.0f){
+                    mag.idle();
+                    mag.draw(screen, 120, 164);
+                    screen.setTextPosition(130, 164);
+                    screen.print((int)(saveManager.magnet*100) + "%");
+                }
             }
         }
         

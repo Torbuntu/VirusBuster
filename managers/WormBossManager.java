@@ -16,13 +16,14 @@ public class WormBossManager {
     WormBoss head;
     WormBodyObject[] body;
     Explode explode;
-    int health = 25;
+    int health;
     int sx = 1, sy = 0, shoot = 150, dying = 150, turnX, turnY, dir;
     boolean angry = false, alive = true, met = false;
     float speed = 1;
     float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
     
     WormBossManager(){
+        health = Globals.endless ? 25 + (Globals.ZONE * 20) : 25;
         explode = new Explode(1);
         head = new WormBoss();
         head.x = -32;

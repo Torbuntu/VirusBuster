@@ -39,7 +39,7 @@ class WormBossStage extends State {
         
         if(Globals.shield <= 0){
             if(Globals.endless) Game.changeState(new SummaryStage());
-            Game.changeState(new GameOverStage());
+            else Game.changeState(new GameOverStage());
         }
         
         if(wormManager.cleared()){

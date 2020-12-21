@@ -36,7 +36,7 @@ class ForkBombManager {
         };
         
         dying = 100;
-        total = 10;
+        total = Globals.endless ? (100 + Globals.ZONE * 20) : 100;
         health = total;
         hurt = 0;
         

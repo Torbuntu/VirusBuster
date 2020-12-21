@@ -46,9 +46,15 @@ public class BlastManager {
             b.blast.x = -10;
             b.blast.y = -10;
         }
-        rate = Globals.saveManager.rate;
-        refresh = Globals.saveManager.refresh;
-        chargeSpeed = Globals.saveManager.charge;
+        if(Globals.endless){
+            rate = Globals.endlessSaveManager.rate;
+            refresh = Globals.endlessSaveManager.refresh;
+            chargeSpeed = Globals.endlessSaveManager.charge;
+        }else{
+            rate = Globals.saveManager.rate;
+            refresh = Globals.saveManager.refresh;
+            chargeSpeed = Globals.saveManager.charge;
+        }
         System.out.println("[I] - chargeSpeed: " + chargeSpeed);
     }
     

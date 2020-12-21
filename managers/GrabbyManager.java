@@ -18,6 +18,9 @@ class GrabbyManager {
     int rightHealth = 5, hitRight = 0;
     
     void init(){
+        health = Globals.endless ? 20 + (Globals.ZONE * 20) : 20;
+        leftHealth = Globals.endless ? 5 + (Globals.ZONE * 20) : 5;
+        rightHealth = Globals.endless ? 5 + (Globals.ZONE * 20) : 5;
         leftX = 0;
         leftY = 16;
         rightX = 204; // 220-16;

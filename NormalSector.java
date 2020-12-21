@@ -23,10 +23,11 @@ class NormalSector extends State {
     ItemDropManager itemDropManager;
     
     int transitionTime = 0, currency = 0, pos;
+    float mag;
     
     void init(){
         screen = Globals.screen;
-        currency = Globals.saveManager.currency;
+        
         
         botManager = EntityManager.botManager;
         botManager.setPos(110, 88);
@@ -38,6 +39,9 @@ class NormalSector extends State {
         debrisManager.reset();
         blastManager.reset();
         virusManager.initWave(Globals.SECTOR, debrisManager);
+        
+        currency = Globals.endless ? Globals.endlessSaveManager.currency : Globals.saveManager.currency;
+        mag = Globals.endless ? Globals.endlessSaveManager.magnet : Globals.saveManager.magnet;
     }
     
     void update(){
@@ -50,12 +54,12 @@ class NormalSector extends State {
 
         Globals.drawGrid();
         itemDropManager.updateAndRender(screen);
-        if(itemDropManager.checkCollect(botManager.getX(), botManager.getY(), Globals.saveManager.magnet)){
+        if(itemDropManager.checkCollect(botManager.getX(), botManager.getY(), mag)){
             currency++;
         }
         if(Globals.shield <= 0){
             if(Globals.endless) Game.changeState(new SummaryStage());
-            Game.changeState(new GameOverStage());
+            else Game.changeState(new GameOverStage());
         }
         
         botManager.updateBotMovement(debrisManager, blastManager.charge);
@@ -98,7 +102,8 @@ class NormalSector extends State {
         blastManager = null;
         itemDropManager = null;*/
         botManager.setPos(110, 88);
-        Globals.saveManager.currency = currency;
+        if(Globals.endless) Globals.endlessSaveManager.currency = currency;
+        else Globals.saveManager.currency = currency;
     }
     
     

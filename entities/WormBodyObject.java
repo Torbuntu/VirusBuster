@@ -3,7 +3,7 @@ import sprites.WormBody;
 
 class WormBodyObject {
     WormBody body;
-    int sx = 1, sy = 0, id, health = 15, hurt = 0, dying = 0, turnX, turnY;
+    int sx = 1, sy = 0, id, health, hurt = 0, dying = 0, turnX, turnY;
     boolean last, alive = true;
     
     WormBodyObject(int id, boolean last){
@@ -14,6 +14,7 @@ class WormBodyObject {
         body.y = 122;
         body.x = id * -18;
         body.x-=14;
+        health = Globals.endless ? 15 + (Globals.ZONE * 20) : 15;
     }
     
     void initDirection(int dir, int sx, int sy, float x, float y, int turnX, int turnY){

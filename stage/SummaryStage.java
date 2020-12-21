@@ -38,7 +38,7 @@ class SummaryStage extends State {
                 bonusScore = 1000;
             }else if(accuracy >= 75 && accuracy < 90){
                 bonusScore = 2000;
-            }else if(accuracy >= 90){
+            }else if(accuracy >= 90 && accuracy < 99){
                 bonusScore = 3000;
             }else if(accuracy > 99){//holy crap dude
                 bonusScore = 6000;
@@ -54,18 +54,27 @@ class SummaryStage extends State {
         }
         
         screen.setTextPosition(110-40, 0);
-        screen.println("Summary:");
+        screen.println("Summary");
         
-        screen.setTextPosition(0, 18);
-        screen.println("Accuracy: " + accuracy);
+        screen.setTextPosition(42, 18);
+        
+        screen.print(    "Accuracy: " + accuracy);
         if(Globals.endless){
-            screen.println("Bonus: " + bonusScore);
-            screen.println("Score: " + score);
-            screen.println("Total: " + (bonusScore + score));
-            screen.println("\nHigh Score: " + highScore);
+            screen.setTextPosition(42, 18+9);
+            screen.print("Bonus:    " + bonusScore);
+            screen.setTextPosition(42, 18+18);
+            screen.print("Score:    " + score);
+            screen.setTextPosition(42, 18+27);
+            screen.print("Total:    " + (bonusScore + score));
+            
             
             if(score+bonusScore > highScore){
-                screen.println("\n !NEW HIGH SCORE! - " + (score+bonusScore));
+                screen.setTextPosition(33, 70);
+                screen.print("!NEW HIGH SCORE!");
+                screen.setTextPosition(80, 88);
+                screen.print((score+bonusScore));
+            }else{
+                screen.println("\nHigh Score: " + highScore);
             }
         }else{
             if(accuracy >= 50 && accuracy < 75){
@@ -98,6 +107,8 @@ class SummaryStage extends State {
             Globals.endless = false;
             if(bonusScore + score > Globals.endlessSaveManager.highScore) Globals.endlessSaveManager.highScore = (score + bonusScore);
             Globals.score = 0;
+            Globals.shield = 100;
+            // Refreshing shield on endless ending, because why not ;) 
             Globals.endlessSaveManager.saveCookie();
         }
         
