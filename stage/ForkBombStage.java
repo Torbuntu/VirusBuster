@@ -55,6 +55,11 @@ class ForkBombStage extends State {
         //botManager = null;
         //blastManager = null;
         forkBombManager = null;
+        if(Globals.endless) {
+            Globals.endlessSaveManager.currency += 25;
+            Globals.shield += 25;
+            if(Globals.shield > 100) Globals.shield = 100;
+        }
     }
     
 }

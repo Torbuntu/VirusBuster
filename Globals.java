@@ -212,7 +212,7 @@ class Globals {
     
     static void drawCleared(boolean boss){
         screen.setTextColor(0);
-        if(boss){
+        if(!endless && boss){
             screen.setTextPosition(8, 60);
             screen.print("You have recovered a\n Mega Fragment!");
         }
@@ -223,11 +223,9 @@ class Globals {
         screen.print(PRESS_C_TRANSPORT);
         if(Button.C.justPressed()){
             SECTOR++;
-            if(boss){
+            if(endless && boss){
                 score += 500 + (ZONE * 50);
             }
-            // if(boss) Game.changeState(SectorZoneManager.getNextState());
-            // else
             Game.changeState(new Shop());
         }
     }

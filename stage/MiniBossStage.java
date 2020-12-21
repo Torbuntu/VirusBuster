@@ -87,5 +87,10 @@ class MiniBossStage extends State {
         //botManager = null;
         //blastManager = null;
         bossManager = null;
+        if(Globals.endless) {
+            Globals.endlessSaveManager.currency += 15;
+            Globals.shield += 25;
+            if(Globals.shield > 100) Globals.shield = 100;
+        }
     }
 }

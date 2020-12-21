@@ -73,5 +73,10 @@ class WormBossStage extends State {
         //blastManager = null;
         wormManager = null;
         screen = null;
+        if(Globals.endless) {
+            Globals.endlessSaveManager.currency += 25;
+            Globals.shield += 25;
+            if(Globals.shield > 100) Globals.shield = 100;
+        }
     }
 }
