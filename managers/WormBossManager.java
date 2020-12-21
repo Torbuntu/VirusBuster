@@ -284,7 +284,7 @@ public class WormBossManager {
     }
     
     int getTotalHealth(){
-        return 145;//health + body * 15
+        return 145;//health + 8 * 15
     }
     
     // ensure we draw the full enemy death animation

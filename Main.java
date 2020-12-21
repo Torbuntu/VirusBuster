@@ -53,16 +53,13 @@ public class Main extends State {
             if(Button.A.justPressed()) {
                 //TODO: If old save data exists, purge it.
                 confirm = true;
-                
+                Globals.newGame();
             }
         }
         screen.flush();
     }
     
     void shutdown(){
-        if(!start) {
-            Globals.newGame();
-        }
         Globals.destroyTitle();
         screen = null;
     }

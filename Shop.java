@@ -18,13 +18,24 @@ class Shop extends State {
     float magnet = 0.0f;
     
     void init() {
-        if(Globals.shield != shield) shield = Globals.shield;
-        if(Globals.saveManager.currency != currency) currency = Globals.saveManager.currency;
-        if(Globals.saveManager.rate != rate) rate = Globals.saveManager.rate;
-        if(Globals.saveManager.refresh != refresh) refresh = Globals.saveManager.refresh;
-        if(Globals.saveManager.magnet != magnet) magnet = Globals.saveManager.magnet;
-        if(Globals.saveManager.charge != charge) charge = Globals.saveManager.charge;
-        if(Globals.saveManager.damage != damage) damage = Globals.saveManager.damage;
+        if(Globals.endless){
+            if(Globals.shield != shield) shield = Globals.shield;
+            if(Globals.endlessSaveManager.currency != currency) currency = Globals.endlessSaveManager.currency;
+            if(Globals.endlessSaveManager.rate != rate) rate = Globals.endlessSaveManager.rate;
+            if(Globals.endlessSaveManager.refresh != refresh) refresh = Globals.endlessSaveManager.refresh;
+            if(Globals.endlessSaveManager.magnet != magnet) magnet = Globals.endlessSaveManager.magnet;
+            if(Globals.endlessSaveManager.charge != charge) charge = Globals.endlessSaveManager.charge;
+            if(Globals.endlessSaveManager.damage != damage) damage = Globals.endlessSaveManager.damage;
+        }else{
+            if(Globals.shield != shield) shield = Globals.shield;
+            if(Globals.saveManager.currency != currency) currency = Globals.saveManager.currency;
+            if(Globals.saveManager.rate != rate) rate = Globals.saveManager.rate;
+            if(Globals.saveManager.refresh != refresh) refresh = Globals.saveManager.refresh;
+            if(Globals.saveManager.magnet != magnet) magnet = Globals.saveManager.magnet;
+            if(Globals.saveManager.charge != charge) charge = Globals.saveManager.charge;
+            if(Globals.saveManager.damage != damage) damage = Globals.saveManager.damage;
+        }
+        
         screen = Globals.screen;
         loot = new Loot();
         loot.play();
@@ -61,17 +72,16 @@ class Shop extends State {
                     }
                 break;
                 case 3:
-                    if(charge < 100 && currency >= 20){
+                    if(charge < 20 && currency >= 20){
                         currency -= 20;
-                        if(charge + 5 > 100) charge=100;
-                        else charge+=5;
+                        charge++;
                     }
                 break;
                 case 4:
-                    if(magnet < 1.0f && currency >= 25){
+                    if(magnet < 2.0f && currency >= 25){
                         currency -= 25;
                         coin.play();
-                        if((magnet + 0.1f) > 1.0f) magnet = 1.02f;
+                        if((magnet + 0.1f) > 2.0f) magnet = 2.02f;
                         else magnet+=0.1f;
                     }
                 break;
@@ -119,11 +129,11 @@ class Shop extends State {
         
         screen.setTextPosition(16, 60+27);
         screen.print(" 20 - Charge:");
-        screen.fillRect(146, 63+27, (charge*50/100), 4, (charge == 100 ? 11 : 15), true);
+        screen.fillRect(146, 63+27, ((charge-1)*50/19), 4, (charge == 20 ? 11 : 15), true);
         
         screen.setTextPosition(16, 60+36);
         screen.print(" 25 - Magnet:");
-        screen.fillRect(146, 63+36, ((int)(magnet*100)*50/100), 4, ((int)(magnet*100) >= 100 ? 11 : 15), true);
+        screen.fillRect(146, 63+36, ((int)(magnet*100)*50/200), 4, ((int)(magnet*100) >= 200 ? 11 : 15), true);
         
         screen.setTextPosition(16, 60+45);
         screen.print(" 30 - Damage:");
@@ -135,7 +145,10 @@ class Shop extends State {
         screen.setTextPosition(16, 60+select*9);
         screen.print(">");
         
-        
+        if(Globals.endless){
+            screen.setTextPosition(0, 160);
+            screen.print("Endless Enabled");
+        }
         
         if(Button.C.justPressed()){
             Game.changeState(SectorZoneManager.getNextState());
@@ -146,13 +159,23 @@ class Shop extends State {
     
     /// We purposely do *not* save the cookie until after the summary stage. 
     void shutdown() {
-        Globals.shield = shield;
-        Globals.saveManager.currency = currency;
-        Globals.saveManager.rate = rate;
-        Globals.saveManager.refresh = refresh;
-        Globals.saveManager.magnet = magnet;
-        Globals.saveManager.charge = charge;
-        Globals.saveManager.damage = damage;
+        if(Globals.endless){
+            Globals.shield = shield;
+            Globals.endlessSaveManager.currency = currency;
+            Globals.endlessSaveManager.rate = rate;
+            Globals.endlessSaveManager.refresh = refresh;
+            Globals.endlessSaveManager.magnet = magnet;
+            Globals.endlessSaveManager.charge = charge;
+            Globals.endlessSaveManager.damage = damage;
+        }else{
+            Globals.shield = shield;
+            Globals.saveManager.currency = currency;
+            Globals.saveManager.rate = rate;
+            Globals.saveManager.refresh = refresh;
+            Globals.saveManager.magnet = magnet;
+            Globals.saveManager.charge = charge;
+            Globals.saveManager.damage = damage;
+        }
         screen = null;
     }
 }

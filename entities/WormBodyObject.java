@@ -120,6 +120,7 @@ class WormBodyObject {
         if(health <= 0){
             dying = 20;
         }
+        if(health < 0)health = 0;
     }
     
     int getHealth(){

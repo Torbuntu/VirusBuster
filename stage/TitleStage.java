@@ -20,11 +20,11 @@ public class TitleStage extends State {
     boolean first, second, third, fourth, endless;
     
     void init(){
-        endless = Globals.endless;
-        first = true;
-        second = true;
-        third = true;
-        fourth = true;
+        endless = Globals.endlessUnlocked;
+        first = Globals.saveManager.firstZoneClear;
+        second = Globals.saveManager.secondZoneClear;
+        third = Globals.saveManager.thirdZoneClear;
+        fourth = Globals.saveManager.fourthZoneClear;
         
         megaFrag = new MegaFragment();
         megaFrag.corrupt();
@@ -46,17 +46,21 @@ public class TitleStage extends State {
         
         if(Button.B.justPressed()){
             // TODO: create endless mode
-            //if(select == 4) Game.changeState(new Endless());
+            if(select == 4) {
+                Globals.initEndlessMode();   
+            }
             Globals.ZONE = select;
             Globals.reset();
             // Globals.saveManager.refresh = 10;
             // Globals.saveManager.charge = 10;
             // Globals.saveManager.rate = 8;
+            
+            EntityManager.initializeNormalStage();
             // Game.changeState(new MiniBossStage());
             // Game.changeState(new WormBossStage());
             // Game.changeState(new GrabbyMcStage());
             // Game.changeState(new ForkBombStage());
-            EntityManager.initializeNormalStage();
+            
             Game.changeState(new NormalSector());
             return;
         }
@@ -64,7 +68,7 @@ public class TitleStage extends State {
         screen.clear(3);
         
         screen.drawRect(8, 8, 202, 38, 1);
-        screen.fillRect(10, 10, 200, 36, 8);
+        screen.fillRect(10, 10, 200, 36, endless ? 13 : 8);
         screen.setTextPosition(15, 15);
         screen.setTextColor(3);
         screen.print(
@@ -147,7 +151,7 @@ public class TitleStage extends State {
         
         
         screen.drawRect(8, 98+16, 202, 48, 1);
-        screen.fillRect(10, 100+16, 200, 46, 8+select);
+        screen.fillRect(10, 100+16, 200, 46, endless ? 13 : 8);
         screen.setTextPosition(15, 105+16);
         screen.setTextColor(3);
         screen.print(aboutText[select]);

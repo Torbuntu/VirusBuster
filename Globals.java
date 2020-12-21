@@ -22,12 +22,12 @@ class Globals {
     
     static Title title;
     
-    static boolean endless;
+    static boolean endlessUnlocked, endless;
     
     static void initTitle(){
         title = new Title();
         // we can also set the endless variable here based on saveManager:
-        endless = (saveManager.firstZoneClear && saveManager.secondZoneClear && saveManager.thirdZoneClear && saveManager.fourthZoneClear);
+        endlessUnlocked = (saveManager.firstZoneClear && saveManager.secondZoneClear && saveManager.thirdZoneClear && saveManager.fourthZoneClear);
     }
     static void destroyTitle(){
         title = null;
@@ -43,6 +43,7 @@ class Globals {
     
     static void initEndlessMode(){
         endlessSaveManager = new EndlessSaveManager();
+        endless = true;
         endlessSaveManager.highScore = 0;
         endlessSaveManager.rate = 1;
         endlessSaveManager.refresh = 50;
@@ -210,6 +211,9 @@ class Globals {
         screen.print(PRESS_C_TRANSPORT);
         if(Button.C.justPressed()){
             SECTOR++;
+            if(boss){
+                score += 500 + (ZONE * 50);
+            }
             // if(boss) Game.changeState(SectorZoneManager.getNextState());
             // else
             Game.changeState(new Shop());

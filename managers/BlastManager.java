@@ -10,7 +10,7 @@ public class BlastManager {
     Blast blast;
     // refresh: 50 how quickly blasts refresh
     // rate:    1  how many blasts are active at a time
-    int cooldown = 0, refresh, rate, charge, chargeSpeed;
+    int cooldown = 0, refresh, rate, charge = 0, chargeSpeed;
     BlastObject[] blasts;
     float swordX = 0, swordY = 0;
     
@@ -42,9 +42,14 @@ public class BlastManager {
     }
     
     void reset(){
+        for(BlastObject b : blasts){
+            b.blast.x = -10;
+            b.blast.y = -10;
+        }
         rate = Globals.saveManager.rate;
         refresh = Globals.saveManager.refresh;
         chargeSpeed = Globals.saveManager.charge;
+        System.out.println("[I] - chargeSpeed: " + chargeSpeed);
     }
     
     void update(float x, float y, int dir){
