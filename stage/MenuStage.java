@@ -57,16 +57,7 @@ public class MenuStage extends State {
             } else Globals.ZONE = select;
             
             Globals.reset();
-            // Globals.saveManager.refresh = 10;
-            // Globals.saveManager.charge = 10;
-            // Globals.saveManager.rate = 8;
-            
             EntityManager.initializeNormalStage();
-            // Game.changeState(new MiniBossStage());
-            // Game.changeState(new WormBossStage());
-            // Game.changeState(new GrabbyMcStage());
-            // Game.changeState(new ForkBombStage());
-            
             Game.changeState(new NormalSector());
             return;
         }

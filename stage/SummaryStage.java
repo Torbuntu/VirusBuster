@@ -14,15 +14,15 @@ import sprites.Loot;
 class SummaryStage extends State {
     HiRes16Color screen;
     Loot loot;
-    int accuracy, c, highScore, score, bonusScore = 0;
+    int accuracy, c, highScore, score, bonusScore = 0, t = 100;
     void init(){
         screen = Globals.screen;
-        screen.setTextColor(0);
+        screen.setTextColor(12);
         accuracy = Globals.getAccuracy();
         
         if(!Globals.endless) {
             c = Globals.saveManager.currency;
-        
+            accuracy = 100;
             if(accuracy >= 50 && accuracy < 75){
                 c += (int)(c*1.5);
             }else if(accuracy >= 75 && accuracy < 90){
@@ -33,7 +33,6 @@ class SummaryStage extends State {
         }else{
             score = Globals.score;
             highScore = Globals.endlessSaveManager.highScore;
-            
             if(accuracy >= 50 && accuracy < 75){
                 bonusScore = 1000;
             }else if(accuracy >= 75 && accuracy < 90){
@@ -53,41 +52,56 @@ class SummaryStage extends State {
             Game.changeState(new MenuStage());
         }
         
-        screen.setTextPosition(110-40, 0);
-        screen.println("Summary");
+        screen.drawRect(18, 16, 184, 140, 12);
+        screen.setTextPosition(0, 0);
+        screen.println("P:// SUMMARY.EXE");
         
-        screen.setTextPosition(42, 18);
+        screen.setTextPosition(20, 18);
         
-        screen.print(    "Accuracy: " + accuracy);
+        screen.println(    "Accuracy:   " + accuracy);
         if(Globals.endless){
-            screen.setTextPosition(42, 18+9);
-            screen.print("Bonus:    " + bonusScore);
-            screen.setTextPosition(42, 18+18);
-            screen.print("Score:    " + score);
-            screen.setTextPosition(42, 18+27);
-            screen.print("Total:    " + (bonusScore + score));
+            screen.setTextPosition(20, 18+9);
+            screen.print("Bonus:      " + bonusScore);
+            screen.setTextPosition(20, 18+18);
+            screen.print("Score:      " + score);
+            screen.setTextPosition(20, 18+27);
+            screen.print("Total:      " + (bonusScore + score));
             
             
             if(score+bonusScore > highScore){
-                screen.setTextPosition(33, 70);
+                screen.setTextPosition(20, 70);
                 screen.print("!NEW HIGH SCORE!");
-                screen.setTextPosition(80, 88);
-                screen.print((score+bonusScore));
+                screen.setTextPosition(20, 88);
+                screen.print("-"+(score+bonusScore)+"-");
             }else{
-                screen.println("\nHigh Score: " + highScore);
+                screen.setTextPosition(20, 18+36);
+                screen.println("High Score: " + highScore);
             }
         }else{
+            screen.setTextPosition(20, 27);
             if(accuracy >= 50 && accuracy < 75){
-                screen.println("Bonus x1.5");
+                screen.println("Bonus:      x1.5");
             }else if(accuracy >= 75 && accuracy < 90){
-                screen.println("Bonus x2.0");
+                screen.println("Bonus:      x2.0");
             }else if(accuracy >= 90){
-                screen.println("Bonus x3.0");
+                screen.println("Bonus:      x3.0");
             }
+            screen.setTextPosition(25, 36);
             screen.println(" x"+c);
-            loot.draw(screen, 0, 36);
+            loot.draw(screen, 20, 36);
         }
         
+        screen.setTextPosition(0, 167);
+        screen.print("P:// [C] - CONTINUE");
+        if(t < 50){
+            int x = screen.textWidth("P:// [C] - CONTINUE");
+            if(t < 4) screen.drawRect(x, 166, 5, 9, 12);
+            else screen.fillRect(x, 166, 5, 9, 12);
+        }
+        t--;
+        if(t == 0){
+            t = 100;
+        }
         
         screen.flush();
     }

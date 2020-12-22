@@ -37,7 +37,7 @@ class TutorialStage extends State{
         };
         
         screen = Globals.screen;
-        screen.setTextColor(0);
+        screen.setTextColor(12);
     }
     
     void update(){
@@ -81,6 +81,7 @@ class TutorialStage extends State{
             break;
         }
         
+        screen.println("P:// TUT_PROG.EXE");
         screen.println(messages[stage]);
         if(Button.C.justPressed()){
             if(stage < 15){
@@ -105,6 +106,8 @@ class TutorialStage extends State{
     void shootingAndCharge(){
         blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
         Globals.drawHud(10);
+        // Hud changes text to white for the ZONE:SECTOR rendering
+        screen.setTextColor(12);
         blastManager.render(screen);
     }
     

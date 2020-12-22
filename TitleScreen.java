@@ -11,6 +11,8 @@ import stage.MenuStage;
 import stage.TutorialStage;
 import stage.IntroCutStage;
 
+import stage.SummaryStage;
+
 import sprites.Blast;
 
 class TitleScreen extends State {
@@ -20,7 +22,47 @@ class TitleScreen extends State {
     HiRes16Color screen;
     Title title;
     boolean start = false, confirm = false, shooting = false;
-    int select = 0;
+    int select = 0, t = 200, c = 100, x = 0;
+    
+    
+    boolean drawingIntro(){
+        if(t == 0)return false;
+        screen.setTextPosition(0, 0);
+        screen.setTextColor(12);
+        screen.print("P:// ");
+        if(t >= 180){
+            x = screen.textWidth("P:// VIR");
+            screen.print("VIR");
+        }
+        if(t >= 150 && t < 180){
+            x = screen.textWidth("P:// VIRUS_");
+            screen.print("VIRUS_");
+        }
+        if(t >= 100 && t < 150){
+            x = screen.textWidth("P:// VIRUS_BUSTE");
+            screen.print("VIRUS_BUSTE");
+        }
+        if(t < 100){
+            x = screen.textWidth("P:// VIRUS_BUSTER.EXE");
+            screen.print("VIRUS_BUSTER.EXE");
+        }
+        
+        // Cursor
+        if(c < 25){
+            
+            if(c < 4) screen.drawRect(x, 0, 5, 9, 12);
+            else screen.fillRect(x, 0, 5, 9, 12);
+        }
+        c--;
+        if(c == 0){
+            c = 50;
+        }
+        
+        
+        t--;
+        if(Button.C.justPressed())t = 0;
+        return true;
+    }
     
     void init(){
         title = new Title();
@@ -35,6 +77,14 @@ class TitleScreen extends State {
     
     void update(){
         screen.clear(3);
+        
+        if(drawingIntro()) {
+            
+            screen.flush();
+            return;
+        }
+        
+        
         title.draw(screen, 0,0);
         
         if(Button.Up.justPressed() && select == 1) select = 0;

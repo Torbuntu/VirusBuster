@@ -42,8 +42,10 @@ public class MiniBoss{
                 virus.y = 160;
             break;
         }
- 
-        health = 50 + Globals.ZONE*10;
+        
+        if(Globals.ZONE == 0 && !Globals.endless){
+            health = 25;
+        }else health = 50 + Globals.ZONE*10;
         maxHealth = health;
         shootReady = 250;
         blasts = new BossBlastObject[]{

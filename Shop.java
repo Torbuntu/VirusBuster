@@ -14,7 +14,7 @@ class Shop extends State {
     Coin coin = new Coin(0);
     Loot loot;
     
-    int currency = 0, rate = 1, refresh = 50, shield = 100, charge = 1, damage = 2, select = 0;
+    int currency = 0, rate = 1, refresh = 50, shield = 100, charge = 1, damage = 2, select = 0, t = 100;
     float magnet = 0.0f;
     
     void init() {
@@ -101,9 +101,9 @@ class Shop extends State {
         if(Button.Up.justPressed() && select > 0) select--;
         if(Button.Down.justPressed() && select < 6) select++;
         
-        screen.setTextColor(0);
-        screen.setTextPosition(36, 0);
-        screen.print("Program Upgrades");
+        screen.setTextColor(12);
+        screen.setTextPosition(0, 0);
+        screen.print("P:// PROG_UPG.EXE");
 
         loot.draw(screen, 15, 42);
         screen.setTextPosition(25, 42);
@@ -146,8 +146,19 @@ class Shop extends State {
         screen.print(">");
         
         if(Globals.endless){
-            screen.setTextPosition(0, 160);
-            screen.print("Endless Enabled");
+            screen.setTextPosition(0, 156);
+            screen.print("P:// ENDLESS: Enabled");
+        }
+        screen.setTextPosition(0, 167);
+        screen.print("P:// [C] - CONTINUE");
+        if(t < 50){
+            int x = screen.textWidth("P:// [C] - CONTINUE");
+            if(t < 4) screen.drawRect(x, 166, 5, 9, 12);
+            else screen.fillRect(x, 166, 5, 9, 12);
+        }
+        t--;
+        if(t == 0){
+            t = 100;
         }
         
         if(Button.C.justPressed()){

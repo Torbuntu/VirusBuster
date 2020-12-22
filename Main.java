@@ -7,8 +7,6 @@ import femto.font.FontC64;
 
 import managers.SaveManager;
 import stage.MenuStage;
-import stage.TutorialStage;
-import stage.IntroCutStage;
 
 public class Main extends State {
     
