@@ -13,14 +13,16 @@ class GrabbyManager {
     
     int leftX, rightX, leftY, rightY;
     int shooting = 0, dying = 100, leftMove=1, rightMove=-2, bounce = 0, meet = 100;
-    int health = 20, headX = 32, headS = 1, hitHead = 0;
-    int leftHealth = 5, hitLeft = 0;
-    int rightHealth = 5, hitRight = 0;
+    int health, headX = 32, headS = 1, hitHead = 0;
+    int leftHealth, hitLeft = 0;
+    int rightHealth , hitRight = 0;
+    int totalHealth;
     
     void init(){
         health = Globals.endless ? 20 + (Globals.ZONE * 20) : 20;
         leftHealth = Globals.endless ? 5 + (Globals.ZONE * 20) : 5;
         rightHealth = Globals.endless ? 5 + (Globals.ZONE * 20) : 5;
+        totalHealth = health + rightHealth + leftHealth;
         leftX = 0;
         leftY = 16;
         rightX = 204; // 220-16;
@@ -179,7 +181,7 @@ class GrabbyManager {
     }
     
     int getTotalHealth(){
-        return 30; // 20 + 5 + 5
+        return totalHealth; // 20 + 5 + 5
     }
     
     boolean cleared(){
