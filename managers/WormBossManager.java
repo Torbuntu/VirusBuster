@@ -16,7 +16,7 @@ public class WormBossManager {
     WormBoss head;
     WormBodyObject[] body;
     Explode explode;
-    int health;
+    int health, totalHealth;
     int sx = 1, sy = 0, shoot = 150, dying = 150, turnX, turnY, dir;
     boolean angry = false, alive = true, met = false;
     float speed = 1;
@@ -24,6 +24,8 @@ public class WormBossManager {
     
     WormBossManager(){
         health = Globals.endless ? 25 + (Globals.ZONE * 20) : 25;
+        // getCurrentHealth() returns the combined health of the body and head
+        totalHealth = getCurrentHealth();
         explode = new Explode(1);
         head = new WormBoss();
         head.x = -32;
@@ -285,7 +287,7 @@ public class WormBossManager {
     }
     
     int getTotalHealth(){
-        return 145;//health + 8 * 15
+        return totalHealth;//health + 8 * 15
     }
     
     // ensure we draw the full enemy death animation

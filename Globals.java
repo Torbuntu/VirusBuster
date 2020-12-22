@@ -20,7 +20,6 @@ import managers.EndlessSaveManager;
 class Globals {
     //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
     
-    static Title title;
     static final SaveManager saveManager = new SaveManager();
     // Initialize only in endless mode
     static EndlessSaveManager endlessSaveManager;
@@ -39,20 +38,7 @@ class Globals {
     static final String SECTOR_CLEAR = "Sector Cleared";
     
     static boolean endlessUnlocked, endless;
-    
-    static void initTitle(){
-        title = new Title();
-        // we can also set the endless variable here based on saveManager:
-        endlessUnlocked = (saveManager.firstZoneClear && saveManager.secondZoneClear && saveManager.thirdZoneClear && saveManager.fourthZoneClear);
-    }
-    static void destroyTitle(){
-        title = null;
-    }
-    static void drawTitle(){
-        title.draw(screen, 0, 0);
-    }
-    
-    
+
     static void initEndlessMode(){
         ZONE = 0;
         endlessSaveManager = new EndlessSaveManager();

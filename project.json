@@ -834,6 +834,15 @@
 		},
 		"/managers/EndlessSaveManager.java": {
 			"sdcard": false
+		},
+		"/stage/MenuStage.java": {
+			"sdcard": false
+		},
+		"/Title.java": {
+			"sdcard": false
+		},
+		"/TitleScreen.java": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

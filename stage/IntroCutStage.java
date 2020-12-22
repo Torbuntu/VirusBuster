@@ -8,7 +8,7 @@ import audio.Explode;
 import sprites.Virus;
 import sprites.MegaFragment;
 
-import stage.TitleStage;
+import stage.MenuStage;
 
 class IntroCutStage extends State {
     
@@ -31,7 +31,7 @@ class IntroCutStage extends State {
     }
     
     void update(){
-        if(Button.C.justPressed()) Game.changeState(new TitleStage());
+        if(Button.C.justPressed()) Game.changeState(new MenuStage());
         screen.clear(3);
         
         switch(dir){

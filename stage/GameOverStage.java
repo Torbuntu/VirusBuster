@@ -3,7 +3,7 @@ import femto.State;
 import femto.input.Button;
 
 import femto.mode.HiRes16Color;
-import stage.TitleStage;
+import stage.MenuStage;
 
 class GameOverStage extends State {
     HiRes16Color screen;
@@ -13,7 +13,7 @@ class GameOverStage extends State {
     void update(){
         screen.clear(3);
         if(Button.C.justPressed()){
-            Game.changeState(new TitleStage());
+            Game.changeState(new MenuStage());
         }
         
         screen.setTextPosition(110-40, 0);

@@ -12,7 +12,7 @@ import femto.mode.HiRes16Color;
 import sprites.MegaFragment;
 import sprites.Chip;
 
-public class TitleStage extends State {
+public class MenuStage extends State {
     
     HiRes16Color screen;
     MegaFragment megaFrag;
