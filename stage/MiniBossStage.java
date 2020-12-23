@@ -21,6 +21,7 @@ class MiniBossStage extends State {
     //only used in ZONE 0 where miniboss is actually the megaboss
     MegaFragment frag;
     boolean collected = false;
+    int fragmentTimer = 150, incoming = 150;
     
     BotManager botManager;
     BlastManager blastManager;
@@ -58,12 +59,27 @@ class MiniBossStage extends State {
         if(bossManager.cleared()){
             // CLEARED!
             if(Globals.ZONE == 0 && !Globals.endless){
-                if(collected){
-                    Globals.drawCleared(true);
-                } else {
-                    if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
-                    frag.draw(screen, 98, 76);
-
+                if(incoming > 0){
+                    incoming--;
+                    screen.fillRect(80, 150-incoming-2, 70, 12, 3);
+                    screen.setTextPosition(82, 150-incoming);
+                    screen.setTextColor(11);
+                    screen.print("<CLEAR>");
+                }else{
+                    if(collected){
+                        if(fragmentTimer > 0){
+                            fragmentTimer--;
+                            screen.fillRect(0, 150-fragmentTimer-2, 220, 10, 3);
+                            screen.setTextPosition(1, 150-fragmentTimer);
+                            screen.setTextColor(11);
+                            screen.print("Mega Fragment Recovered!");
+                        }else Globals.drawCleared(true);
+                    } else {
+                        if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
+                        frag.setMirrored(true);
+                        frag.draw(screen, 98, 76);
+                    }
+                    
                 }
             } else Globals.drawCleared(false);
         }

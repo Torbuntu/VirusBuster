@@ -191,11 +191,6 @@ class Globals {
     static void drawCleared(boolean boss){
         screen.setTextColor(12);
 
-        if(!endless && boss){
-            screen.setTextPosition(0, 18+9);
-            screen.print("You have recovered a\nMega Fragment!");
-        }
-
         screen.fillRect(0, 160, 220, 20, 3);
         screen.setTextPosition(0, 167);
         screen.print(PRESS_C_TRANSPORT);

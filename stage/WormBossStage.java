@@ -20,6 +20,7 @@ class WormBossStage extends State {
     WormBossManager wormManager;
     MegaFragment frag;
     boolean collected = false;
+    int incoming = 150, fragmentTimer = 150;
     
     void init(){
         screen = Globals.screen;
@@ -29,7 +30,10 @@ class WormBossStage extends State {
         wormManager = new WormBossManager();
         frag = new MegaFragment();
         frag.complete();
-        if(Globals.endless)collected = true;
+        if(Globals.endless){
+            collected = true;
+            fragmentTimer  = 0;
+        }
         System.out.println("[I] - Worm Boss initialized");
     }
     
@@ -43,12 +47,26 @@ class WormBossStage extends State {
         }
         
         if(wormManager.cleared()){
-            if(collected){
-                Globals.drawCleared(true);
-            } else {
-                if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
-                frag.setMirrored(true);
-                frag.draw(screen, 98, 76);
+            if(incoming > 0){
+                incoming--;
+                screen.fillRect(80, 150-incoming-2, 70, 12, 3);
+                screen.setTextPosition(82, 150-incoming);
+                screen.setTextColor(11);
+                screen.print("<CLEAR>");
+            } else{
+                if(collected){
+                    if(fragmentTimer > 0){
+                        fragmentTimer--;
+                        screen.fillRect(0, 150-fragmentTimer-2, 220, 10, 3);
+                        screen.setTextPosition(1, 150-fragmentTimer);
+                        screen.setTextColor(11);
+                        screen.print("Mega Fragment Recovered!");
+                    }else Globals.drawCleared(true);
+                } else {
+                    if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
+                    frag.setMirrored(true);
+                    frag.draw(screen, 98, 76);
+                }
             }
         }  
         
