@@ -843,6 +843,15 @@
 		},
 		"/TitleScreen.java": {
 			"sdcard": false
+		},
+		"/audio/hurt.wav": {
+			"sdcard": false
+		},
+		"/audio/Hurt.wav": {
+			"sdcard": false
+		},
+		"/audio/Mega.wav": {
+			"sdcard": false
 		}
 	},
 	"ideVersion": 10000,

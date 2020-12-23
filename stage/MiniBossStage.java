@@ -5,6 +5,7 @@ import femto.sound.Mixer;
 
 import femto.mode.HiRes16Color;
 
+import audio.Mega;
 import stage.GameOverStage;
 import stage.SummaryStage;
 
@@ -17,7 +18,7 @@ import sprites.MegaFragment;
 class MiniBossStage extends State {
     
     HiRes16Color screen;
-    
+    Mega pickup;
     //only used in ZONE 0 where miniboss is actually the megaboss
     MegaFragment frag;
     boolean collected = false;
@@ -29,7 +30,7 @@ class MiniBossStage extends State {
     
     void init(){
         screen = Globals.screen;
-        
+        pickup = new Mega(3);
         bossManager = new MiniBoss();
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
@@ -46,6 +47,7 @@ class MiniBossStage extends State {
     void update(){
         screen.clear(3);
         Globals.drawGrid();
+        Globals.drawHud((int)(bossManager.health * 78 / bossManager.maxHealth));
         
         // Update
         botManager.updateBotMovement(blastManager.charge);
@@ -58,14 +60,14 @@ class MiniBossStage extends State {
         
         if(bossManager.cleared()){
             // CLEARED!
-            if(Globals.ZONE == 0 && !Globals.endless){
-                if(incoming > 0){
-                    incoming--;
-                    screen.fillRect(80, 150-incoming-2, 70, 12, 3);
-                    screen.setTextPosition(82, 150-incoming);
-                    screen.setTextColor(11);
-                    screen.print("<CLEAR>");
-                }else{
+            if(incoming > 0){
+                incoming--;
+                screen.fillRect(80, 150-incoming-2, 70, 12, 3);
+                screen.setTextPosition(82, 150-incoming);
+                screen.setTextColor(11);
+                screen.print("<CLEAR>");
+            }else{
+                 if(Globals.ZONE == 0 && !Globals.endless){
                     if(collected){
                         if(fragmentTimer > 0){
                             fragmentTimer--;
@@ -73,15 +75,17 @@ class MiniBossStage extends State {
                             screen.setTextPosition(1, 150-fragmentTimer);
                             screen.setTextColor(11);
                             screen.print("Mega Fragment Recovered!");
-                        }else Globals.drawCleared(true);
+                        } else Globals.drawCleared(true);
                     } else {
-                        if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
+                        if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) {
+                            collected = true;
+                            pickup.play();
+                        }
                         frag.setMirrored(true);
                         frag.draw(screen, 98, 76);
                     }
-                    
-                }
-            } else Globals.drawCleared(false);
+                } else Globals.drawCleared(false);
+            }  
         }
         
         // START update Blast
@@ -90,8 +94,6 @@ class MiniBossStage extends State {
         // Render
         botManager.render(screen);
         
-        
-        Globals.drawHud((int)(bossManager.health * 78 / bossManager.maxHealth));
         bossManager.render(screen);
         blastManager.render(screen);
         
@@ -103,6 +105,7 @@ class MiniBossStage extends State {
         //botManager = null;
         //blastManager = null;
         bossManager = null;
+        pickup = null;
         if(Globals.endless) {
             Globals.endlessSaveManager.currency += 15;
             Globals.shield += 25;

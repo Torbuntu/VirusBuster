@@ -57,6 +57,7 @@ public class MenuStage extends State {
             } else Globals.ZONE = select;
             
             Globals.reset();
+            
             EntityManager.initializeNormalStage();
             Game.changeState(new NormalSector());
             return;

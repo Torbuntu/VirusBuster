@@ -3,6 +3,8 @@ import femto.State;
 import femto.input.Button;
 import femto.mode.HiRes16Color;
 
+import audio.Mega;
+
 import managers.BotManager;
 import managers.BlastManager;
 import managers.ForkBombManager;
@@ -18,12 +20,14 @@ class ForkBombStage extends State {
     ForkBombManager forkBombManager;
     
     MegaFragment frag;
+    Mega pickup;
     
     boolean collected = false;
     int incoming = 150, fragmentTimer = 150;
     
     
     void init(){
+        pickup = new Mega(3);
         screen = Globals.screen;
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
@@ -41,6 +45,7 @@ class ForkBombStage extends State {
     void update(){
         screen.clear(3);
         Globals.drawGrid();
+        Globals.drawHud((int)(forkBombManager.getCurrentHealth() * 78 / forkBombManager.getTotalHealth()));
         
         if(forkBombManager.cleared()){
             if(incoming > 0){
@@ -53,8 +58,8 @@ class ForkBombStage extends State {
                 if(collected){
                     if(fragmentTimer > 0){
                         fragmentTimer--;
-                        screen.fillRect(0, 150-incoming-2, 220, 10, 3);
-                        screen.setTextPosition(1, 150-incoming);
+                        screen.fillRect(0, 150-fragmentTimer-2, 220, 10, 3);
+                        screen.setTextPosition(1, 150-fragmentTimer);
                         screen.setTextColor(11);
                         screen.print("Mega Fragment Recovered!");
                     }else Globals.drawCleared(true);
@@ -82,13 +87,13 @@ class ForkBombStage extends State {
         botManager.render(screen);
         forkBombManager.render(screen);
         
-        Globals.drawHud((int)(forkBombManager.getCurrentHealth() * 78 / forkBombManager.getTotalHealth()));
         blastManager.render(screen);
         screen.flush();
     }
     
     void shutdown(){
         screen = null;
+        pickup = null;
         //botManager = null;
         //blastManager = null;
         forkBombManager = null;

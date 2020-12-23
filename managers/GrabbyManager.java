@@ -1,12 +1,19 @@
+import femto.mode.HiRes16Color;
+import audio.Explode;
+
 import managers.BlastManager;
 import managers.BotManager;
 import sprites.Grabby;
 import sprites.GrabbyHand;
-import femto.mode.HiRes16Color;
+import sprites.BossBlast;
+import sprites.BlastCharge;
 
 class GrabbyManager {
     
+    Explode explode;
+    BlastCharge charge;
     Grabby grabby;
+    BossBlast blast;
     GrabbyHand leftHand, rightHand;
     
     boolean ready = false;
@@ -16,12 +23,14 @@ class GrabbyManager {
     int health, headX = 32, headS = 1, hitHead = 0;
     int leftHealth, hitLeft = 0;
     int rightHealth , hitRight = 0;
-    int totalHealth;
+    int totalHealth, blastTime = 150;
+    float blastX, blastY;
     
     void init(){
-        health = Globals.endless ? 20 + (Globals.ZONE * 20) : 20;
-        leftHealth = Globals.endless ? 5 + (Globals.ZONE * 20) : 5;
-        rightHealth = Globals.endless ? 5 + (Globals.ZONE * 20) : 5;
+        explode = new Explode(0);
+        health = Globals.endless ? 50 + (Globals.ZONE * 20) : 50;
+        leftHealth = Globals.endless ? 8 + (Globals.ZONE * 20) : 8;
+        rightHealth = Globals.endless ? 8 + (Globals.ZONE * 20) : 8;
         totalHealth = health + rightHealth + leftHealth;
         leftX = 0;
         leftY = 16;
@@ -35,6 +44,12 @@ class GrabbyManager {
         rightHand.move();
         grabby = new Grabby();
         grabby.move();
+        
+        blast = new BossBlast();
+        blast.fire();
+        
+        charge = new BlastCharge();
+        charge.charge();
     }
 
     void update(BlastManager blastManager, BotManager bot){
@@ -43,18 +58,38 @@ class GrabbyManager {
             return;
         }
         
+        if(blastTime > 0){
+            blastTime--;
+            if(blastTime == 0){
+                blastX = headX+grabby.width()/2;
+                blastY = 17;
+            }
+        }else{
+            blastY += 1.5f;
+            if(bot.getX() > blastX) blastX += 0.3f;
+            else blastX -= 0.3f;
+            if(Globals.checkHitBot(blast.x, blast.y, 16, bot.getX(), bot.getY(), 12)){
+                Globals.shield -= 20;
+                blastY = 190;
+            }
+            if(blastY > 180) blastTime = 150;
+        }
+        
+        
         // hit left hand
         if(leftHealth > 0 && hitLeft == 0){
             int damage = blastManager.hitEnemy(leftX, leftY+12, 10);
             if(damage > 0){
                 leftHealth-=damage;
                 hitLeft = 35;
+                if(leftHealth <= 0)explode.play();
             }
         }
         if(rightHealth > 0 && hitRight == 0){
             int damage = blastManager.hitEnemy(rightX+8, rightY+12, 10);
             if(damage > 0){
                 rightHealth-=damage;
+                if(rightHealth <= 0)explode.play();
                 hitRight = 35;
             }
         }
@@ -144,12 +179,17 @@ class GrabbyManager {
             if(dying % 2 == 0){
                 screen.fillCircle(headX+8, 16, 32, 8);
             }
+            switch(dying){
+                case 90:explode.play();break;
+                case 75:explode.play();break;
+                case 40:explode.play();break;
+                case 15:explode.play();break;
+            }
             return;
         }
         if(shooting > 0 && ready){
             screen.drawHLine(13, (int)(leftY+16), 204, 8);
         }
-        
         
         if(leftHealth > 0){
             if(shooting > 0 && ready) leftHand.fire();
@@ -174,6 +214,14 @@ class GrabbyManager {
         
         // draw head
         grabby.draw(screen, headX, 8.0f);
+        
+        if(blastTime == 0) blast.draw(screen, blastX, blastY);
+        
+        int pos = Math.abs((int)((blastTime-150) * 68 / 150));
+        screen.fillRect(214-pos, 12, pos, 2, 8);
+        if(blastTime == 0){
+            charge.draw(screen, 134, 8);
+        }
     }
     
     int getCurrentHealth(){

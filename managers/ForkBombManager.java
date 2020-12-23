@@ -1,8 +1,8 @@
 import femto.mode.HiRes16Color;
 
+import audio.Explode;
 import entities.Spike;
 import managers.BlastManager;
-import audio.Explode;
 import sprites.ForkBomb;
 
 
@@ -130,7 +130,9 @@ class ForkBombManager {
         if(dying == 0)return;
         if(health <= 0 && dying > 0){
             dying--;
+            if(dying == 75) explode.play();
             if(dying == 50) explode.play();
+            if(dying == 15) explode.play();
         }else if(hurt > 0){
             hurt--;
             forkBomb.hurt();

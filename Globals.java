@@ -4,6 +4,8 @@ import femto.mode.HiRes16Color;
 import femto.palette.UltimaViSharpX68000;
 import femto.font.FontC64;
 
+import audio.Hurt;
+
 import sprites.Loot;
 import sprites.Magnet;
 
@@ -19,7 +21,7 @@ import managers.EndlessSaveManager;
  */
 class Globals {
     //TODO: I find it incredibly annoying to have the Bot's "hurt" variable here.
-
+    static final Hurt pain = new Hurt(2);
     static final SaveManager saveManager = new SaveManager();
     // Initialize only in endless mode
     static EndlessSaveManager endlessSaveManager;
@@ -65,6 +67,7 @@ class Globals {
     public static boolean checkHitBot(float vx, float vy, int vSize, float bx, float by, int bSize){
         if(boundingBox(vx, vy, vSize, bx, by, bSize)){
             if(hurt == 0){
+                pain.play();
                 hurt = 50;
                 return true;
             }

@@ -119,10 +119,6 @@ public class BlastManager {
     
     void render(HiRes16Color screen){
         if(charge == 100)blast.draw(screen, 78, 8);
-        // screen.drawVLine(4, 160, -(int)(charge * 140 / 50), 11);
-        // screen.drawVLine(2, 160, -(int)(cooldown * 140 / refresh), 8);
-        // screen.drawHLine(6, 12, (int)(cooldown * 70 / refresh), 8);
-        // screen.drawHLine(6, 13, (int)(charge * 70 / 50), 11);
         screen.fillRect(8, 12, (int)(charge * 68 / 100), 2, 11);
         screen.drawHLine(8, 8, (int)(cooldown * 70 / refresh), 8);
         

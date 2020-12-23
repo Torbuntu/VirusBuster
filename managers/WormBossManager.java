@@ -23,9 +23,6 @@ public class WormBossManager {
     float blastX = -10, blastY = -10, bvx = 0, bvy = 0;
     
     WormBossManager(){
-        health = Globals.endless ? 25 + (Globals.ZONE * 20) : 25;
-        // getCurrentHealth() returns the combined health of the body and head
-        totalHealth = getCurrentHealth();
         explode = new Explode(1);
         head = new WormBoss();
         head.x = -32;
@@ -54,6 +51,10 @@ public class WormBossManager {
         for(WormBodyObject b : body){
             b.initDirection(dir, sx, sy, head.x, head.y, turnX, turnY);
         }
+        health = Globals.endless ? 25 + (Globals.ZONE * 20) : 25;
+        // getCurrentHealth() returns the combined health of the body and head
+        totalHealth = getCurrentHealth();
+        System.out.println("[I] - Worm Manager initialized");
     }
     
     private void setDir(){
@@ -157,8 +158,8 @@ public class WormBossManager {
             blastX += bvx;
             blastY += bvy;
             if(Globals.boundingBox(blastX, blastY, 8, botManager.getX(), botManager.getY(), 16)){
-                blastX = -10;
-                blastY = -10;
+                blastX = -20;
+                blastY = -20;
                 moveHurtBot(botManager);
             }
         }else{

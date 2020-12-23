@@ -52,6 +52,8 @@ class NormalSector extends State {
         }
 
         Globals.drawGrid();
+        Globals.drawHud((int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats()));
+        
         itemDropManager.updateAndRender(screen);
         if(itemDropManager.checkCollect(botManager.getX(), botManager.getY(), mag)){
             currency++;
@@ -75,18 +77,17 @@ class NormalSector extends State {
         blastManager.update(botManager.getX()+2, botManager.getY()+6, botManager.dir);
         blastManager.hitDebris(debrisManager);
         
-        Globals.drawHud((int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats()));
+       
         
         pos = (int)(virusManager.getWaveCurrent() * 68 / virusManager.getWaveTotal());
         screen.fillRect(214-pos, 12, pos, 2, 8);
         
+        screen.setTextColor(0);
         screen.setTextPosition(16, 164);
         screen.print("x"+currency);
         
         //Need to draw the blast manager after the hud or else some items don't render 
         blastManager.render(screen);
-        
-        
         
         if(virusManager.getThreats() == 0){
             if(incoming > 0){

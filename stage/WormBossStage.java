@@ -5,6 +5,7 @@ import femto.sound.Mixer;
 
 import femto.mode.HiRes16Color;
 
+import audio.Mega;
 import managers.BotManager;
 import managers.BlastManager;
 import managers.WormBossManager;
@@ -19,14 +20,17 @@ class WormBossStage extends State {
     BlastManager blastManager;
     WormBossManager wormManager;
     MegaFragment frag;
+    Mega pickup;
     boolean collected = false;
     int incoming = 150, fragmentTimer = 150;
     
     void init(){
+        pickup = new Mega(3);
         screen = Globals.screen;
         botManager = EntityManager.botManager;
         blastManager = EntityManager.blastManager;
         blastManager.reset();
+        
         wormManager = new WormBossManager();
         frag = new MegaFragment();
         frag.complete();
@@ -34,12 +38,14 @@ class WormBossStage extends State {
             collected = true;
             fragmentTimer  = 0;
         }
+
         System.out.println("[I] - Worm Boss initialized");
     }
     
     void update(){
         screen.clear(3);
         Globals.drawGrid();
+        Globals.drawHud((int)(wormManager.getCurrentHealth() * 78 / wormManager.getTotalHealth()));
         
         if(Globals.shield <= 0){
             if(Globals.endless) Game.changeState(new SummaryStage());
@@ -61,9 +67,12 @@ class WormBossStage extends State {
                         screen.setTextPosition(1, 150-fragmentTimer);
                         screen.setTextColor(11);
                         screen.print("Mega Fragment Recovered!");
-                    }else Globals.drawCleared(true);
+                    } else Globals.drawCleared(true);
                 } else {
-                    if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)) collected = true;
+                    if(Globals.boundingBox(botManager.getX(), botManager.getY(), 16, 98, 76, 24)){
+                        collected = true;
+                        pickup.play();
+                    } 
                     frag.setMirrored(true);
                     frag.draw(screen, 98, 76);
                 }
@@ -79,8 +88,6 @@ class WormBossStage extends State {
         botManager.render(screen);
         wormManager.render(screen);
         
-        Globals.drawHud((int)(wormManager.getCurrentHealth() * 78 / wormManager.getTotalHealth()));
-        
         blastManager.render(screen);
 
         screen.flush();
@@ -91,6 +98,7 @@ class WormBossStage extends State {
         //blastManager = null;
         wormManager = null;
         screen = null;
+        pickup = null;
         if(Globals.endless) {
             Globals.endlessSaveManager.currency += 25;
             Globals.shield += 25;
