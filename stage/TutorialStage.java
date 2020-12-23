@@ -104,7 +104,7 @@ class TutorialStage extends State{
         botManager.render(screen);
     }
     void shootingAndCharge(){
-        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
+        blastManager.update(botManager.getX()+2, botManager.getY()+6, botManager.dir);
         Globals.drawHud(10);
         // Hud changes text to white for the ZONE:SECTOR rendering
         screen.setTextColor(12);

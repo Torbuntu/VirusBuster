@@ -28,8 +28,6 @@ class BlastObject {
     
     void render(HiRes16Color screen){
         if(draw){
-            //if(charged) blast.rotoscale(screen, 0, 1.4f);
-            //else 
             blast.draw(screen);
         }
     }

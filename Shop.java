@@ -104,7 +104,9 @@ class Shop extends State {
         screen.setTextColor(12);
         screen.setTextPosition(0, 0);
         screen.print("P:// PROG_UPG.EXE");
-
+    
+        screen.drawRect(10, 37, 200, 90, 12);
+    
         loot.draw(screen, 15, 42);
         screen.setTextPosition(25, 42);
         screen.print("x"+currency);

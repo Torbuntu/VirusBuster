@@ -4,6 +4,7 @@ import femto.input.Button;
 import femto.mode.HiRes16Color;
 
 import sprites.Blast;
+import managers.DebrisManager;
 
 public class BlastManager {
     
@@ -95,6 +96,14 @@ public class BlastManager {
             charge+=chargeSpeed;
             if(charge > 100)charge = 100;
         } 
+    }
+    
+    public void hitDebris(DebrisManager debris){
+        for(BlastObject b : blasts){
+            if(b.draw && debris.checkCollides(b.blast.x+1, b.blast.y+1, b.blast.width()-2, b.blast.height()-2)){
+                b.hit();
+            }
+        }
     }
     
     public int hitEnemy(float ex, float ey, float er){

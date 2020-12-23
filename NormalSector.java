@@ -22,12 +22,11 @@ class NormalSector extends State {
     VirusManager virusManager;
     ItemDropManager itemDropManager;
     
-    int transitionTime = 0, currency = 0, pos;
+    int transitionTime = 0, currency = 0, pos, incoming = 150;
     float mag;
     
     void init(){
         screen = Globals.screen;
-        
         
         botManager = EntityManager.botManager;
         botManager.setPos(110, 88);
@@ -70,13 +69,11 @@ class NormalSector extends State {
         debrisManager.render(screen);
         virusManager.update(botManager.getX(), botManager.getY(), debrisManager, blastManager);
 
-        if(virusManager.getThreats() == 0){
-            Globals.drawCleared(false);
-        }
         virusManager.render(screen);
 
         //START update Blast
-        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
+        blastManager.update(botManager.getX()+2, botManager.getY()+6, botManager.dir);
+        blastManager.hitDebris(debrisManager);
         
         Globals.drawHud((int)(virusManager.getThreats() * 78 / virusManager.getTotalThreats()));
         
@@ -88,6 +85,18 @@ class NormalSector extends State {
         
         //Need to draw the blast manager after the hud or else some items don't render 
         blastManager.render(screen);
+        
+        
+        
+        if(virusManager.getThreats() == 0){
+            if(incoming > 0){
+                incoming--;
+                screen.fillRect(80, 150-incoming-2, 70, 12, 3);
+                screen.setTextPosition(82, 150-incoming);
+                screen.setTextColor(11);
+                screen.print("<CLEAR>");
+            } else Globals.drawCleared(false);
+        }
         
         screen.flush();
     }

@@ -141,10 +141,10 @@ public class VirusManager{
     
     public void render(HiRes16Color screen){
         if(incoming > 0){
-            screen.fillRect(60, 150-incoming-2, 94, 12, 3);
-            screen.setTextPosition(62, 150-incoming);
+            screen.fillRect(68, 150-incoming-2, 94, 12, 3);
+            screen.setTextPosition(70, 150-incoming);
             screen.setTextColor(8);
-            screen.print("<Incoming>");
+            screen.print("<INCOMING>");
             return;
         }
         for(int i = 0; i < spawned; i++){

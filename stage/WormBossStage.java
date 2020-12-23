@@ -56,7 +56,7 @@ class WormBossStage extends State {
         botManager.updateBotMovement(blastManager.charge);
         wormManager.update(blastManager, botManager);
         
-        blastManager.update(botManager.getX()+8, botManager.getY()+6, botManager.dir);
+        blastManager.update(botManager.getX()+2, botManager.getY()+6, botManager.dir);
         
         botManager.render(screen);
         wormManager.render(screen);

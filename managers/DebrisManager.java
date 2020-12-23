@@ -1,7 +1,7 @@
 import entities.Debris;
 import femto.mode.HiRes16Color;
-// TODO: The debris spawn needs to be more clever in avoiding placing spawns on the same tile
-// TODO: If spawners are on the same X or Y, and ZONE is 1, 2, or 3, enable blasts or zappers
+
+// TODO post-release: If spawners are on the same X or Y, and ZONE is 1, 2, or 3, enable blasts or zappers
 class DebrisManager {
     private Debris[] debris;
     

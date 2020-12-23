@@ -17,7 +17,7 @@ public class MenuStage extends State {
     HiRes16Color screen;
     MegaFragment megaFrag;
     Chip chip;
-    int select=0, count=0;
+    int select=0, count=0, t = 100;
     String[] aboutText;
     boolean first, second, third, fourth, endless;
     
@@ -63,18 +63,15 @@ public class MenuStage extends State {
         }
         
         screen.clear(3);
-        screen.setTextColor(endless ? 0:3);
-        screen.drawRect(8, 8, 202, 38, 1);
-        screen.fillRect(10, 10, 200, 36, endless ? 13 : 8);
-        screen.setTextPosition(15, 15);
         
-        screen.print(
-            "Virus Buster Program" +
-            "\n  Initialized" +
-            "\n  Select Zone to Begin" 
-            );
+        screen.setTextColor(12);
+        screen.setTextPosition(0, 0);
+        screen.print("P:// ZONE_MNGR.EXE");
         
-        
+        screen.drawRect(9, 27, 202, 130, 12);
+        screen.setTextPosition(18, 36);
+        screen.print("Disk Utility: v1.0.0");
+
         if(Button.Right.justPressed() ){
             if((select == 3) && endless) select = 4;
             else if (select < 3) select++;
@@ -147,11 +144,22 @@ public class MenuStage extends State {
                 break;
         }
         
-        
-        screen.drawRect(8, 98+16, 202, 48, 1);
-        screen.fillRect(10, 100+16, 200, 46, endless ? 13 : 8);
-        screen.setTextPosition(15, 105+16);
+        screen.setTextPosition(18, 105+16);
         screen.print(aboutText[select]);
+        
+        //TODO: 
+        screen.setTextPosition(0, 167);
+        screen.print("P:// [B] - Begin");
+        //cursor stuff here
+        if(t < 50){
+            int x = screen.textWidth("P:// [B] - Begin");
+            if(t < 4) screen.drawRect(x, 166, 5, 9, 12);
+            else screen.fillRect(x, 166, 5, 9, 12);
+        }
+        t--;
+        if(t == 0){
+            t = 100;
+        }
         
         if(count > 20) count = 0;
         
