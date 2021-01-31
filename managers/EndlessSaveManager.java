@@ -6,6 +6,8 @@ class EndlessSaveManager extends femto.Cookie {
     
     // highScore only used in Endless mode
     int highScore;
+    int ZONE;
+    int SECTOR;
     int rate;
     int refresh;
     int currency;

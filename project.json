@@ -165,694 +165,120 @@
 		]
 	},
 	"meta": {
-		"": {},
-		"/Dog.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/Main.java": {
-			"sdcard": false
-		},
-		"/Pattern.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/dog.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/project.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites": {
-			"sdcard": false
-		},
-		"/sprites/Background.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Blast.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Blast-sheet.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Blast.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Bot.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Virus-sheet.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Virus.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Virus.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/bot-sheet.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/bot.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/README.md": {
-			"sdcard": false
-		},
-		"/LICENSE": {
-			"sdcard": false
-		},
-		"/VirusBuster.bin": {
-			"sdcard": false
-		},
-		"/demo.gif": {
-			"sdcard": false
-		},
-		"/VirusBuster.elf": {
-			"sdcard": false
-		},
-		"/BlastManager.java": {
-			"sdcard": false
-		},
-		"/sprites/Bot-sheet.png": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/sprites/Bot.png": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/VirusManager.java": {
-			"sdcard": false
-		},
-		"/TitleScene.java": {
-			"sdcard": false
-		},
-		"/WaveManager.java": {
-			"sdcard": false
-		},
-		"/ItemDropManager.java": {
-			"sdcard": false
-		},
-		"/sprites/Loot.png": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/sprites/Loot.json": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/sprites/Loot-sheet.png": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/sprites/Hexagon.png": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/BossMode.java": {
-			"sdcard": false
-		},
-		"/sprites/SmallBoss.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/SmallBoss.json": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/sprites/SmallBoss-sheet.png": {
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0,
-			"sdcard": false
-		},
-		"/sprites/Chip.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/Bot.aseprite": {
-			"sdcard": false
-		},
-		"/managers": {
-			"sdcard": false
-		},
-		"/managers/BlastManager.java": {
-			"sdcard": false
-		},
-		"/managers/ItemDropManager.java": {
-			"sdcard": false
-		},
-		"/managers/VirusManager.java": {
-			"sdcard": false
-		},
-		"/managers/BossManager.java": {
-			"sdcard": false
-		},
-		"/managers/BossMode.java": {
-			"sdcard": false
-		},
-		"/VirusBuster.eeprom": {
-			"sdcard": false
-		},
-		"/managers/BotManager.java": {
-			"sdcard": false
-		},
-		"/audio": {
-			"sdcard": false
-		},
-		"/audio/shoot.beep": {
-			"sdcard": false
-		},
-		"/audio/shoot.wav": {
-			"sdcard": false
-		},
-		"/audio/shoot.wave": {
-			"sdcard": false
-		},
-		"/audio/Shoot.wav": {
-			"sdcard": false
-		},
-		"/audio/Test.wav": {
-			"sdcard": false
-		},
-		"/audio/test.wav": {
-			"sdcard": false
-		},
-		"/audio/Shoot.h": {
-			"sdcard": false
-		},
-		"/audio/ShootSound.wav": {
-			"sdcard": false
-		},
-		"/audio/Explode.wav": {
-			"sdcard": false
-		},
-		"/audio/Coin.wav": {
-			"sdcard": false
-		},
-		"/audio/Coin0.wav": {
-			"sdcard": false
-		},
-		"/sprites/WormBoss.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/WormBoss.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/WormBoss.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/managers/WormBoss.java": {
-			"sdcard": false
-		},
-		"/sprites/WormBody.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/WormBody.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/WormBody.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/SaveManager.java": {
-			"sdcard": false
-		},
-		"/managers/WormBossManager.java": {
-			"sdcard": false
-		},
-		"/managers/DebrisManager.java": {
-			"sdcard": false
-		},
-		"/entities": {
-			"sdcard": false
-		},
-		"/entities/Debris.java": {
-			"sdcard": false
-		},
-		"/entities/Virus.java": {
-			"sdcard": false
-		},
-		"/entities/Item.java": {
-			"sdcard": false
-		},
-		"/entities/BlastObject.java": {
-			"sdcard": false
-		},
-		"/entities/VirusObject.java": {
-			"sdcard": false
-		},
-		"/sprites/Virus.ase": {
-			"sdcard": false
-		},
-		"/entities/BossMode.java": {
-			"sdcard": false
-		},
-		"/entities/MiniBoss.java": {
-			"sdcard": false
-		},
-		"/managers/MiniBossManager.java": {
-			"sdcard": false
-		},
-		"/entities/BossBlastObject.java": {
-			"sdcard": false
-		},
-		"/entities/BossBlast.java": {
-			"sdcard": false
-		},
-		"/managers/ForkBombManager.java": {
-			"sdcard": false
-		},
-		"/entities/ForkBomb.java": {
-			"sdcard": false
-		},
-		"/entities/Grabby.java": {
-			"sdcard": false
-		},
-		"/managers/GrabbyManager.java": {
-			"sdcard": false
-		},
-		"/NormalSector.java": {
-			"sdcard": false
-		},
-		"/Globals.java": {
-			"sdcard": false
-		},
-		"/Shop.java": {
-			"sdcard": false
-		},
-		"/SectorZoneManager.java": {
-			"sdcard": false
-		},
-		"/WormBossStage.java": {
-			"sdcard": false
-		},
-		"/ForkBombStage.java": {
-			"sdcard": false
-		},
-		"/GrabbyMcStage.java": {
-			"sdcard": false
-		},
-		"/MiniBossStage.java": {
-			"sdcard": false
-		},
-		"/sprites/Debris.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Chip.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Spawn.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/ForkBomb.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/ForkBomb.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/ForkBomb.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Blast.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/GrabbyHand.ase": {
-			"sdcard": false
-		},
-		"/sprites/GrabbyHand.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/GrabbyHand.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Spawn.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/Spawn.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/BotHead.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/BotHead.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/BotHead.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Dash.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/Dash.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/SummaryScene.java": {
-			"sdcard": false
-		},
-		"/stage": {
-			"sdcard": false
-		},
-		"/stage/ForkBombStage.java": {
-			"sdcard": false
-		},
-		"/stage/GrabbyMcStage.java": {
-			"sdcard": false
-		},
-		"/stage/MiniBossStage.java": {
-			"sdcard": false
-		},
-		"/stage/WormBossStage.java": {
-			"sdcard": false
-		},
-		"/stage/SummaryStage.java": {
-			"sdcard": false
-		},
-		"/stage/TitleStage.java": {
-			"sdcard": false
-		},
-		"/managers/SaveManager.java": {
-			"sdcard": false
-		},
-		"/managers/SectorZoneManager.java": {
-			"sdcard": false
-		},
-		"/sprites/Grabby.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/UltimaViSharpX68000.pal": {
-			"sdcard": false
-		},
-		"/sprites/Grabby.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Grabby.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/virus-buster-poster-5.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/WormBossVert.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/WormBossVert.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/WormBossVert.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/WormBossHori.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/WormBossHori.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/WormBossHori.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/MegaFragment.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/MegaFragment.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/MegaFragment.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/stage/GameOverStage": {
-			"sdcard": false
-		},
-		"/stage/GameOverStage.java": {
-			"sdcard": false
-		},
-		"/sprites/BossBlast.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/BossBlast.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/BossBlast.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Chip.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/VirusBuster": {
-			"sdcard": false
-		},
-		"/sprites/Loot.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/Magnet.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/Magnet.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/Magnet.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/BlastCharge.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/BlastCharge.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/BlastCharge.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/Linux": {
-			"sdcard": false
-		},
-		"/Linux/VirusBuster": {
-			"sdcard": false
-		},
-		"/Linux/VirusBuster.bin": {
-			"sdcard": false
-		},
-		"/VirusBuster-linux.tar.xz": {
-			"sdcard": false
-		},
-		"/stage/TutorialStage.java": {
-			"sdcard": false
-		},
-		"/entities/WormBodyObject.java": {
-			"sdcard": false
-		},
-		"/entities/Spike.java": {
-			"sdcard": false
-		},
-		"/EntityManager.java": {
-			"sdcard": false
-		},
-		"/sprites/JunkBot.aseprite": {
-			"sdcard": false
-		},
-		"/sprites/JunkBot.json": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/sprites/JunkBot.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/virus-buster-title-pixels.aseprite": {
-			"sdcard": false
-		},
-		"/Title.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/stage/IntroCutStage.java": {
-			"sdcard": false
-		},
-		"/VirusBuster_Pokitto.elf": {
-			"sdcard": false
-		},
-		"/VirusBuster_Pokitto.bin": {
-			"sdcard": false
-		},
-		"/VirusBuster_Pokitto.eeprom": {
-			"sdcard": false
-		},
-		"/buster.png": {
-			"sdcard": false,
-			"implements": "",
-			"palette": "[default]",
-			"palOffset": 0
-		},
-		"/managers/EndlessSaveManager.java": {
-			"sdcard": false
-		},
-		"/stage/MenuStage.java": {
-			"sdcard": false
-		},
-		"/Title.java": {
-			"sdcard": false
-		},
-		"/TitleScreen.java": {
-			"sdcard": false
-		},
-		"/audio/hurt.wav": {
-			"sdcard": false
-		},
-		"/audio/Hurt.wav": {
-			"sdcard": false
-		},
-		"/audio/Mega.wav": {
-			"sdcard": false
-		}
+		"Banner.png": {},
+		"EntityManager.java": {},
+		"Globals.java": {},
+		"LICENSE": {},
+		"Main.java": {},
+		"NormalSector.java": {},
+		"README.md": {},
+		"Shop.java": {},
+		"Title.png": {},
+		"TitleScreen.java": {},
+		"VirusBuster": {},
+		"VirusBuster.bin": {},
+		"VirusBuster.eeprom": {},
+		"VirusBuster.elf": {},
+		"audio": {},
+		"buster.png": {},
+		"demo.gif": {},
+		"entities": {},
+		"managers": {},
+		"project.json": {},
+		"sprites": {},
+		"stage": {},
+		"virus-buster-poster-5.png": {},
+		"virus-buster-title-pixels.aseprite": {},
+		"audio/Coin.wav": {},
+		"audio/Explode.wav": {},
+		"audio/Hurt.wav": {},
+		"audio/Mega.wav": {},
+		"audio/Shoot.wav": {},
+		"entities/BlastObject.java": {},
+		"entities/Item.java": {},
+		"entities/BossBlastObject.java": {},
+		"entities/Debris.java": {},
+		"entities/MiniBoss.java": {},
+		"entities/Spike.java": {},
+		"entities/VirusObject.java": {},
+		"entities/WormBodyObject.java": {},
+		"managers/BlastManager.java": {},
+		"managers/BotManager.java": {},
+		"managers/DebrisManager.java": {},
+		"managers/EndlessSaveManager.java": {},
+		"managers/ForkBombManager.java": {},
+		"managers/GrabbyManager.java": {},
+		"managers/ItemDropManager.java": {},
+		"managers/SaveManager.java": {},
+		"managers/SectorZoneManager.java": {},
+		"managers/VirusManager.java": {},
+		"managers/WormBossManager.java": {},
+		"sprites/Blast.aseprite": {},
+		"sprites/Blast.json": {},
+		"sprites/Blast.png": {},
+		"sprites/BlastCharge.aseprite": {},
+		"sprites/BlastCharge.json": {},
+		"sprites/BlastCharge.png": {},
+		"sprites/BossBlast.aseprite": {},
+		"sprites/BossBlast.json": {},
+		"sprites/BossBlast.png": {},
+		"sprites/Bot.aseprite": {},
+		"sprites/Bot.json": {},
+		"sprites/Bot.png": {},
+		"sprites/BotHead.json": {},
+		"sprites/BotHead.aseprite": {},
+		"sprites/BotHead.png": {},
+		"sprites/Chip.aseprite": {},
+		"sprites/Chip.json": {},
+		"sprites/ForkBomb.aseprite": {},
+		"sprites/Chip.png": {},
+		"sprites/ForkBomb.json": {},
+		"sprites/ForkBomb.png": {},
+		"sprites/Grabby.aseprite": {},
+		"sprites/Grabby.json": {},
+		"sprites/Grabby.png": {},
+		"sprites/GrabbyHand.ase": {},
+		"sprites/GrabbyHand.json": {},
+		"sprites/GrabbyHand.png": {},
+		"sprites/JunkBot.aseprite": {},
+		"sprites/JunkBot.json": {},
+		"sprites/JunkBot.png": {},
+		"sprites/Loot-sheet.png": {},
+		"sprites/Loot.aseprite": {},
+		"sprites/Loot.json": {},
+		"sprites/Loot.png": {},
+		"sprites/Magnet.aseprite": {},
+		"sprites/Magnet.json": {},
+		"sprites/Magnet.png": {},
+		"sprites/MegaFragment.aseprite": {},
+		"sprites/MegaFragment.json": {},
+		"sprites/MegaFragment.png": {},
+		"sprites/SmallBoss-sheet.png": {},
+		"sprites/SmallBoss.aseprite": {},
+		"sprites/SmallBoss.json": {},
+		"sprites/Spawn.aseprite": {},
+		"sprites/Spawn.json": {},
+		"sprites/Spawn.png": {},
+		"sprites/UltimaViSharpX68000.pal": {},
+		"sprites/Virus.ase": {},
+		"sprites/Virus.json": {},
+		"sprites/Virus.png": {},
+		"sprites/WormBody.aseprite": {},
+		"sprites/WormBody.json": {},
+		"sprites/WormBody.png": {},
+		"sprites/WormBoss.aseprite": {},
+		"sprites/WormBoss.json": {},
+		"sprites/WormBoss.png": {},
+		"stage/ForkBombStage.java": {},
+		"stage/GameOverStage.java": {},
+		"stage/GrabbyMcStage.java": {},
+		"stage/IntroCutStage.java": {},
+		"stage/MenuStage.java": {},
+		"stage/MiniBossStage.java": {},
+		"stage/SummaryStage.java": {},
+		"stage/TutorialStage.java": {},
+		"stage/WormBossStage.java": {},
+		"": {}
 	},
 	"ideVersion": 10000,
 	"BUILDFlags": {

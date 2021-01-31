@@ -60,6 +60,9 @@ class SummaryStage extends State {
         
         screen.println(    "Accuracy:   " + accuracy);
         if(Globals.endless){
+            //tmp
+            screen.setTextPosition(110, 8);
+            screen.println(Globals.SECTOR + ":" + Globals.ZONE);
             screen.setTextPosition(20, 18+9);
             screen.print("Bonus:      " + bonusScore);
             screen.setTextPosition(20, 18+18);
@@ -120,6 +123,8 @@ class SummaryStage extends State {
             //TODO: Save high score and display score
             Globals.endless = false;
             if(bonusScore + score > Globals.endlessSaveManager.highScore) Globals.endlessSaveManager.highScore = (score + bonusScore);
+            if(Globals.SECTOR > Globals.endlessSaveManager.SECTOR) Globals.endlessSaveManager.SECTOR = Globals.SECTOR;
+            if(Globals.ZONE > Globals.endlessSaveManager.ZONE) Globals.endlessSaveManager.ZONE = Globals.ZONE;
             Globals.score = 0;
             Globals.shield = 100;
             // Refreshing shield on endless ending, because why not ;) 
