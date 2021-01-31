@@ -9,10 +9,7 @@ Built with [FemtoIDE](https://github.com/felipemanga/femtoide/)
 
 
 ## TODO:
-- GameOver stage
-- Better Title stage
-- Story text for Micro and Mega Fragments (micro fragments are the currency, used for upgrades, Mega Fragments are for correcting the virus damage and "beating" the game. Collected from mega bosses)
-- Update assets where needed. 
+- Music?
 
 ## Future Ideas Post Release:
 - Different weapon types.
