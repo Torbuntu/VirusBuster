@@ -21,7 +21,7 @@ class TitleScreen extends State {
     Blast blast;
     HiRes16Color screen;
     Title title;
-    boolean start = false, confirm = false, shooting = false;
+    boolean start = false, confirm = false, confirmNew = false, shooting = false;
     int select = 0, t = 200, c = 100, x = 0;
     
     
@@ -64,6 +64,58 @@ class TitleScreen extends State {
         return true;
     }
     
+    void confirmNewUpdate(){
+        screen.fillRect(110, 130, 65, 10, 3);
+        screen.setTextPosition(10,131);
+        screen.print("Initiate New\nProgram?\n");
+        screen.setTextPosition(10,149);
+        screen.print(" - Yes");
+        screen.setTextPosition(10,158);
+        screen.print(" - No");
+    
+        if(shooting){
+            if(shootAnimation()){
+                if(select == 0) {
+                    confirmNew = false;
+                    confirm = true;
+                    System.out.println("New game started");
+                    Globals.newGame();
+                    System.out.println("New game initialized");
+                } else  confirmNew = false;
+                shooting = false;
+            }
+        }else{
+            shootWait();
+        }
+    }
+    
+    boolean shootAnimation(){
+        if(shooting){
+            blast.x+=5;
+            blast.charge();
+            if(blast.x > 130){
+                shooting = false;
+                return true;
+            }
+            blast.draw(screen);
+        }
+        return false;
+    }
+    
+    void shootWait(){
+        if(Button.A.justPressed() || Button.C.justPressed()){
+            shoot.play();
+            shooting = true;
+        }
+        
+        blast.fire();
+        if(select == 0){
+            blast.draw(screen, 4, 148);
+        }else{
+            blast.draw(screen, 4, 157);
+        }
+    }
+    
     void init(){
         title = new Title();
         start = Globals.saveManager.started;
@@ -73,6 +125,8 @@ class TitleScreen extends State {
         blast.fire();
         
         shoot = new Shoot(0);
+        
+        System.out.println("[I] - TitleScreen initialized");
     }
     
     void update(){
@@ -90,7 +144,9 @@ class TitleScreen extends State {
         if(Button.Up.justPressed() && select == 1) select = 0;
         if(start && Button.Down.justPressed() && select == 0) select = 1;
         
-        if(confirm){
+        if(confirmNew){
+            confirmNewUpdate();
+        }else if(confirm){
             screen.fillRect(110, 130, 65, 10, 3);
             screen.setTextPosition(10,131);
             screen.print("Initiate Training\nProgram?\n");
@@ -98,66 +154,39 @@ class TitleScreen extends State {
             screen.print(" - Yes");
             screen.setTextPosition(10,158);
             screen.print(" - No");
-            
+
             if(shooting){
-                blast.x+=5;
-                blast.charge();
-                if(blast.x > 130){
+                if(shootAnimation()){
+                    System.out.println("New Game screen transition start");
                     if(select == 0) Game.changeState(new TutorialStage());
                     else  Game.changeState(new IntroCutStage());
                     shooting = false;
                 }
-                blast.draw(screen);
             }else{
-                if(Button.A.justPressed() || Button.C.justPressed()){
-                    shoot.play();
-                    shooting = true;
-                }
-                
-                blast.fire();
-                if(select == 0){
-                    blast.draw(screen, 4, 148);
-                }else{
-                    blast.draw(screen, 4, 157);
-                }
+                shootWait();
             }
         }else{
             
-            screen.setTextPosition(10,140);
+            screen.setTextPosition(10,149);
             screen.print(" - New Game");
             if(start){
-                screen.setTextPosition(10,149);
+                screen.setTextPosition(10,158);
                 screen.print(" - Continue");
             }
             
             if(shooting){
-                blast.x+=5;
-                blast.charge();
-                if(blast.x > 130){
+                if(shootAnimation()){
                     if(select == 0){
                         //new
-                        confirm = true;
-                        Globals.newGame();
+                        confirmNew = true;
+                        //Globals.newGame();
                     }else{
                         Game.changeState(new MenuStage());
                     }
                     shooting = false;
                 }
-                
-                blast.draw(screen);
-                
             }else{
-                if(Button.C.justPressed() || Button.A.justPressed()) {
-                    shoot.play();
-                    shooting = true;
-                }
-                
-                blast.fire();
-                if(select == 0){
-                    blast.draw(screen, 4, 139);
-                }else{
-                    blast.draw(screen, 4, 148);
-                }
+                shootWait();
             }
         }
         screen.flush();

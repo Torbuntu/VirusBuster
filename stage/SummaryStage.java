@@ -8,13 +8,14 @@ import stage.MenuStage;
 import sprites.Loot;
 
 /**
- * Summary scene displays the final after stage summary. 
+ * Summary scene displays the final post-stage summary. 
  * This class also saves the player variables between Zones.
  */ 
 class SummaryStage extends State {
     HiRes16Color screen;
     Loot loot;
     int accuracy, c, highScore, score, bonusScore = 0, t = 100;
+    int sector, zone;
     void init(){
         screen = Globals.screen;
         screen.setTextColor(12);
@@ -33,6 +34,8 @@ class SummaryStage extends State {
         }else{
             score = Globals.score;
             highScore = Globals.endlessSaveManager.highScore;
+            sector = Globals.SECTOR;
+            zone = Globals.ZONE;
             if(accuracy >= 50 && accuracy < 75){
                 bonusScore = 1000;
             }else if(accuracy >= 75 && accuracy < 90){
@@ -46,6 +49,7 @@ class SummaryStage extends State {
         loot = new Loot();
         loot.play();
     }
+    
     void update(){
         screen.clear(3);
         if(Button.C.justPressed()){
@@ -62,7 +66,7 @@ class SummaryStage extends State {
         if(Globals.endless){
             //tmp
             screen.setTextPosition(110, 8);
-            screen.println(Globals.SECTOR + ":" + Globals.ZONE);
+            screen.println(Globals.ZONE + ":" + Globals.SECTOR);
             screen.setTextPosition(20, 18+9);
             screen.print("Bonus:      " + bonusScore);
             screen.setTextPosition(20, 18+18);
@@ -79,6 +83,15 @@ class SummaryStage extends State {
             }else{
                 screen.setTextPosition(20, 18+36);
                 screen.println("High Score: " + highScore);
+            }
+            if(zone > Globals.endlessSaveManager.ZONE){
+                screen.setTextPosition(20, 88+18);
+                screen.print("!NEW BEST ZONE!");
+                screen.setTextPosition(20, 88+27);
+                screen.print("-"+zone+":"+sector+"-");
+            }else{
+                screen.setTextPosition(20, 88+18);
+                screen.print("-"+Globals.endlessSaveManager.ZONE+":"+Globals.endlessSaveManager.SECTOR+"-");
             }
         }else{
             screen.setTextPosition(20, 27);
@@ -108,6 +121,7 @@ class SummaryStage extends State {
         
         screen.flush();
     }
+    
     void shutdown(){
         if(!Globals.endless){
             switch(Globals.ZONE){
@@ -123,8 +137,8 @@ class SummaryStage extends State {
             //TODO: Save high score and display score
             Globals.endless = false;
             if(bonusScore + score > Globals.endlessSaveManager.highScore) Globals.endlessSaveManager.highScore = (score + bonusScore);
-            if(Globals.SECTOR > Globals.endlessSaveManager.SECTOR) Globals.endlessSaveManager.SECTOR = Globals.SECTOR;
-            if(Globals.ZONE > Globals.endlessSaveManager.ZONE) Globals.endlessSaveManager.ZONE = Globals.ZONE;
+            if(sector > Globals.endlessSaveManager.SECTOR) Globals.endlessSaveManager.SECTOR = sector;
+            if(zone > Globals.endlessSaveManager.ZONE) Globals.endlessSaveManager.ZONE = zone;
             Globals.score = 0;
             Globals.shield = 100;
             // Refreshing shield on endless ending, because why not ;) 

@@ -12,7 +12,8 @@ class GameOverStage extends State {
     
     void init(){
         screen = Globals.screen;
-        screen.setTextColor(12);//We only use green here.
+        //We only use green here.
+        screen.setTextColor(12);
     }
     void update(){
         screen.clear(3);
