@@ -96,11 +96,11 @@ class Globals {
     
     public static void newGame(){
         saveManager.started = true;
-        endlessUnlocked = true;
-        saveManager.firstZoneClear = true;
-        saveManager.secondZoneClear = true;
-        saveManager.thirdZoneClear = true;
-        saveManager.fourthZoneClear = true;
+        endlessUnlocked = false;
+        saveManager.firstZoneClear = false;
+        saveManager.secondZoneClear = false;
+        saveManager.thirdZoneClear = false;
+        saveManager.fourthZoneClear = false;
         saveManager.rate = 1;
         saveManager.refresh = 50;
         saveManager.currency = 0;
